@@ -11,7 +11,7 @@ import CreateAcc from './pages/CreateAcc';
 import Sidebar from "./other/Sidebar";
 import Navbar from "./other/Navbar";
 import Projects from "./pages/Projects";
-
+import AdminTasks from './pages/AdminTasks';
 
 function Layout() {
   const user = " "; // Replace with actual user authentication logic
@@ -51,6 +51,7 @@ function App() {
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
           <Route path="/task/:id" element={<TaskDetails />} />
+          <Route path="/adtask/:id" element={<AdminTasks />} />
         </Route>
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />

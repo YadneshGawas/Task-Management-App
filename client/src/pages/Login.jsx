@@ -15,9 +15,15 @@ const Login = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   
-  useEffect(()=>{
-    user && navigate("/dashboard");
-  }, [user]);
+  //original fuctionality
+  // useEffect(()=>{
+  //   user && navigate("/dashboard");
+  // }, [user]);
+
+  //temporary login functionality
+  const login = () =>{
+    navigate("/dashboard")
+  }
 
   const {
     register,
@@ -100,6 +106,7 @@ const Login = () => {
               <Button
                 type="submit"
                 label="Log In"
+                onClick={login}
                 className="w-full h-10 bg-blue-400 text-white rounded-full"
               />
 

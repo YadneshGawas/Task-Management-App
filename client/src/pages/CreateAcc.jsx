@@ -4,8 +4,11 @@ import Textbox from "../other/Textbox";
 import Button from "../other/Button";
 import Checkbox from "../other/Checkbox";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const CreateAcc = () => {
+
+  const navigate = useNavigate();
   
   const {
     register,
@@ -23,6 +26,7 @@ const CreateAcc = () => {
   const submitHandler = async(data) => {
     console.log("submit successful");
     console.log(data);
+    navigate("/log-in")
   };
 
   const [isChecked, setIsChecked] = useState(false);

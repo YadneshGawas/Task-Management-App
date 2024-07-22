@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { getInitials } from "../assets/index";
 
 const UserAvatar = () => {
@@ -16,6 +16,8 @@ const UserAvatar = () => {
 
   const logoutHandler = () => {
     console.log("logout");
+    // Navigate to /log-in
+    navigate("/create");
   };
 
   return (

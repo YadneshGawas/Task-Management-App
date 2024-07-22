@@ -3,11 +3,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import ModalWrapper from "./ModalWrapper";
 import { Dialog } from "@headlessui/react";
-import Textbox from "./Textbox";
-import Loading from "./Loader";
-import Button from "./Button";
+import Wrapper from './Wrapper';
+import Textbox from './Textbox';
+import Loading from './Loader';
+import Button from './Button';
+
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
@@ -26,7 +27,7 @@ const AddUser = ({ open, setOpen, userData }) => {
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <Wrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
           <Dialog.Title
             as='h2'
@@ -103,7 +104,7 @@ const AddUser = ({ open, setOpen, userData }) => {
             </div>
           )}
         </form>
-      </ModalWrapper>
+      </Wrapper>
     </>
   );
 };

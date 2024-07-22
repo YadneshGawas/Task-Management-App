@@ -17,7 +17,6 @@ const TASK_TYPE = {
 
 const Tasks = () => {
   
-  
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);

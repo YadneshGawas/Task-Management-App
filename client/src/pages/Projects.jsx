@@ -2,10 +2,9 @@
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import { tasks } from "../assets/data";
+import { projects } from "../assets/data";
 import BoardView from "../other/BoardView";
 import Loading from "../other/Loader";
-
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from './../other/task/AddTask';
@@ -16,7 +15,7 @@ const TASK_TYPE = {
   completed: "bg-green-600",
 };
 
-const Tasks = () => {
+const Projects = () => {
   const params = useParams();
 
   const [selected, setSelected] = useState(0);
@@ -37,9 +36,9 @@ const Tasks = () => {
     });
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    const priorityMatch = filters.priority === "all" || task.priority === filters.priority;
-    const stageMatch = filters.stage === "all" || task.stage === filters.stage;
+  const filteredProjects = projects.filter((projects) => {
+    const priorityMatch = filters.priority === "all" || projects.priority === filters.priority;
+    const stageMatch = filters.stage === "all" || projects.stage === filters.stage;
     return priorityMatch && stageMatch;
   });
 
@@ -108,10 +107,11 @@ const Tasks = () => {
       </div>
     </div>
 
-          <BoardView tasks={filteredTasks} />
+          <BoardView tasks={filteredProjects} />
+{/* pass to admin tasks and filter them using the tasks/_id from the projects structure */}
       <AddTask open={open} setOpen={setOpen} />
     </div>
   );
 };
 
-export default Tasks;
+export default Projects;
