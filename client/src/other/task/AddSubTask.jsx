@@ -5,9 +5,11 @@ import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
 import Button from "../Button";
 import Wrapper from './../Wrapper';
+import { useSelector } from 'react-redux';
 
 
 const AddSubTask = ({ open, setOpen, id }) => {
+  const { user } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -37,7 +39,10 @@ const AddSubTask = ({ open, setOpen, id }) => {
             as='h2'
             className='text-base font-bold leading-6 text-gray-900 mb-4'
           >
-            ADD SUB-TASK
+    <span>
+
+              {user.isAdmin ? "ADD TASK" : "ADD SUB-TASK"}
+    </span>
           </Dialog.Title>
           <div className='mt-2 flex flex-col gap-6'>
             <Textbox

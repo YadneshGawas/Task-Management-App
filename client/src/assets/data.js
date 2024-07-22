@@ -197,6 +197,7 @@ export const projects = [
 export const tasks = [
   {
     _id: "65c5f12ab5204a81bde866a8",
+    pid: "65d5f12ab5204a81bde866b1",
     title: "Task1",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
@@ -232,6 +233,7 @@ export const tasks = [
   },
   {
     _id: "65c5f12ab5204a81bde866a9",
+    pid: "65d5f12ab5204a81bde866b1",
     title: "Task2",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",

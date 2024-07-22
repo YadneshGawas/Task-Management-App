@@ -22,6 +22,7 @@ const TaskDialog = ({ task }) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const navigate = useNavigate();
+  const projectId = task._id;
 
   const duplicateHandler = () => {};
   const deleteClicks = () => {};
@@ -31,7 +32,7 @@ const TaskDialog = ({ task }) => {
     {
       label: user.isAdmin ? "Open Project" : "Open Task",
       icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => navigate(user.isAdmin ? `/project/${task._id}` : `/task/${task._id}`),
+      onClick: () => navigate(`/projects/${projectId}/tasks`),//to be modified
     },
     {
       label: "Edit",
