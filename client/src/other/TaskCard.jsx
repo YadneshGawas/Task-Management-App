@@ -17,7 +17,6 @@ import TaskDialog from "../other/task/TaskDialog";
 import UserInfo from "../other/UserInfo";
 import AddSubTask from "./task/AddSubTask";
 
-
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
   medium: <MdKeyboardArrowUp />,

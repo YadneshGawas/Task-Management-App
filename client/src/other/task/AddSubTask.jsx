@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
 import Button from "../Button";
+import Wrapper from './../Wrapper';
 
 
 const AddSubTask = ({ open, setOpen, id }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+  formState: { errors },
   } = useForm();
 
   // const [addSbTask] = useCreateSubTaskMutation();
@@ -31,7 +31,7 @@ const AddSubTask = ({ open, setOpen, id }) => {
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <Wrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
           <Dialog.Title
             as='h2'
@@ -92,7 +92,7 @@ const AddSubTask = ({ open, setOpen, id }) => {
             />
           </div>
         </form>
-      </ModalWrapper>
+      </Wrapper>
     </>
   );
 };

@@ -61,6 +61,7 @@ const Tasks = () => {
           />
         )}
       </div>
+      
       <div className="flex gap-4 mb-4">
       {/* Filter by Priority */}
       <div className="w-1/5">

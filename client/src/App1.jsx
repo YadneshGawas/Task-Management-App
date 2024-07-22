@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import CreateAcc from './pages/CreateAcc';
+import AddTask from './other/task/AddTask';
 
 const App1 = () => {
   return (
-    <div><CreateAcc /></div>
+    <div><AddTask /></div>
   )
 }
 

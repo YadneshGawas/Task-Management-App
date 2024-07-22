@@ -2,14 +2,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
-import ModalWrapper from './../ModalWrapper';
+import { useForm } from "react-hook-form";
+import Wrapper from '../Wrapper';
 import Textbox from './../Textbox';
 import UserList from './UserList';
 import SelectList from './../SelectList';
 import Button from './../Button';
-
+import { useSelector } from "react-redux";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -17,6 +17,8 @@ const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 const uploadedFileURLs = [];
 
 const AddTask = ({ open, setOpen }) => {
+  const { user } = useSelector((state) => state.auth);
+
   const task = "";
 
   const {
@@ -40,13 +42,16 @@ const AddTask = ({ open, setOpen }) => {
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <Wrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(submitHandler)}>
           <Dialog.Title
             as='h2'
             className='text-base font-bold leading-6 text-gray-900 mb-4'
           >
-            {task ? "UPDATE TASK" : "ADD TASK"}
+            {task ? 
+              (user.isAdmin ? "UPDATE PROJECT" : "UPDATE TASK") : 
+              (user.isAdmin ? "ADD PROJECT" : "ADD TASK")
+            }
           </Dialog.Title>
 
           <div className='mt-2 flex flex-col gap-6'>
@@ -134,7 +139,7 @@ const AddTask = ({ open, setOpen }) => {
             </div>
           </div>
         </form>
-      </ModalWrapper>
+      </Wrapper>
     </>
   );
 };

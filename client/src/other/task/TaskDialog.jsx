@@ -11,9 +11,12 @@ import { Menu, Transition } from "@headlessui/react";
 import AddTask from "./AddTask";
 import ConfirmatioDialog from "../Dialogs";
 import AddSubTask from "./AddSubTask";
+import { useSelector } from "react-redux";
 
 
 const TaskDialog = ({ task }) => {
+
+  const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -26,9 +29,9 @@ const TaskDialog = ({ task }) => {
 
   const items = [
     {
-      label: "Open Task",
+      label: user.isAdmin ? "Open Project" : "Open Task",
       icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => navigate(`/task/${task._id}`),
+      onClick: () => navigate(user.isAdmin ? `/project/${task._id}` : `/task/${task._id}`),
     },
     {
       label: "Edit",
@@ -36,7 +39,7 @@ const TaskDialog = ({ task }) => {
       onClick: () => setOpenEdit(true),
     },
     {
-      label: "Add Sub-Task",
+      label: user.isAdmin ? "Add Task" : "Add Sub-Task",
       icon: <MdAdd className='mr-2 h-5 w-5' aria-hidden='true' />,
       onClick: () => setOpen(true),
     },

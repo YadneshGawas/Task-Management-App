@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { BsChevronExpand } from "react-icons/bs";
-import { summary } from "../../assets/data";
-import clsx from "clsx";
-
 import { MdCheck } from "react-icons/md";
-import { getInitials } from "../../assets";
+
+import clsx from "clsx";
+import { summary } from './../../assets/data';
+import { getInitials } from './../../assets/index';
 
 const UserList = ({ setTeam, team }) => {
   const data = summary.users;
@@ -16,13 +17,14 @@ const UserList = ({ setTeam, team }) => {
     setSelectedUsers(el);
     setTeam(el?.map((u) => u._id));
   };
-  useEffect(() => {
-    if (team?.length < 1) {
-      data && setSelectedUsers([data[0]]);
-    } else {
-      setSelectedUsers(team);
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (team?.length < 1) {
+  //     data && setSelectedUsers([data[0]]);
+  //   } else {
+  //     setSelectedUsers(team);
+  //   }
+  // }, []);
 
   return (
     <div>
