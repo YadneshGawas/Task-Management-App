@@ -22,9 +22,6 @@ const AdminTasks = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
     
-  // const { projectId } = useParams(); // Retrieve projectId from URL parameters
-
-
   const location = useLocation();
   const { projectId } = location.state || {};
   console.log(projectId);

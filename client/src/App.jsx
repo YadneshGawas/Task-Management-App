@@ -12,7 +12,6 @@ import Sidebar from "./other/Sidebar";
 import Navbar from "./other/Navbar";
 import Projects from "./pages/Projects";
 import AdminTasks from './pages/AdminTasks';
-
 //import Projects from './pages/pro';
 import Testing from './pages/idpasscheck';
 

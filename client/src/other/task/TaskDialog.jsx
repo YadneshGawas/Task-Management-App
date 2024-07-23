@@ -25,7 +25,7 @@ const TaskDialog = ({ task }) => {
   const deleteHandler = () => {};
   const location = useLocation();
 
-
+  console.log("Project/Task ID=>",projectId);
   const isTasksPage = location.pathname.includes("/task");
   console.log("=>",isTasksPage);
 
@@ -33,9 +33,10 @@ const TaskDialog = ({ task }) => {
     {
       label: "Open",
       icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
-      onClick: () => {
+      onClick: () => 
+        {
         if (user.isAdmin && isTasksPage) {
-          navigate('/task/:id');
+          navigate('/task/:id', { state: { projectId } } );
         } 
         else if(user.isAdmin) {
           navigate('/projects/task', { state: { projectId } });
@@ -45,7 +46,6 @@ const TaskDialog = ({ task }) => {
           navigate('/task/:id', { state: { projectId } } );
         }
       },
-      // onClick: () => navigate(`/projects/${projectId}/tasks`),
     },
     {
       label: "Edit",

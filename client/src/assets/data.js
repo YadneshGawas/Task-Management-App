@@ -148,16 +148,10 @@ export const projects = [
     assets: [],
     tasks: [
       {
-        _id: "65c5f12ab5204a81bde866a8",
-        title: "Tasks1",
-        date: "2024-07-18T00:00:00.000Z",
-        tag: "testing",
+        _id: "65c5f12ab5204a81bde866a8",//Task 1
       },
       {
-        _id: "65c5f12ab5204a81bde866a9",
-        title: "Tasks2",
-        date: "2024-07-18T00:00:00.000Z",
-        tag: "testing",
+        _id: "65c5f12ab5204a81bde866a9",//Task 2
       },
     ],
     team: [
@@ -201,16 +195,10 @@ export const projects = [
     assets: [],
     tasks: [
       {
-        _id: "65c5f12ab5204a81bde866c2",
-        title: "Tasks",
-        date: "2024-07-18T00:00:00.000Z",
-        tag: "testing",
+        _id: "65c5f12ab5204a81bde866c2",//Task 3
       },
       {
-        _id: "65c5f12ab5204a81bde866a5",
-        title: "Tasks",
-        date: "2024-07-18T00:00:00.000Z",
-        tag: "testing",
+        _id: "65c5f12ab5204a81bde866a5",//Task 4
       },
     ],
     team: [
@@ -243,9 +231,9 @@ export const projects = [
 
 export const tasks = [
   {
-    _id: "65c5f12ab5204a81bde866a8",
+    _id: "65c5f12ab5204a81bde866a8",//Task 1
     pid: "65d5f12ab5204a81bde866b1",//Project 1
-    title: "Task1",
+    title: "Task 1",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
     stage: "todo",
@@ -279,9 +267,9 @@ export const tasks = [
     __v: 1,
   },
   {
-    _id: "65c5f12ab5204a81bde866a9",
+    _id: "65c5f12ab5204a81bde866a9",//Task 2
     pid: "65d5f12ab5204a81bde866b1",//Project 1
-    title: "Task2",
+    title: "Task 2",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
     stage: "todo",
@@ -315,7 +303,7 @@ export const tasks = [
     __v: 1,
   },
   {
-    _id: "65c5f12ab5204a81bde866c2",
+    _id: "65c5f12ab5204a81bde866c2",//Task 3
     pid: "65d5f12ab5204a81bde866b2",//Project 2
     title: "Task 3",
     date: "2024-07-18T00:00:00.000Z",
@@ -351,7 +339,7 @@ export const tasks = [
     __v: 1,
   },
   {
-    _id: "65c5f12ab5204a81bde866a5",
+    _id: "65c5f12ab5204a81bde866a5",//Task 4
     pid: "65d5f12ab5204a81bde866b2",//Project 2
     title: "Task 4",
     date: "2024-07-18T00:00:00.000Z",
@@ -395,7 +383,7 @@ export const user = {
   title: "Administrator",
   role: "Admin",
   email: "yadnesh@gmail.com",
-  isAdmin: false,
+  isAdmin: true,
   tasks: [],
   createdAt: "2024-07-18T09:58:44.794Z",
   updatedAt: "2024-07-18T06:13:26.757Z",
