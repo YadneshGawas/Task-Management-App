@@ -44,7 +44,7 @@ const TaskCard = ({ task }) => {
             <span className='uppercase'>{task?.priority} Priority</span>
           </div>
 
-          {user?.isAdmin && <TaskDialog task={task} />}
+          <TaskDialog task={task} />
         </div>
 
         <>
@@ -115,19 +115,8 @@ const TaskCard = ({ task }) => {
           </>
         )}
 
-        <div className='w-full pb-2'>
-          <button
-            onClick={() => setOpen(true)}
-            disabled={false}
-            className='w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'
-          >
-            <IoMdAdd className='text-lg' />
-            <span>{user.isAdmin ? "ADD TASK": "ADD SUBTASK"}</span>
-          </button>
-        </div>
+        
       </div>
-
-      <AddSubTask open={open} setOpen={setOpen} id={task._id} />
     </>
   );
 };

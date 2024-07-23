@@ -140,7 +140,7 @@ export const summary = {
 
 export const projects = [
   {
-    _id: "65d5f12ab5204a81bde866b1",
+    _id: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Project1",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
@@ -149,13 +149,13 @@ export const projects = [
     tasks: [
       {
         _id: "65c5f12ab5204a81bde866a8",
-        title: "Tasks",
+        title: "Tasks1",
         date: "2024-07-18T00:00:00.000Z",
         tag: "testing",
       },
       {
         _id: "65c5f12ab5204a81bde866a9",
-        title: "Tasks",
+        title: "Tasks2",
         date: "2024-07-18T00:00:00.000Z",
         tag: "testing",
       },
@@ -192,12 +192,59 @@ export const projects = [
     updatedAt: "2024-02-18T09:36:53.339Z",
     __v: 1,
   },
+  {
+    _id: "65d5f12ab5204a81bde866b2",//Project 2
+    title: "Project2",
+    date: "2024-07-18T00:00:00.000Z",
+    priority: "medium",
+    stage: "todo",
+    assets: [],
+    tasks: [
+      {
+        _id: "65c5f12ab5204a81bde866c2",
+        title: "Tasks",
+        date: "2024-07-18T00:00:00.000Z",
+        tag: "testing",
+      },
+      {
+        _id: "65c5f12ab5204a81bde866a5",
+        title: "Tasks",
+        date: "2024-07-18T00:00:00.000Z",
+        tag: "testing",
+      },
+    ],
+    team: [
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Yadnesh",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+      {
+        _id: "65c30b96e639681a13def0b5",
+        name: "Person2",
+        title: "User",
+        email: "user@example.com",
+      },
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Person3",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+    ],
+    isTrashed: false,
+    activities: [],
+    createdAt: "2024-07-19T09:32:26.574Z",
+    updatedAt: "2024-02-19T09:36:53.339Z",
+    __v: 1,
+  },
 ];
 
 export const tasks = [
   {
     _id: "65c5f12ab5204a81bde866a8",
-    pid: "65d5f12ab5204a81bde866b1",
+    pid: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Task1",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
@@ -233,8 +280,80 @@ export const tasks = [
   },
   {
     _id: "65c5f12ab5204a81bde866a9",
-    pid: "65d5f12ab5204a81bde866b1",//1
+    pid: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Task2",
+    date: "2024-07-18T00:00:00.000Z",
+    priority: "medium",
+    stage: "todo",
+    assets: [],
+    team: [
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Person3",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+      {
+        _id: "65c30b96e639681a13def0b5",
+        name: "Person4",
+        title: "User",
+        email: "user@example.com",
+      },
+    ],
+    isTrashed: false,
+    activities: [],
+    subTasks: [
+      {
+        title: "Tasks",
+        date: "2024-07-18T00:00:00.000Z",
+        tag: "testing",
+        _id: "65c5f153b5204a81bde866c9",
+      },
+    ],
+    createdAt: "2024-07-18T09:32:26.574Z",
+    updatedAt: "2024-02-18T09:36:53.339Z",
+    __v: 1,
+  },
+  {
+    _id: "65c5f12ab5204a81bde866c2",
+    pid: "65d5f12ab5204a81bde866b2",//Project 2
+    title: "Task 3",
+    date: "2024-07-18T00:00:00.000Z",
+    priority: "medium",
+    stage: "todo",
+    assets: [],
+    team: [
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Person3",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+      {
+        _id: "65c30b96e639681a13def0b5",
+        name: "Person4",
+        title: "User",
+        email: "user@example.com",
+      },
+    ],
+    isTrashed: false,
+    activities: [],
+    subTasks: [
+      {
+        title: "Tasks",
+        date: "2024-07-18T00:00:00.000Z",
+        tag: "testing",
+        _id: "65c5f153b5204a81bde866c9",
+      },
+    ],
+    createdAt: "2024-07-18T09:32:26.574Z",
+    updatedAt: "2024-02-18T09:36:53.339Z",
+    __v: 1,
+  },
+  {
+    _id: "65c5f12ab5204a81bde866a5",
+    pid: "65d5f12ab5204a81bde866b2",//Project 2
+    title: "Task 4",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
     stage: "todo",

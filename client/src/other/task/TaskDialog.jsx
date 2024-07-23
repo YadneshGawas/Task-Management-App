@@ -32,7 +32,7 @@ const TaskDialog = ({ task }) => {
       icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
       onClick: () =>
         navigate(
-          user.isAdmin ? `/project/${projectId}/tasks` : `/task/${task._id}`
+          user.isAdmin ? `/projects/tasks/${projectId}` : `/task/${task._id}`
         ), //true : fasle
       // onClick: () => navigate(`/projects/${projectId}/tasks`),
     },

@@ -52,7 +52,7 @@ function App() {
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
           <Route path="/task/:id" element={<TaskDetails />} />
-          <Route path="/projects/:projectId/tasks" element={<AdminTasks />} />
+          <Route path="/projects/tasks/:projectId" element={<AdminTasks />} />
         </Route>
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />

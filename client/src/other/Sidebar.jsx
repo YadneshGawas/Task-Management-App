@@ -73,8 +73,8 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='w-full h-full flex flex-col gap-6 p-5'>
-      <h1 className='flex gap-1 pt-4 items-center'>
+    <div className='w-full h-full flex flex-col gap-6 pl-3'>
+      <h1 className='flex gap-1 pt-6 items-center'>
         <p className='bg-gradient-to-br from-blue-400 to-green-300 p-2 rounded-full'>
           <AiFillThunderbolt className='text-white text-2xl font-black' />
         </p>
