@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { tasks } from "../assets/data";
 import BoardView from "../other/BoardView";
 import Loading from "../other/Loader";
@@ -24,6 +24,10 @@ const Tasks = () => {
     
   const params = useParams();
   const status = params?.status || "";
+
+  const location = useLocation();
+  const { projectId } = location.state || {};
+  console.log(projectId," posted from tasks ");
 
   useEffect(()=>{
     console.log("Open variable status",open);

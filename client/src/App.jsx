@@ -12,7 +12,10 @@ import Sidebar from "./other/Sidebar";
 import Navbar from "./other/Navbar";
 import Projects from "./pages/Projects";
 import AdminTasks from './pages/AdminTasks';
+
 //import Projects from './pages/pro';
+import Testing from './pages/idpasscheck';
+
 
 function Layout() {
   const user = " "; // Replace with actual user authentication logic
@@ -46,13 +49,14 @@ function App() {
           <Route path="/" element={<Navigate to="/create" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/test" element={<Testing />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/completed/:status" element={<Tasks />} />
           <Route path="/in-progress/:status" element={<Tasks />} />
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
           <Route path="/task/:id" element={<TaskDetails />} />
-          <Route path="/projects/tasks/:projectId" element={<AdminTasks />} />
+          <Route path="/projects/task" element={<AdminTasks />} />
         </Route>
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />

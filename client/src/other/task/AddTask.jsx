@@ -10,17 +10,20 @@ import UserList from "./UserList";
 import SelectList from "./../SelectList";
 import Button from "./../Button";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
 const uploadedFileURLs = [];
 
-const AddTask = ({ open, setOpen }) => {
+const AddTask = ({ proj, open, setOpen }) => {
   const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
+
+  const id = proj?._id;
+  console.log(id);
 
   const getTitle = () => {
     const isTasksPage = location.pathname.includes("/tasks");
@@ -54,32 +57,7 @@ const AddTask = ({ open, setOpen }) => {
     return "Project Stage";
   };
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const task = "";
-
-  console.log(new Date().toISOString().split("T")[0]);
 
   const today = new Date().toISOString().split("T")[0];
 

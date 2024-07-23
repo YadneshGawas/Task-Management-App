@@ -8,6 +8,7 @@ import Loading from "../other/Loader";
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
+import { useLocation } from 'react-router-dom';
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -21,9 +22,13 @@ const AdminTasks = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
     
-  const { projectId } = useParams(); // Retrieve projectId from URL parameters
-  console.log(projectId);
+  // const { projectId } = useParams(); // Retrieve projectId from URL parameters
 
+
+  const location = useLocation();
+  const { projectId } = location.state || {};
+  console.log(projectId);
+  
   const [filters, setFilters] = useState({
     priority: "all",
     stage: "all",
