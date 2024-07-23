@@ -18,22 +18,27 @@ const TaskDialog = ({ task }) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
   const navigate = useNavigate();
   const projectId = task._id;
-
   const duplicateHandler = () => {};
   const deleteClicks = () => {};
   const deleteHandler = () => {};
+  const location = useLocation();
+
+  const isTasksPage = location.pathname.includes("/task");
+  console.log("=>",isTasksPage);
 
   const items = [
     {
       label: "Open",
       icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
-      onClick: () =>
-        navigate(
-          user.isAdmin ? `/projects/tasks/${projectId}` : `/task/${task._id}`
-        ), //true : fasle
+      onClick: () => {
+        if (user.isAdmin) {
+          navigate('/projects/task', { state: { projectId } });
+        } else {
+          navigate('/task/:id');
+        }
+      },
       // onClick: () => navigate(`/projects/${projectId}/tasks`),
     },
     {
