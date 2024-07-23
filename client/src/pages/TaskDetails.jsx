@@ -21,6 +21,7 @@ import { TASK_TYPE, getInitials } from './../assets/index';
 import Loading from './../other/Loader';
 import Button from './../other/Button';
 import { tasks } from './../assets/data';
+import { useLocation } from 'react-router-dom';
 
 
 const assets = [];
@@ -85,7 +86,13 @@ const act_types = [
 ];
 
 const TaskDetails = () => {
+
   const { id } = useParams();
+
+  const location = useLocation();
+  const { projectId } = location.state || {};
+  console.log(projectId);
+  
 
   const [selected, setSelected] = useState(0);
   const task = tasks[3];
@@ -97,6 +104,7 @@ const TaskDetails = () => {
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
+          <div>Task ID: {task._id}</div>
             <div className='w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-8 overflow-y-auto'>
               {/* LEFT */}
               <div className='w-full md:w-1/2 space-y-8'>

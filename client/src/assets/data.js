@@ -252,7 +252,7 @@ export const tasks = [
     assets: [],
     team: [
       {
-        _id: "65c202d4aa62f32ffd1303cc",
+        _id: "662f32ffd1303cc",
         name: "Yadnesh",
         title: "Administrator",
         email: "admin@gmail.com",
@@ -395,7 +395,7 @@ export const user = {
   title: "Administrator",
   role: "Admin",
   email: "yadnesh@gmail.com",
-  isAdmin: true,
+  isAdmin: false,
   tasks: [],
   createdAt: "2024-07-18T09:58:44.794Z",
   updatedAt: "2024-07-18T06:13:26.757Z",

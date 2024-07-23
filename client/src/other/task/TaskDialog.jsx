@@ -42,7 +42,7 @@ const TaskDialog = ({ task }) => {
         }
         else
         {
-          navigate('/task/:id');
+          navigate('/task/:id', { state: { projectId } } );
         }
       },
       // onClick: () => navigate(`/projects/${projectId}/tasks`),
