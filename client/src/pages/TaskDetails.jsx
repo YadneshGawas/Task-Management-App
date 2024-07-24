@@ -23,6 +23,8 @@ import Button from "./../other/Button";
 import { tasks } from "./../assets/data";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import { compose } from "redux";
+import Title from "../other/Title";
 
 const assets = [];
 
@@ -89,32 +91,24 @@ const TaskDetails = () => {
   const location = useLocation();
   const { projectId } = location.state || {};
   const [selected, setSelected] = useState(0);
-  const [filters, setFilters] = useState();
+  const taskid = projectId;
 
-  const filteredTasks = tasks.filter((task) => {
-    return tasks.pid === projectId;
-  });
-  //Only filter tasks array using PID then done 
-  console.log("PID=>", projectId);
-  console.log("TID=>", tasks._id);
-
-  const task = tasks[1];
+  const task = tasks.find(task => task._id === taskid);
 
   return (
-    <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
-      <h1 className="text-2xl text-gray-600 font-bold">{task?.title}</h1>
+    <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden text-sm">
+      <Title title={task?.title}/>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
-            <div>Task ID: {task._id}</div>
-            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-8 overflow-y-auto">
+            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-4 overflow-y-auto">
               {/* LEFT */}
-              <div className="w-full md:w-1/2 space-y-8">
+              <div className="w-full md:w-1/2 space-y-2">
                 <div className="flex items-center gap-5">
                   <div
                     className={clsx(
-                      "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
+                      "flex gap-1 items-center text-xs font-semibold px-3 py-1 rounded-full",
                       PRIOTITYSTYELS[task?.priority],
                       bgColor[task?.priority]
                     )}
@@ -130,15 +124,15 @@ const TaskDetails = () => {
                         TASK_TYPE[task.stage]
                       )}
                     />
-                    <span className="text-black uppercase">{task?.stage}</span>
+                    <span className="text-black uppercase text-sm">{task?.stage}</span>
                   </div>
                 </div>
 
-                <p className="text-gray-500">
+                <p className="text-gray-500 pb-1">
                   Created At: {new Date(task?.date).toDateString()}
                 </p>
 
-                <div className="flex items-center gap-8 p-4 border-y border-gray-200">
+                <div className="flex items-center gap-0 p-2 border-y border-gray-200">
                   <div className="space-x-2">
                     <span className="font-semibold">Assets :</span>
                     <span>{task?.assets?.length}</span>
@@ -151,6 +145,10 @@ const TaskDetails = () => {
                     <span>{task?.subTasks?.length}</span>
                   </div>
                 </div>
+                
+                <diV className="flex justify-start items-center">
+                <div className="text-lg text-gray-600"><p>Description</p></div>
+                </diV>
 
                 <div className="space-y-4 py-6">
                   <p className="text-gray-600 font-semibold test-sm">
@@ -173,7 +171,7 @@ const TaskDetails = () => {
                         </div>
 
                         <div>
-                          <p className="text-lg font-semibold">{m?.name}</p>
+                          <p className="text-sm font-semibold">{m?.name}</p>
                           <span className="text-gray-500">{m?.title}</span>
                         </div>
                       </div>
