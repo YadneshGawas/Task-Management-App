@@ -25,9 +25,8 @@ const TaskDialog = ({ task }) => {
   const deleteHandler = () => {};
   const location = useLocation();
 
-  console.log("Project/Task ID=>",projectId);
   const isTasksPage = location.pathname.includes("/task");
-  console.log("=>",isTasksPage);
+
 
   const items = [
     {
@@ -36,14 +35,14 @@ const TaskDialog = ({ task }) => {
       onClick: () => 
         {
         if (user.isAdmin && isTasksPage) {
-          navigate('/task/:id', { state: { projectId } } );
+          navigate('/taskdetails', { state: { projectId } } );
         } 
         else if(user.isAdmin) {
           navigate('/projects/task', { state: { projectId } });
         }
         else
         {
-          navigate('/task/:id', { state: { projectId } } );
+          navigate('/taskdetails', { state: { projectId } } );
         }
       },
     },

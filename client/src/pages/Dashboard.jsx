@@ -15,6 +15,8 @@ import {
 import { FaNewspaper } from "react-icons/fa";
 import { LuClipboardEdit } from "react-icons/lu";
 import { FaArrowsToDot } from "react-icons/fa6";
+import { projects } from "../assets/data";
+import { tasks } from "../assets/data";
 
 const TaskTb = ({ user }) => { // Receive user as a prop
   //Icons references
@@ -134,20 +136,65 @@ const UserTb = () => {
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth); // Fetch user from Redux state
+  
+  const usrid = user._id;
+
+  const getTasks = (tasks) => {
+    const taskMatch = tasks.team.some(team => team._id === usrid);
+    console.log("taskMatch Obj=>",typeof(taskMatch));
+  }
+
+  const getComp = (projects) => {
+    const comp = projects.filter(pro => pro.stage === "completed");
+    console.log("Completed",comp.length);
+    return comp.length;
+  }
+
+  const inProg = (projects) => {
+    const comp = projects.filter(pro => pro.stage === "in progress");
+    console.log("In Progress",comp.length);
+    return comp.length;
+  }
+
+  const toDo = (projects) => {
+    const comp = projects.filter(pro => pro.stage === "todo");
+    console.log("To Do",comp.length);
+    return comp.length;
+  }
+
+
+  const getTComp = (tasks) => {
+    const comp = tasks.filter(pro => pro.stage === "completed");
+    console.log("Completed",comp.length);
+    return comp.length;
+  }
+
+  const inTProg = (tasks) => {
+    const comp = tasks.filter(pro => pro.stage === "in progress");
+    console.log("In Progress",comp.length);
+    return comp.length;
+  }
+
+  const toTDo = (tasks) => {
+    const comp = tasks.filter(pro => pro.stage === "todo");
+    console.log("To Do",comp.length);
+    return comp.length;
+  }
+
 
   const stats = [
     {
       _id: "1",
-      label: "TOTAL TASK",
-      total: 7,
+      label: user.isAdmin ? "TOTAL PROJECTS":"TOTAL TASK",
+      total: user.isAdmin ? projects.length : tasks.length,
       icon: <FaNewspaper />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 67,
     },
     {
       _id: "2",
-      label: "COMPLTED TASK",
-      total: 5,
+      label: user.isAdmin ? "COMPLETED PROJECTS":"COMPLTED TASK",
+      total: user.isAdmin ? getComp(projects): getTComp(tasks),
       icon: <MdAdminPanelSettings />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 53,
@@ -155,7 +202,7 @@ const Dashboard = () => {
     {
       _id: "3",
       label: "IN PROGRESS ",
-      total: 1,
+      total: user.isAdmin ? inProg(projects): inTProg(tasks),
       icon: <LuClipboardEdit />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 41,
@@ -163,7 +210,7 @@ const Dashboard = () => {
     {
       _id: "4",
       label: "TODOS",
-      total: 1,
+      total: user.isAdmin ? toDo(projects): toTDo(tasks),
       icon: <FaArrowsToDot />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 47,
@@ -180,10 +227,6 @@ const Dashboard = () => {
         <div className="h-full flex flex-1 flex-col justify-between">
           <p className="text-base text-gray-600">{label}</p>
           <span className="text-2xl font-semibold">{count}</span>
-          <span className="text-sm text-gray-400">
-            {lst}
-            {" last month"}
-          </span>
         </div>
 
         <div

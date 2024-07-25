@@ -8,6 +8,7 @@ import Loading from "../other/Loader";
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
+import { useSelector } from "react-redux";
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -16,9 +17,9 @@ const TASK_TYPE = {
 };
 
 const Tasks = () => {
+
+  const {user} =useSelector((state)=>state.auth);
   
-  const [selected, setSelected] = useState(0);
-  const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
     
@@ -45,11 +46,17 @@ const Tasks = () => {
     });
   };
 
+  const usrid = user._id;
+  //First display only the tasks which belong to that user
+  //Pass that object for another filtration
+
   const filteredTasks = tasks.filter((task) => {
     const priorityMatch = filters.priority === "all" || task.priority === filters.priority;
     const stageMatch = filters.stage === "all" || task.stage === filters.stage;
-    return priorityMatch && stageMatch;
+    const taskMatch = task.team.some(team => team._id === usrid);
+    return priorityMatch && stageMatch && taskMatch;
   });
+
 
   return loading ? (
     <div className='py-10'>
@@ -59,6 +66,8 @@ const Tasks = () => {
     <div className='w-full'>
       <div className='flex items-center justify-between mb-4'>
         <Title title={status ? `${status} Tasks` : "Tasks"} />
+        <div><p>User ID:{user._id}</p></div>
+        {/* <div><p>Task ID:{tasks?.team?._id}</p></div> */}
 
         {!status && (
           <Button

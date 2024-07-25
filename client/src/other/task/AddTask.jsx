@@ -23,7 +23,6 @@ const AddTask = ({ proj, open, setOpen }) => {
   const location = useLocation();
 
   const id = proj?._id;
-  console.log(id);
 
   const getTitle = () => {
     const isTasksPage = location.pathname.includes("/task");

@@ -50,11 +50,9 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/test" element={<Testing />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/completed/:status" element={<Tasks />} />
-          <Route path="/in-progress/:status" element={<Tasks />} />
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
-          <Route path="/task/:id" element={<TaskDetails />} />
+          <Route path="/taskdetails" element={<TaskDetails />} />
           <Route path="/projects/task" element={<AdminTasks />} />
         </Route>
         <Route path="/log-in" element={<Login />} />

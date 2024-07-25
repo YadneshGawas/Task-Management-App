@@ -141,7 +141,7 @@ export const summary = {
 export const projects = [
   {
     _id: "65d5f12ab5204a81bde866b1",//Project 1
-    title: "Project1",
+    title: "Project 1",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
     stage: "todo",
@@ -188,10 +188,51 @@ export const projects = [
   },
   {
     _id: "65d5f12ab5204a81bde866b2",//Project 2
-    title: "Project2",
+    title: "Project 2",
     date: "2024-07-18T00:00:00.000Z",
     priority: "medium",
-    stage: "todo",
+    stage: "completed",
+    assets: [],
+    tasks: [
+      {
+        _id: "65c5f12ab5204a81bde866c2",//Task 3
+      },
+      {
+        _id: "65c5f12ab5204a81bde866a5",//Task 4
+      },
+    ],
+    team: [
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Yadnesh",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+      {
+        _id: "65c30b96e639681a13def0b5",
+        name: "Person2",
+        title: "User",
+        email: "user@example.com",
+      },
+      {
+        _id: "65c202d4aa62f32ffd1303cc",
+        name: "Person3",
+        title: "Administrator",
+        email: "admin@gmail.com",
+      },
+    ],
+    isTrashed: false,
+    activities: [],
+    createdAt: "2024-07-19T09:32:26.574Z",
+    updatedAt: "2024-07-19T09:36:53.339Z",
+    __v: 1,
+  },
+  {
+    _id: "65d5f12ab5204a81bde866c5",//Project 3
+    title: "Project 3",
+    date: "2024-07-18T00:00:00.000Z",
+    priority: "medium",
+    stage: "in progress",
     assets: [],
     tasks: [
       {
@@ -316,8 +357,8 @@ export const tasks = [
     assets: [],
     team: [
       {
-        _id: "65c202d4aa62f32ffd1303cc",
-        name: "Person3",
+        _id: "662f32ffd1303cc",
+        name: "Yadnesh Gawas",
         title: "Administrator",
         email: "admin@gmail.com",
       },
@@ -389,7 +430,7 @@ export const user = {
   title: "Administrator",
   role: "Admin",
   email: "yadnesh@gmail.com",
-  isAdmin: true,
+  isAdmin: false,
   tasks: [],
   createdAt: "2024-07-18T09:58:44.794Z",
   updatedAt: "2024-07-18T06:13:26.757Z",
