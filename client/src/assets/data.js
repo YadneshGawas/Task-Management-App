@@ -235,6 +235,7 @@ export const tasks = [
     pid: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Task 1",
     date: "2024-07-18T00:00:00.000Z",
+    desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
     priority: "medium",
     stage: "todo",
     assets: [],

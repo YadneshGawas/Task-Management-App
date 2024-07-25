@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Tab } from "@headlessui/react";
 
 function classNames(...classes) {

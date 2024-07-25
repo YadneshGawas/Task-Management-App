@@ -25,6 +25,9 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { compose } from "redux";
 import Title from "../other/Title";
+import { IoMdAdd } from 'react-icons/io';
+import AddSubTask from "../other/task/AddSubTask";
+
 
 const assets = [];
 
@@ -42,7 +45,7 @@ const bgColor = {
 
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
-  { title: "Activities/Timeline", icon: <RxActivityLog /> },
+  { title: "Timeline", icon: <RxActivityLog /> },
 ];
 
 const TASKTYPEICON = {
@@ -91,20 +94,52 @@ const TaskDetails = () => {
   const location = useLocation();
   const { projectId } = location.state || {};
   const [selected, setSelected] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const taskid = projectId;
 
-  const task = tasks.find(task => task._id === taskid);
+  const task = tasks.find((task) => task._id === taskid);
+  
+  console.log("Desc=>",task?.desc.length);
 
-  return (
+  const getDesc = () =>{
+  if(task?.desc.length > 0)
+  {
+    return task?.desc;
+  }
+  else
+  {
+    return "No description"
+  }
+};
+
+  return loading ? (
+    <div className="py-10">
+      <Loading/>
+    </div>
+  ) : (
     <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden text-sm">
-      <Title title={task?.title}/>
+
+      <div className="flex items-center justify-between mb-4">
+        <Title title={task?.title} />
+
+        <Button
+          onClick={() => setOpen(true)}
+          label="Add Sub Task"
+          icon={<IoMdAdd className="text-lg" />}
+          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+        />
+
+      </div>
+
+      <div><p>Task ID:{taskid}</p></div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
-            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-4 overflow-y-auto">
+            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 overflow-y-auto">
               {/* LEFT */}
-              <div className="w-full md:w-1/2 space-y-2">
+              <div className="w-full md:w-1/2 space-y-1">
                 <div className="flex items-center gap-5">
                   <div
                     className={clsx(
@@ -124,7 +159,9 @@ const TaskDetails = () => {
                         TASK_TYPE[task.stage]
                       )}
                     />
-                    <span className="text-black uppercase text-sm">{task?.stage}</span>
+                    <span className="text-black uppercase text-sm">
+                      {task?.stage}
+                    </span>
                   </div>
                 </div>
 
@@ -138,19 +175,29 @@ const TaskDetails = () => {
                     <span>{task?.assets?.length}</span>
                   </div>
 
-                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-400">&nbsp;|&nbsp;</span>
 
                   <div className="space-x-2">
                     <span className="font-semibold">Sub-Task :</span>
                     <span>{task?.subTasks?.length}</span>
                   </div>
                 </div>
-                
-                <diV className="flex justify-start items-center">
-                <div className="text-lg text-gray-600"><p>Description</p></div>
-                </diV>
 
-                <div className="space-y-4 py-6">
+                <div className="space-y-1 pb-5">
+                  <div className="flex justify-start items-center pt-3 pb-1">
+                    <div className="text-gray-600 font-semibold test-sm">
+                      <p>DESCRIPTION</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-0 p-2 border-y border-gray-200">
+                    <div className=" text-gray-600">
+                      <p>{getDesc()}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 py-1">
                   <p className="text-gray-600 font-semibold test-sm">
                     TASK TEAM
                   </p>
@@ -179,7 +226,7 @@ const TaskDetails = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4 py-6">
+                <div className="space-y-4 py-1">
                   <p className="text-gray-500 font-semibold text-sm">
                     SUB-TASKS
                   </p>
@@ -227,10 +274,11 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} id={id} />
+            <Activities activity={task?.activities} id={taskid} />
           </>
         )}
       </Tabs>
+      <AddSubTask open={open} setOpen={setOpen}/>
     </div>
   );
 };
