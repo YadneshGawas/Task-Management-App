@@ -24,7 +24,7 @@ const UserList = ({ setTeam, team }) => {
   const location = useLocation();
 
   const getAssignTo = () => {
-    const isTasksPage = location.pathname.includes("/tasks");
+    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage) {
       return "Assign Task To";
     }

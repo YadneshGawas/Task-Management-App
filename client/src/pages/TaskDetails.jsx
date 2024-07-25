@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import clsx from "clsx";
@@ -25,9 +26,9 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { compose } from "redux";
 import Title from "../other/Title";
-import { IoMdAdd } from 'react-icons/io';
+import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "../other/task/AddSubTask";
-
+import { useSelector } from 'react-redux';
 
 const assets = [];
 
@@ -74,7 +75,7 @@ const TASKTYPEICON = {
       <MdOutlineDoneAll size={24} />
     </div>
   ),
-  "in progress": (
+  working: (
     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
       <GrInProgress size={16} />
     </div>
@@ -84,7 +85,7 @@ const TASKTYPEICON = {
 const act_types = [
   "Started",
   "Completed",
-  "In Progress",
+  "Working",
   "Commented",
   "Bug",
   "Assigned",
@@ -95,32 +96,49 @@ const TaskDetails = () => {
   const { projectId } = location.state || {};
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const taskid = projectId;
 
-  const task = tasks.find((task) => task._id === taskid);
-  
-  console.log("Desc=>",task?.desc.length);
+  const { user } = useSelector((state) => state.auth);
 
-  const getDesc = () =>{
-  if(task?.desc.length > 0)
-  {
-    return task?.desc;
-  }
-  else
-  {
-    return "No description"
-  }
-};
+  const task = tasks.find((task) => task._id === taskid);
+
+  console.log("Desc=>", task?.desc.length);
+
+  const descStat = (task?.desc.length > 0);
+
+  console.log("descStat=>",descStat)
+
+  const getDesc = () => {
+    if (descStat) {
+      return task?.desc;
+    } else {
+      return "No description";
+    }
+  };
+
+  const getLabel = () => {
+    if (descStat) {
+      return "Update";
+    } else {
+      return "Submit";
+    }
+  };
+
+  const printStat = () => {
+    console.log("Updated Description!!!")
+  };
+  
+  console.log("Status=>",user.isAdmin);
 
   return loading ? (
     <div className="py-10">
-      <Loading/>
+      <Loading />
     </div>
   ) : (
-    <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden text-sm">
-
-      <div className="flex items-center justify-between mb-4">
+    <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
+      <div className="flex items-center justify-between">
         <Title title={task?.title} />
 
         <Button
@@ -129,10 +147,11 @@ const TaskDetails = () => {
           icon={<IoMdAdd className="text-lg" />}
           className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
         />
-
       </div>
 
-      <div><p>Task ID:{taskid}</p></div>
+      <div>
+        <p>Task ID:{taskid}</p>
+      </div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
@@ -183,7 +202,7 @@ const TaskDetails = () => {
                   </div>
                 </div>
 
-                <div className="space-y-1 pb-5">
+                {/* <div className="space-y-1 pb-5">
                   <div className="flex justify-start items-center pt-3 pb-1">
                     <div className="text-gray-600 font-semibold test-sm">
                       <p>DESCRIPTION</p>
@@ -195,6 +214,28 @@ const TaskDetails = () => {
                       <p>{getDesc()}</p>
                     </div>
                   </div>
+                </div> */}
+
+                <div className="w-full flex flex-wrap">
+                  <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
+                    <p>DESCRIPTION</p>
+                  </div>
+                  <textarea
+                    rows={10}
+                    value={getDesc()}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Type ......"
+                    className="bg-white w-full mb-3 border border-gray-300 outline-none p-4 rounded-md focus:ring-2 ring-blue-500"
+                  ></textarea>
+                  {
+                    user.isAdmin &&
+                    <Button //Visible only if admin
+                    type="button"
+                    label={getLabel()}
+                    onClick={printStat}//set up the button to add the description to the db
+                    className="bg-blue-600 text-white rounded mb-3"
+                  />
+                  }
                 </div>
 
                 <div className="space-y-4 py-1">
@@ -278,7 +319,7 @@ const TaskDetails = () => {
           </>
         )}
       </Tabs>
-      <AddSubTask open={open} setOpen={setOpen}/>
+      <AddSubTask open={open} setOpen={setOpen} />
     </div>
   );
 };

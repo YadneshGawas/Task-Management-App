@@ -26,7 +26,7 @@ const AddTask = ({ proj, open, setOpen }) => {
   console.log(id);
 
   const getTitle = () => {
-    const isTasksPage = location.pathname.includes("/tasks");
+    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage) {
       return "ADD TASK";
     }
@@ -34,7 +34,7 @@ const AddTask = ({ proj, open, setOpen }) => {
   };
 
   const getPlaceholder = () => {
-    const isTasksPage = location.pathname.includes("/tasks");
+    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage) {
       return "Task Name";
     }
@@ -42,7 +42,7 @@ const AddTask = ({ proj, open, setOpen }) => {
   };
 
   const getDate = () => {
-    const isTasksPage = location.pathname.includes("/tasks");
+    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage) {
       return "Task Created On";
     }
@@ -50,7 +50,7 @@ const AddTask = ({ proj, open, setOpen }) => {
   };
 
   const getStage = () => {
-    const isTasksPage = location.pathname.includes("/tasks");
+    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage) {
       return "Task Stage";
     }

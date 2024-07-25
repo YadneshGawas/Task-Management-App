@@ -224,7 +224,7 @@ export const projects = [
     isTrashed: false,
     activities: [],
     createdAt: "2024-07-19T09:32:26.574Z",
-    updatedAt: "2024-02-19T09:36:53.339Z",
+    updatedAt: "2024-07-19T09:36:53.339Z",
     __v: 1,
   },
 ];
@@ -264,7 +264,7 @@ export const tasks = [
       },
     ],
     createdAt: "2024-07-18T09:32:26.574Z",
-    updatedAt: "2024-02-18T09:36:53.339Z",
+    updatedAt: "2024-07-18T09:36:53.339Z",
     __v: 1,
   },
   {
@@ -272,6 +272,7 @@ export const tasks = [
     pid: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Task 2",
     date: "2024-07-18T00:00:00.000Z",
+    desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
     priority: "medium",
     stage: "todo",
     assets: [],
@@ -300,7 +301,7 @@ export const tasks = [
       },
     ],
     createdAt: "2024-07-18T09:32:26.574Z",
-    updatedAt: "2024-02-18T09:36:53.339Z",
+    updatedAt: "2024-07-18T09:36:53.339Z",
     __v: 1,
   },
   {
@@ -308,6 +309,8 @@ export const tasks = [
     pid: "65d5f12ab5204a81bde866b2",//Project 2
     title: "Task 3",
     date: "2024-07-18T00:00:00.000Z",
+    desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
+    
     priority: "medium",
     stage: "todo",
     assets: [],
@@ -336,7 +339,7 @@ export const tasks = [
       },
     ],
     createdAt: "2024-07-18T09:32:26.574Z",
-    updatedAt: "2024-02-18T09:36:53.339Z",
+    updatedAt: "2024-07-18T09:36:53.339Z",
     __v: 1,
   },
   {
@@ -344,6 +347,8 @@ export const tasks = [
     pid: "65d5f12ab5204a81bde866b2",//Project 2
     title: "Task 4",
     date: "2024-07-18T00:00:00.000Z",
+    desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
+    
     priority: "medium",
     stage: "todo",
     assets: [],
@@ -372,7 +377,7 @@ export const tasks = [
       },
     ],
     createdAt: "2024-07-18T09:32:26.574Z",
-    updatedAt: "2024-02-18T09:36:53.339Z",
+    updatedAt: "2024-07-18T09:36:53.339Z",
     __v: 1,
   },
 ];
