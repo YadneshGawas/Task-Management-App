@@ -167,7 +167,7 @@ export const allusers = [
     createdAt: "2024-07-18T09:38:07.765Z",
   },
   {
-    _id: "65c30b96e639681a13def0b5",
+    _id: "65c30b96e639681a13def0b1",
     name: "Person 4",
     title: "User",
     email: "p3@gmail.com",
@@ -182,7 +182,7 @@ export const projects = [
     _id: "65d5f12ab5204a81bde866b1",//Project 1
     title: "Project 1",
     date: "2024-07-18T00:00:00.000Z",
-    priority: "medium",
+    priority: "high",
     stage: "todo",
     assets: [],
     tasks: [
@@ -270,7 +270,7 @@ export const projects = [
     _id: "65d5f12ab5204a81bde866c5",//Project 3
     title: "Project 3",
     date: "2024-07-18T00:00:00.000Z",
-    priority: "medium",
+    priority: "low",
     stage: "in progress",
     assets: [],
     tasks: [
@@ -316,7 +316,7 @@ export const tasks = [
     title: "Task 1",
     date: "2024-07-18T00:00:00.000Z",
     desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
-    priority: "medium",
+    priority: "low",
     stage: "todo",
     assets: [],
     team: [
@@ -337,9 +337,15 @@ export const tasks = [
     activities: [],
     subTasks: [
       {
-        title: "Tasks",
+        title: "Hello World",
         date: "2024-07-18T00:00:00.000Z",
         tag: "testing",
+        _id: "65c5f153b5204a81bde866c7",
+      },
+      {
+        title: "Bye World",
+        date: "2024-07-18T00:00:00.000Z",
+        tag: "completed",
         _id: "65c5f153b5204a81bde866c7",
       },
     ],
@@ -364,7 +370,7 @@ export const tasks = [
         email: "admin@gmail.com",
       },
       {
-        _id: "65c30b96e639681a13def0b5",
+        _id: "65c30b96e639681a13def",
         name: "Person4",
         title: "User",
         email: "user@example.com",
@@ -402,7 +408,7 @@ export const tasks = [
         email: "admin@gmail.com",
       },
       {
-        _id: "65c30b96e639681a13def0b5",
+        _id: "65c30b96e639681a13def0d2",
         name: "Person4",
         title: "User",
         email: "user@example.com",
@@ -469,7 +475,7 @@ export const user = {
   title: "Administrator",
   role: "Admin",
   email: "yadnesh@gmail.com",
-  isAdmin: true ,
+  isAdmin: true,
   tasks: [],
   createdAt: "2024-07-18T09:58:44.794Z",
   updatedAt: "2024-07-18T06:13:26.757Z",

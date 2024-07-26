@@ -68,7 +68,7 @@ const TaskTb = ({ user, tsk }) => {
           <span className={clsx("text-lg", PRIOTITYSTYELS[task.priority])}>
             {icons["high"]}
           </span>
-          <span className="capitalize">HIGH</span>
+          <span className="capitalize">{task.priority}</span>
         </div>
       </td>
 
@@ -104,7 +104,7 @@ const TaskTb = ({ user, tsk }) => {
   );
 };
 
-const UserTb = ({ user, tsk, mems }) => {
+const UserTb = ({ user, mems }) => {
   // Table header part
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
@@ -152,7 +152,7 @@ const UserTb = ({ user, tsk, mems }) => {
 };
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth); // Fetch user from Redux state
+  const { user } = useSelector((state) => state.auth); 
 
   //Dashboard Admin Logic
   const getComp = (projects) => {
@@ -181,12 +181,6 @@ const Dashboard = () => {
     return taskMatch;
   });
 
-  console.log(usrTsk);
-
-  // const mems = usrTsk.flatMap((task) =>
-  //   task.team.map((member) => member.name)
-  // );
-  //const mems = usrTsk.flatMap((task) => task.team);
   let mems;
 
   if (user.isAdmin) {
@@ -194,6 +188,17 @@ const Dashboard = () => {
   } else {
     mems = usrTsk.flatMap((task) => task.team);
   }
+
+  console.log(mems);
+
+  const uniqueArray = Object.values(
+    mems.reduce((acc, obj) => {
+      acc[obj._id] = obj;
+      return acc;
+    }, {})
+  );
+  
+  mems = uniqueArray;
 
   const getTComp = usrTsk.filter((tsk) => tsk.stage === "completed");
   const getTTodo = usrTsk.filter((tsk) => tsk.stage === "todo");

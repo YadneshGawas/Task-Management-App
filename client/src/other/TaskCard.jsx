@@ -10,9 +10,10 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../assets/index";
+import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate, BGSTYLES } from "../assets/index";
 import TaskDialog from "../other/task/TaskDialog";
 import UserInfo from "../other/UserInfo";
+import StatusBar from "./StatusBar";
 import { useSelector } from "react-redux";
 
 const ICONS = {
@@ -39,7 +40,7 @@ const TaskCard = ({ task }) => {
     <>
       <div>
         <div className="w-full h-fit bg-white shadow-md rounded-xl">
-          <div className="w-full bg-yellow-200 py-2 rounded-t-xl"></div>
+          <div className={clsx("w-full py-2 rounded-t-xl",BGSTYLES[task?.priority])}></div>
           <div className="pt-1 px-4 pb-4">
             <div className="w-full flex justify-between">
               <div
@@ -103,7 +104,7 @@ const TaskCard = ({ task }) => {
             </div>
 
             {/* sub tasks */}
-            {task?.subTasks?.length > 0 ? (
+            {/* {task?.subTasks?.length > 0 ? (
               <div className="py-2 border-t border-gray-200">
                 <h5 className="text-base line-clamp-1 text-black">
                   {task?.subTasks[0].title}
@@ -113,7 +114,7 @@ const TaskCard = ({ task }) => {
                   <span className="text-sm text-gray-600">
                     {formatDate(new Date(task?.subTasks[0]?.date))}
                   </span>
-                  <span className="bg-blue-600/10 px-3 py-1 rounded0full text-blue-700 font-medium">
+                  <span className="bg-blue-600/10 px-3 py-1 rounded-full text-blue-700 font-medium">
                     {task?.subTasks[0].tag}
                   </span>
                 </div>
@@ -126,7 +127,7 @@ const TaskCard = ({ task }) => {
                   </span>
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>
