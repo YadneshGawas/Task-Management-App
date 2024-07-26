@@ -17,6 +17,7 @@ import { LuClipboardEdit } from "react-icons/lu";
 import { FaArrowsToDot } from "react-icons/fa6";
 import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
+import { allusers } from "../assets/data";
 import { GrCatalog } from "react-icons/gr";
 import { getInitials } from "./../assets/index";
 
@@ -185,9 +186,14 @@ const Dashboard = () => {
   // const mems = usrTsk.flatMap((task) =>
   //   task.team.map((member) => member.name)
   // );
+  //const mems = usrTsk.flatMap((task) => task.team);
+  let mems;
 
-  const mems = usrTsk.flatMap(task => task.team);
-  console.log(typeof(mems));
+  if (user.isAdmin) {
+    mems = allusers;
+  } else {
+    mems = usrTsk.flatMap((task) => task.team);
+  }
 
   const getTComp = usrTsk.filter((tsk) => tsk.stage === "completed");
   const getTTodo = usrTsk.filter((tsk) => tsk.stage === "todo");
@@ -270,7 +276,7 @@ const Dashboard = () => {
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
         <TaskTb user={user} tsk={usrTsk} />{" "}
         {/* Pass user as a prop to TaskTb */}
-        <UserTb user={user} tsk={usrTsk}  mems={mems} />
+        <UserTb user={user} tsk={usrTsk} mems={mems} />
       </div>
     </div>
   );

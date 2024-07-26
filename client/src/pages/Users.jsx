@@ -6,6 +6,7 @@ import { getInitials } from './../assets/index';
 import Button from './../other/Button';
 import Title from './../other/Title';
 import { summary } from './../assets/data';
+import { allusers } from "./../assets/data";
 import AddUser from './../other/AddUser';
 import ConfirmatioDialog, { UserAction } from './../other/Dialogs';
 import { clsx } from 'clsx';
@@ -107,7 +108,7 @@ const Users = () => {
             <table className='w-full mb-5'>
               <TableHeader />
               <tbody>
-                {summary.users?.map((user, index) => (
+                {allusers?.map((user, index) => (
                   <TableRow key={index} user={user} />
                 ))}
               </tbody>

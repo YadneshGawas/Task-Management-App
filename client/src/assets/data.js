@@ -138,6 +138,45 @@ export const summary = {
   },
 };
 
+export const allusers = [
+  {
+    _id: "662f32ffd1303cc",
+    name: "Yadnesh",
+    title: "Administartor",
+    email: "admin@gmail.com",
+    role: "Dev",
+    isActive: true,
+    createdAt: "2024-07-18T09:38:07.765Z",
+  },
+  {
+    _id: "65c30b96e639681a13def0b5",
+    name: "Person 2",
+    title: "User",
+    email: "user@example.com",
+    role: "Dev",
+    isActive: true,
+    createdAt: "2024-07-18T09:38:07.765Z",
+  },
+  {
+    _id: "65c202d4aa62f32ffd1303cc",
+    name: "Person 3",
+    title: "User",
+    email: "user@gmail.com",
+    role: "Dev",
+    isActive: true,
+    createdAt: "2024-07-18T09:38:07.765Z",
+  },
+  {
+    _id: "65c30b96e639681a13def0b5",
+    name: "Person 4",
+    title: "User",
+    email: "p3@gmail.com",
+    role: "Dev",
+    isActive: true,
+    createdAt: "2024-07-18T09:38:07.765Z",
+  },
+];
+
 export const projects = [
   {
     _id: "65d5f12ab5204a81bde866b1",//Project 1
@@ -430,7 +469,7 @@ export const user = {
   title: "Administrator",
   role: "Admin",
   email: "yadnesh@gmail.com",
-  isAdmin: false,
+  isAdmin: true ,
   tasks: [],
   createdAt: "2024-07-18T09:58:44.794Z",
   updatedAt: "2024-07-18T06:13:26.757Z",
