@@ -17,8 +17,11 @@ import { LuClipboardEdit } from "react-icons/lu";
 import { FaArrowsToDot } from "react-icons/fa6";
 import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
+import { GrCatalog } from "react-icons/gr";
+import { getInitials } from "./../assets/index";
 
-const TaskTb = ({ user }) => { // Receive user as a prop
+const TaskTb = ({ user, tsk }) => {
+  // Receive user as a prop
   //Icons references
   const icons = {
     high: <MdKeyboardDoubleArrowUp />,
@@ -42,18 +45,26 @@ const TaskTb = ({ user }) => { // Receive user as a prop
     </thead>
   );
 
-  const TbRow = () => (
+  //Format date function
+  const formatDate = (dateString) => {
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  };
+
+  const TbRow = ({ task }) => (
     <tr className="border-b border-gray-300 text-gray-600">
       <td className="py-2">
         <div className="flex items-center gap-2">
-          <div className={clsx("w-4 h-4 rounded-full", TASK_TYPE["completed"])} />
-          <p className="text-base text-black">Project1</p>
+          <div
+            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
+          />
+          <p className="text-base text-black">{task.title}</p>
         </div>
       </td>
 
       <td className="py-2">
         <div className="flex items-center justify-start gap-2">
-          <span className={clsx("text-lg", PRIOTITYSTYELS["high"])}>
+          <span className={clsx("text-lg", PRIOTITYSTYELS[task.priority])}>
             {icons["high"]}
           </span>
           <span className="capitalize">HIGH</span>
@@ -70,7 +81,7 @@ const TaskTb = ({ user }) => { // Receive user as a prop
 
       <td className="py-2 pl-7">
         <div className="flex items-center justify-start">
-          <p>10-Jul-24</p>
+          <p>{formatDate(task.createdAt)}</p>
         </div>
       </td>
     </tr>
@@ -82,7 +93,9 @@ const TaskTb = ({ user }) => { // Receive user as a prop
         <table className="w-full">
           <TbHeader />
           <tbody>
-            <TbRow />
+            {tsk.map((task, index) => (
+              <TbRow key={index} task={task} />
+            ))}
           </tbody>
         </table>
       </div>
@@ -90,29 +103,30 @@ const TaskTb = ({ user }) => { // Receive user as a prop
   );
 };
 
-const UserTb = () => {
+const UserTb = ({ user, tsk, mems }) => {
   // Table header part
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
       <tr className="text-black  text-left">
-        <th className="py-2">Full Name</th>
+        <th className="py-2">{user.isAdmin ? "Full Name" : "Team Members"}</th>
         <th className="py-2">Status</th>
         <th className="py-2">Created At</th>
       </tr>
     </thead>
   );
+
   // Table row part
-  const TbRow = () => (
+  const TbRow = ({ func }) => (
     <tr className="border-b border-gray-200  text-gray-600">
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
-            <span className="text-center">YG</span>
+            <span className="text-center">NA</span>
           </div>
 
           <div>
-            <p>Yadnesh</p>
-            <span className="text-xs text-black">Admin</span>
+            <p>{func.name}</p>
+            <span className="text-xs text-black">{func.title}</span>
           </div>
         </div>
       </td>
@@ -127,7 +141,9 @@ const UserTb = () => {
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
-          <TbRow />
+          {mems.map((mem, index) => (
+            <TbRow key={index} func={mem} />
+          ))}
         </tbody>
       </table>
     </div>
@@ -136,65 +152,60 @@ const UserTb = () => {
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth); // Fetch user from Redux state
-  
-  const usrid = user._id;
 
-  const getTasks = (tasks) => {
-    const taskMatch = tasks.team.some(team => team._id === usrid);
-    console.log("taskMatch Obj=>",typeof(taskMatch));
-  }
-
+  //Dashboard Admin Logic
   const getComp = (projects) => {
-    const comp = projects.filter(pro => pro.stage === "completed");
-    console.log("Completed",comp.length);
+    const comp = projects.filter((pro) => pro.stage === "completed");
+    //console.log("Completed",comp.length);
     return comp.length;
-  }
+  };
 
   const inProg = (projects) => {
-    const comp = projects.filter(pro => pro.stage === "in progress");
-    console.log("In Progress",comp.length);
+    const comp = projects.filter((pro) => pro.stage === "in progress");
+    //console.log("In Progress",comp.length);
     return comp.length;
-  }
+  };
 
   const toDo = (projects) => {
-    const comp = projects.filter(pro => pro.stage === "todo");
-    console.log("To Do",comp.length);
+    const comp = projects.filter((pro) => pro.stage === "todo");
+    //console.log("To Do",comp.length);
     return comp.length;
-  }
+  };
 
+  //Dashboard User Logic
+  const usrid = user._id;
 
-  const getTComp = (tasks) => {
-    const comp = tasks.filter(pro => pro.stage === "completed");
-    console.log("Completed",comp.length);
-    return comp.length;
-  }
+  const usrTsk = tasks.filter((task) => {
+    const taskMatch = task.team.some((team) => team._id === usrid);
+    return taskMatch;
+  });
 
-  const inTProg = (tasks) => {
-    const comp = tasks.filter(pro => pro.stage === "in progress");
-    console.log("In Progress",comp.length);
-    return comp.length;
-  }
+  console.log(usrTsk);
 
-  const toTDo = (tasks) => {
-    const comp = tasks.filter(pro => pro.stage === "todo");
-    console.log("To Do",comp.length);
-    return comp.length;
-  }
+  // const mems = usrTsk.flatMap((task) =>
+  //   task.team.map((member) => member.name)
+  // );
 
+  const mems = usrTsk.flatMap(task => task.team);
+  console.log(typeof(mems));
+
+  const getTComp = usrTsk.filter((tsk) => tsk.stage === "completed");
+  const getTTodo = usrTsk.filter((tsk) => tsk.stage === "todo");
+  const getTinProg = usrTsk.filter((tsk) => tsk.stage === "in progress");
 
   const stats = [
     {
       _id: "1",
-      label: user.isAdmin ? "TOTAL PROJECTS":"TOTAL TASK",
-      total: user.isAdmin ? projects.length : tasks.length,
+      label: user.isAdmin ? "TOTAL PROJECTS" : "TOTAL TASK",
+      total: user.isAdmin ? projects.length : usrTsk.length,
       icon: <FaNewspaper />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 67,
     },
     {
       _id: "2",
-      label: user.isAdmin ? "COMPLETED PROJECTS":"COMPLTED TASK",
-      total: user.isAdmin ? getComp(projects): getTComp(tasks),
+      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLTED TASK",
+      total: user.isAdmin ? getComp(projects) : getTComp.length,
       icon: <MdAdminPanelSettings />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 53,
@@ -202,7 +213,7 @@ const Dashboard = () => {
     {
       _id: "3",
       label: "IN PROGRESS ",
-      total: user.isAdmin ? inProg(projects): inTProg(tasks),
+      total: user.isAdmin ? inProg(projects) : getTinProg.length,
       icon: <LuClipboardEdit />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 41,
@@ -210,7 +221,7 @@ const Dashboard = () => {
     {
       _id: "4",
       label: "TODOS",
-      total: user.isAdmin ? toDo(projects): toTDo(tasks),
+      total: user.isAdmin ? toDo(projects) : getTTodo.length,
       icon: <FaArrowsToDot />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 47,
@@ -245,13 +256,21 @@ const Dashboard = () => {
     <div className="h-full py-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
         {stats.map(({ icon, bg, label, total, lstm }, index) => (
-          <Card key={index} icon={icon} bg={bg} label={label} count={total} lst={lstm} />
+          <Card
+            key={index}
+            icon={icon}
+            bg={bg}
+            label={label}
+            count={total}
+            lst={lstm}
+          />
         ))}
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTb user={user} /> {/* Pass user as a prop to TaskTb */}
-        <UserTb />
+        <TaskTb user={user} tsk={usrTsk} />{" "}
+        {/* Pass user as a prop to TaskTb */}
+        <UserTb user={user} tsk={usrTsk}  mems={mems} />
       </div>
     </div>
   );

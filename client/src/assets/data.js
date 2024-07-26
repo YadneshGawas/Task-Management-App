@@ -315,7 +315,7 @@ export const tasks = [
     date: "2024-07-18T00:00:00.000Z",
     desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
     priority: "medium",
-    stage: "todo",
+    stage: "in progress",
     assets: [],
     team: [
       {
@@ -353,12 +353,12 @@ export const tasks = [
     desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
     
     priority: "medium",
-    stage: "todo",
+    stage: "completed",
     assets: [],
     team: [
       {
         _id: "662f32ffd1303cc",
-        name: "Yadnesh Gawas",
+        name: "Yadnesh",
         title: "Administrator",
         email: "admin@gmail.com",
       },
@@ -379,7 +379,7 @@ export const tasks = [
         _id: "65c5f153b5204a81bde866c9",
       },
     ],
-    createdAt: "2024-07-18T09:32:26.574Z",
+    createdAt: "2024-07-20T09:32:26.574Z",
     updatedAt: "2024-07-18T09:36:53.339Z",
     __v: 1,
   },
@@ -391,7 +391,7 @@ export const tasks = [
     desc: "This is task 2As the project nears completion, it's crucial to compile and finalize all project documentation. This includes gathering all reports, design documents, user manuals, and any other relevant materials. The goal is to ensure that all documentation is accurate, comprehensive, and easy to understand. This task involves proofreading, formatting, and organizing documents, as well as ensuring all team members have reviewed and approved the final versions. Proper documentation will aid in project handoff, future maintenance, and serve as a reference for similar projects in the future.",
     
     priority: "medium",
-    stage: "todo",
+    stage: "in progress",
     assets: [],
     team: [
       {
