@@ -5,6 +5,7 @@ import Button from "../other/Button";
 import Checkbox from "../other/Checkbox";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../redux/slice/api/authApi";
 
 const CreateAcc = () => {
 
@@ -17,16 +18,16 @@ const CreateAcc = () => {
     formState: { errors },
   } = useForm();
 
-  // const user = true";
-  // const navigate = useNavigate();
-  // useEffect(()=>{
-  //   user && Navigate("/dashboard");
-  // }, [user]);
+  const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
 
   const submitHandler = async(data) => {
-    console.log("submit successful");
-    console.log(data);
-    navigate("/log-in")
+    try {
+      await registerUser(data).unwrap(); // Call the register mutation and unwrap the response
+      console.log("Registration successful");
+      navigate("/log-in");
+    } catch (err) {
+      console.error("Failed to register: ", err); // Handle registration error
+    }
   };
 
   const [isChecked, setIsChecked] = useState(false);

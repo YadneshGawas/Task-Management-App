@@ -2,28 +2,20 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../redux/slice/api/authApi";
 import Button from "./../other/Button";
 import Textbox from "./../other/Textbox";
-import { useNavigate } from "react-router-dom";
-import { Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { setCredentials } from "../redux/slice/authS";
 
 const Login = () => {
-   
   const { user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  
-  //original fuctionality
-  // useEffect(()=>{
-  //   user && navigate("/dashboard");
-  // }, [user]);
 
-  //temporary login functionality
-  const login = () =>{
-    navigate("/dashboard")
-  }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -31,10 +23,22 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const [loginUser, { isLoading, isError, error }] = useLoginMutation();
+
   const submitHandler = async (data) => {
-    console.log("submit successful");
-    console.log(data);
+    try {
+      const res = await loginUser(data).unwrap(); // Call the login mutation and unwrap the response
+      dispatch(setCredentials(res));
+      navigate("/");
+      console.log("Login successful", res);
+    } catch (err) {
+      console.error("Failed to login: ", err); // Handle login error
+    }
   };
+
+  useEffect(() => {
+    user && navigate("/dashboard");
+  }, [user]);
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
@@ -98,7 +102,10 @@ const Login = () => {
               />
 
               <span className="ml-2 pb-1">
-                <a href="/forgot" className="hover:text-blue-700  hover:underline">
+                <a
+                  href="/forgot"
+                  className="hover:text-blue-700  hover:underline"
+                >
                   Forget Password
                 </a>
               </span>
@@ -106,7 +113,7 @@ const Login = () => {
               <Button
                 type="submit"
                 label="Log In"
-                onClick={login}
+                //onClick={login}
                 className="w-full h-10 bg-blue-400 text-white rounded-full"
               />
 

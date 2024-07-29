@@ -7,15 +7,15 @@ import TaskDetails from './pages/TaskDetails';
 import Tasks from './pages/Tasks';
 import Trash from './pages/Trash';
 import Users from './pages/Users';
-import CreateAcc from './pages/CreateAcc';
 import Sidebar from "./other/Sidebar";
 import Navbar from "./other/Navbar";
 import Projects from "./pages/Projects";
 import AdminTasks from './pages/AdminTasks';
 //import Projects from './pages/pro';
-import Testing from './pages/idpasscheck';
+//import Testing from './pages/idpasscheck';
 import ForgotPassword from "./pages/ForgotPassword";
 import AddPopup from "./other/AddPopup";
+import CreateAcc from './pages/CreateAcc';
 
 
 function Layout() {

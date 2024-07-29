@@ -1,0 +1,35 @@
+/* eslint-disable no-unused-vars */
+import dotenv from "dotenv";
+import express from "express";
+import dbConnection from "./components/index.js";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import { cors } from 'cors';
+
+dotenv.config();
+
+dbConnection();
+
+const PORT = process.env.PORT || 5000;
+
+const routes = "";
+
+const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:4555"],
+    method: ["GET","PUT","POST","DELETE"],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(morgan("dev"));
+// app.use("/api",routes);
+// app.use(notFound);
+// app.use(errHandler);
+
+app.listen(PORT, ()=> console.log('Listening on port',PORT));

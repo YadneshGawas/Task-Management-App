@@ -1,0 +1,124 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// User Model
+const userSchema = new Schema({
+  name: String,
+  title: String,
+  email: String,
+  role: String,
+  isActive: Boolean,
+  createdAt: Date,
+  updatedAt: Date,
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Task Model
+const taskSchema = new Schema({
+  pid: { type: Schema.Types.ObjectId, ref: 'Project' },
+  title: String,
+  date: Date,
+  desc: String,
+  priority: String,
+  stage: String,
+  assets: [String],
+  team: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  isTrashed: Boolean,
+  activities: [String],
+  subTasks: [
+    {
+      title: String,
+      date: Date,
+      tag: String,
+    },
+  ],
+  createdAt: Date,
+  updatedAt: Date,
+});
+
+const Task = mongoose.model('Task', taskSchema);
+
+// Project Model
+const projectSchema = new Schema({
+  title: String,
+  date: Date,
+  priority: String,
+  stage: String,
+  assets: [String],
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  team: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  isTrashed: Boolean,
+  activities: [String],
+  createdAt: Date,
+  updatedAt: Date,
+});
+
+const Project = mongoose.model('Project', projectSchema);
+
+// Summary Model
+const summarySchema = new Schema({
+  totalTasks: Number,
+  last10Task: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  tasks: {
+    todo: Number,
+    inProgress: Number,
+    completed: Number,
+  },
+});
+
+const Summary = mongoose.model('Summary', summarySchema);
+
+// Activities Model
+const activitySchema = new Schema({
+  type: String,
+  activity: String,
+  date: Date,
+  by: { type: Schema.Types.ObjectId, ref: 'User' },
+});
+
+const Activity = mongoose.model('Activity', activitySchema);
+
+// Current User Model
+const currentUserSchema = new Schema({
+  name: String,
+  title: String,
+  role: String,
+  email: String,
+  isAdmin: Boolean,
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  createdAt: Date,
+  updatedAt: Date,
+  isActive: Boolean,
+});
+
+const CurrentUser = mongoose.model('CurrentUser', currentUserSchema);
+
+// Exporting all models
+module.exports = {
+  User,
+  Task,
+  Project,
+  Summary,
+  Activity,
+  CurrentUser,
+};
+
+
+import mongoose, { Schema } from "mongoose";
+
+const noticeSchema = new Schema(
+  {
+    team: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    text: { type: String },
+    task: { type: Schema.Types.ObjectId, ref: "Task" },
+    notiType: { type: String, default: "alert", enum: ["alert", "message"] },
+    isRead: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  },
+  { timestamps: true }
+);
+
+const Notice = mongoose.model("Notice", noticeSchema);
+
+export default Notice;
