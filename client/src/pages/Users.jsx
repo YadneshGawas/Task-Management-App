@@ -38,7 +38,6 @@ const Users = () => {
         <th className='py-2'>Title</th>
         <th className='py-2'>Email</th>
         <th className='py-2'>Role</th>
-        <th className='py-2'>Active</th>
       </tr>
     </thead>
   );
@@ -60,17 +59,6 @@ const Users = () => {
       <td className='p-2'>{user.email || "user.emal.com"}</td>
       <td className='p-2'>{user.role}</td>
 
-      <td>
-        <button
-          // onClick={() => userStatusClick(user)}
-          className={clsx(
-            "w-fit px-4 py-1 rounded-full",
-            user?.isActive ? "bg-blue-200" : "bg-yellow-100"
-          )}
-        >
-          {user?.isActive ? "Active" : "Disabled"}
-        </button>
-      </td>
 
       <td className='p-2 flex gap-4 justify-end'>
         <Button

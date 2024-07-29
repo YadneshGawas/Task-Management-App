@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Dialog } from "@headlessui/react";
@@ -8,6 +8,8 @@ import Wrapper from './Wrapper';
 import Textbox from './Textbox';
 import Loading from './Loader';
 import Button from './Button';
+import AddPopup from "./AddPopup";
+import { useNavigate } from "react-router-dom";
 
 
 const AddUser = ({ open, setOpen, userData }) => {
@@ -17,13 +19,17 @@ const AddUser = ({ open, setOpen, userData }) => {
   const isLoading = false,
     isUpdating = false;
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const handleOnSubmit = () => {};
+  const handleOnSubmit = () => {
+    navigate("/add");
+  };
 
   return (
     <>
@@ -46,17 +52,6 @@ const AddUser = ({ open, setOpen, userData }) => {
                 required: "Full name is required!",
               })}
               error={errors.name ? errors.name.message : ""}
-            />
-            <Textbox
-              placeholder='Title'
-              type='text'
-              name='title'
-              label='Title'
-              className='w-full rounded'
-              register={register("title", {
-                required: "Title is required!",
-              })}
-              error={errors.title ? errors.title.message : ""}
             />
             <Textbox
               placeholder='Email Address'
@@ -103,7 +98,9 @@ const AddUser = ({ open, setOpen, userData }) => {
               />
             </div>
           )}
+          
         </form>
+        
       </Wrapper>
     </>
   );

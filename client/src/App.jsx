@@ -14,6 +14,8 @@ import Projects from "./pages/Projects";
 import AdminTasks from './pages/AdminTasks';
 //import Projects from './pages/pro';
 import Testing from './pages/idpasscheck';
+import ForgotPassword from "./pages/ForgotPassword";
+import AddPopup from "./other/AddPopup";
 
 
 function Layout() {
@@ -47,14 +49,15 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/create" />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add" element={<AddPopup />} />
           <Route path="/tasks" element={<Tasks />} />
-          <Route path="/test" element={<Testing />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
           <Route path="/taskdetails" element={<TaskDetails />} />
           <Route path="/projects/task" element={<AdminTasks />} />
         </Route>
+        <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />
       </Routes>

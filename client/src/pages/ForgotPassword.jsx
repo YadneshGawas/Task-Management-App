@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import Button from "./../other/Button";
-import Textbox from "./../other/Textbox";
 import { useNavigate } from "react-router-dom";
-import { Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import Button from "../other/Button";
+import FgPopup from "../other/FgPopup";
+import Textbox from "../other/Textbox";
 
-const Login = () => {
+const ForgotPassword = () => {
    
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [open,setOpen]= useState(false);
   
   //original fuctionality
   // useEffect(()=>{
@@ -57,10 +57,10 @@ const Login = () => {
           >
             <div className="">
               <p className="text-blue-400 text-3xl font-bold text-center">
-                Welcome back!
+                Forgot your password?
               </p>
               <p className="text-center text-base text-gray-700 ">
-                Login to continue.
+                We made it easy to get you back in
               </p>
             </div>
             <div className="flex flex-col gap-y-5">
@@ -75,53 +75,28 @@ const Login = () => {
                 })}
                 error={errors.email ? errors.email.message : ""}
               />
-              <Textbox
-                placeholder="your password"
-                type="password"
-                name="password"
-                label="Password"
-                className="w-full rounded-full"
-                register={register("password", {
-                  required: "Password is required!",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters long",
-                  },
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
-                    message:
-                      "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
-                  },
-                })}
-                error={errors.password ? errors.password.message : ""}
-              />
-
-              <span className="ml-2 pb-1">
-                <a href="/forgot" className="hover:text-blue-700  hover:underline">
-                  Forget Password
-                </a>
-              </span>
 
               <Button
                 type="submit"
-                label="Log In"
-                onClick={login}
+                label="Reset Password"
+                onClick={()=>setOpen(true)}
                 className="w-full h-10 bg-blue-400 text-white rounded-full"
               />
 
               <span className="ml-2 pb-2">
-                New here?{" "}
-                <a href="./create" className="text-blue-700 underline">
-                  Create an account
+                Remember your password?{" "}
+                <a href="./log-in" className="text-blue-700 underline">
+                  Login
                 </a>
               </span>
             </div>
           </form>
+          <FgPopup open={open} setOpen={setOpen}/>
         </div>
       </div>
+
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;
