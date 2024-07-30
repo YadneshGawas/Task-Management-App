@@ -2,11 +2,12 @@
 import { response } from "express";
 import User from "../schemas/user.js";
 import { createJWT } from "../components/index.js";
-import Notif from './../schemas/notifications.js';
+import Notif from "./../schemas/notifications.js";
+import transporter from "./../components/nodeMailerConfig.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, isAdmin, role, title } = req.body;
+    const { name, email, password, isAdmin, role } = req.body;
 
     const userExist = await User.findOne({ email });
 
@@ -23,7 +24,6 @@ export const registerUser = async (req, res) => {
       password,
       isAdmin,
       role,
-      title,
     });
 
     if (user) {
@@ -48,8 +48,6 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
-    const temp = true;
 
     if (!user) {
       return res
@@ -99,7 +97,7 @@ export const logoutUser = async (req, res) => {
 
 export const getTeamList = async (req, res) => {
   try {
-    const users = await User.find().select("name title role email isActive");
+    const users = await User.find().select("name role email isActive");
 
     res.status(200).json(users);
   } catch (error) {
@@ -133,14 +131,13 @@ export const updateUserProfile = async (req, res) => {
       isAdmin && userId === _id
         ? userId
         : isAdmin && userId !== _id
-        ? _id
-        : userId;
+          ? _id
+          : userId;
 
     const user = await User.findById(id);
 
     if (user) {
       user.name = req.body.name || user.name;
-      user.title = req.body.title || user.title;
       user.role = req.body.role || user.role;
 
       const updatedUser = await user.save();
@@ -252,5 +249,29 @@ export const deleteUserProfile = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+export const forgotUser = async (req, res) => {
+  const { email } = req.body;
+  const mailOptions = {
+    from: "yadneshgawas.infipreintern@gmail.com",
+    to: email,
+    subject: "Password Reset",
+    text: `You requested a password reset. Use the following token to reset your password: `, // plain text body
+    html: `<p>You requested a password reset. Use the following token to reset your password: <b></b></p>`, // html body
+  };
+  try {
+    const oldUser = await User.findOne({ email });
+    if (oldUser) {
+      //const info = await transporter.sendMail(mailOptions);
+      //console.log('Message sent: %s', info.messageId);
+      return res.json({ status: 'ok' });
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    //console.error('Error sending email: %s', error);
+    return res.json({ error, message: "User not found" });
   }
 };

@@ -47,7 +47,7 @@ function App() {
     <main className="w-full min-h-screen bg-white">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/create" />} />
+          <Route path="/" element={<Navigate to="/log-in" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add" element={<AddPopup />} />
           <Route path="/tasks" element={<Tasks />} />
@@ -57,6 +57,7 @@ function App() {
           <Route path="/taskdetails" element={<TaskDetails />} />
           <Route path="/projects/task" element={<AdminTasks />} />
         </Route>
+        <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />

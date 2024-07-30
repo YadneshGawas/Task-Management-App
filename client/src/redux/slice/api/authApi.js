@@ -1,7 +1,7 @@
 import { apiSlice } from "../apiS";
 
 /* eslint-disable no-unused-vars */
-const AUTH_URL = "/user"
+const AUTH_URL = "/user";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,18 +9,25 @@ export const authApi = apiSlice.injectEndpoints({
             query: (data) => ({
                 url: `${AUTH_URL}/login`,
                 method: "POST",
+                body: data,
                 credentials: 'include',
-
             })
         }),
         register: builder.mutation({
-            query: (data)=>({
+            query: (data) => ({
                 url: `${AUTH_URL}/register`,
-                method:"POST",
+                method: "POST",
                 body: data,
             })
-        })
-    })
+        }),
+        forgot: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/forgot`,
+                method: "POST",
+                body: data,
+            })
+        }),
+    }),
 });
 
-export const {useLoginMutation,useRegisterMutation} = authApi;
+export const { useLoginMutation, useRegisterMutation, useForgotMutation } = authApi;

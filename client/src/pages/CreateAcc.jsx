@@ -1,15 +1,19 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Textbox from "../other/Textbox";
 import Button from "../other/Button";
 import Checkbox from "../other/Checkbox";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../redux/slice/api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/slice/authS";
+import { toast } from "sonner";
 
 const CreateAcc = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   const {
     register,
@@ -22,11 +26,14 @@ const CreateAcc = () => {
 
   const submitHandler = async(data) => {
     try {
-      await registerUser(data).unwrap(); // Call the register mutation and unwrap the response
-      console.log("Registration successful");
-      navigate("/log-in");
-    } catch (err) {
-      console.error("Failed to register: ", err); // Handle registration error
+      const res = await registerUser(data).unwrap(); // Call the register mutation and unwrap the response
+      console.log(res);
+      dispatch(setCredentials(res));
+      toast.success("Successfully added");
+      navigate("/log-in")
+    } catch (error) {
+      console.error("Failed to register: ", error); // Handle registration error
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -159,7 +166,7 @@ const CreateAcc = () => {
 
               <span className="ml-2 pb-2">
                 Already have an account?{" "}
-                <a href="./log-in" className="text-blue-700 underline">
+                <a href="/log-in" className="text-blue-700 underline">
                   Login here
                 </a>
               </span>

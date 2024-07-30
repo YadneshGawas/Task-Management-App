@@ -3,13 +3,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/slice/api/authApi";
 import Button from "./../other/Button";
 import Textbox from "./../other/Textbox";
 import { setCredentials } from "../redux/slice/authS";
+import { toast } from "sonner";
 
 const Login = () => {
   const { user } = useSelector((state) => state.auth);
@@ -28,13 +28,14 @@ const Login = () => {
   const submitHandler = async (data) => {
     try {
       const res = await loginUser(data).unwrap(); // Call the login mutation and unwrap the response
+      //navigate("/home");
+      console.log("Server response=>",res);
       dispatch(setCredentials(res));
-      navigate("/");
-      console.log("Login successful", res);
-      console.log('Data=>', data)
-    } catch (err) {
-      console.log(data);
-      console.error("Failed to login: ", err); // Handle login error
+      toast.success("Successfully logged in");
+      //navigate("/dashboard");
+    } catch (error) {
+      console.error("Failed to login: ", error); // Handle login error
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -115,7 +116,6 @@ const Login = () => {
               <Button
                 type="submit"
                 label="Log In"
-                //onClick={login}
                 className="w-full h-10 bg-blue-400 text-white rounded-full"
               />
 
