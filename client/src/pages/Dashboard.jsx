@@ -152,9 +152,9 @@ const UserTb = ({ user, mems }) => {
 };
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth); 
+  const { user } = useSelector((state) => state.auth);  
 
-  //Dashboard Admin Logic
+  //Da; shboard Admin Logic
   const getComp = (projects) => {
     const comp = projects.filter((pro) => pro.stage === "completed");
     //console.log("Completed",comp.length);

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URI = import.meta.env.BASE_APP_URL;
+const API_URI = "http://localhost:5000/api";
 
-const baseQuery = fetchBaseQuery({ baseUrl: API_URI + "/api" });
+const baseQuery = fetchBaseQuery({ baseUrl: API_URI });
 
 export const apiSlice = createApi({
   baseQuery,

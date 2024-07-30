@@ -31,7 +31,9 @@ const Login = () => {
       dispatch(setCredentials(res));
       navigate("/");
       console.log("Login successful", res);
+      console.log('Data=>', data)
     } catch (err) {
+      console.log(data);
       console.error("Failed to login: ", err); // Handle login error
     }
   };

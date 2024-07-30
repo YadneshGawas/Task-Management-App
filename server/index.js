@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
 import dotenv from "dotenv";
 import express from "express";
-import dbConnection from "./components/index.js";
+import {dbConnection} from "./components/index.js";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import { cors } from 'cors';
+import cors from 'cors';
+import routes from './routes/index.js';
+import { errorHandler, routeNotFound } from "./middleware/errorWare.js";
 
 dotenv.config();
 
 dbConnection();
 
 const PORT = process.env.PORT || 5000;
-
-const routes = "";
 
 const app = express();
 
@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(morgan("dev"));
-// app.use("/api",routes);
-// app.use(notFound);
-// app.use(errHandler);
+app.use("/api",routes);
+app.use(routeNotFound);
+app.use(errorHandler);
 
 app.listen(PORT, ()=> console.log('Listening on port',PORT));

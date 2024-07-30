@@ -6,6 +6,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getInitials } from "../assets/index";
+import UserInfo from "./UserInfo";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -82,6 +83,7 @@ const UserAvatar = () => {
             </Menu.Items>
           </Transition>
         </Menu>
+        {/* <UserInfo open={open}/> */}
       </div>
     </>
   );
