@@ -8,7 +8,6 @@ import Wrapper from './Wrapper';
 import Textbox from './Textbox';
 import Loading from './Loader';
 import Button from './Button';
-import AddPopup from "./AddPopup";
 import { useNavigate } from "react-router-dom";
 
 const AddUser = ({ open, setOpen, userData }) => {
@@ -26,7 +25,7 @@ const AddUser = ({ open, setOpen, userData }) => {
   } = useForm({ defaultValues });
 
   const handleOnSubmit = () => {
-    navigate("/add");
+    
   };
 
   return (
@@ -98,7 +97,7 @@ const AddUser = ({ open, setOpen, userData }) => {
           )}
           
         </form>
-        
+
       </Wrapper>
     </>
   );

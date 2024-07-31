@@ -14,7 +14,6 @@ import AdminTasks from './pages/AdminTasks';
 //import Projects from './pages/pro';
 //import Testing from './pages/idpasscheck';
 import ForgotPassword from "./pages/ForgotPassword";
-import AddPopup from "./other/AddPopup";
 import CreateAcc from './pages/CreateAcc';
 import ResetPassword from "./pages/ResetPassword";
 
@@ -50,7 +49,6 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/add" element={<AddPopup />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/team" element={<Users />} />

@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import Button from "../other/Button";
-import FgPopup from "../other/FgPopup";
 import Textbox from "../other/Textbox";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
