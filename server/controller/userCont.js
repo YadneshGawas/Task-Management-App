@@ -5,7 +5,6 @@ import { createJWT } from "../components/index.js";
 import Notif from "./../schemas/notifications.js";
 import transporter from "./../components/nodeMailerConfig.js";
 import jwt from "jsonwebtoken";
-import bcrypt from 'bcryptjs';
 
 const JWT_SECRET = "hvdvay6ert72839289";
 
@@ -127,16 +126,10 @@ export const getNotificationsList = async (req, res) => {
 };
 
 export const updateUserProfile = async (req, res) => {
-  try {
     const { userId, isAdmin } = req.user;
     const { _id } = req.body;
 
-    const id =
-      isAdmin && userId === _id
-        ? userId
-        : isAdmin && userId !== _id
-          ? _id
-          : userId;
+    const id = isAdmin && userId === _id ? userId : isAdmin && userId !== _id ? _id : userId;
 
     const user = await User.findById(id);
 
@@ -148,17 +141,15 @@ export const updateUserProfile = async (req, res) => {
 
       user.password = undefined;
 
-      res.status(201).json({
-        status: true,
-        message: "Profile Updated Successfully.",
-        user: updatedUser,
-      });
-    } else {
-      res.status(404).json({ status: false, message: "User not found" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+      res.status(501).json({ message: `${id}`});
+
+    //   res.status(201).json({
+    //     status: true,
+    //     message: "Profile Updated Successfully.",
+    //     user: updatedUser,
+    //   });
+    // } else {
+    //   res.status(404).json({ status: false, message: "User not found" });
   }
 };
 
@@ -316,4 +307,8 @@ export const resetPassword = async (req, res) => {
   } catch (error) {
     return res.json({ status: 'An error occurred. Please try again later.' });
   }
+};
+
+export const adduser = async(req,res) =>{
+
 };
