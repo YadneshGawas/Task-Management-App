@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
   /* eslint-disable no-undef */
   import mongoose from "mongoose";
   import bcrypt from "bcryptjs";
@@ -23,6 +24,11 @@
       const salt = await bcrypt.genSalt(10)
       this.password = await bcrypt.hash(this.password, salt);
   });
+
+  userSchema.methods.reset = async function (enteredPassword) {
+    const salt = await bcrypt.genSalt(10)
+    return await bcrypt.hash(enteredPassword, salt);
+};
 
   userSchema.methods.matchPassword = async function(enteredPassword){
       return await bcrypt.compare(enteredPassword, this.password);

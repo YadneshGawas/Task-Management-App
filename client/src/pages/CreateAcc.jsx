@@ -28,7 +28,6 @@ const CreateAcc = () => {
     try {
       const res = await registerUser(data).unwrap(); // Call the register mutation and unwrap the response
       console.log(res);
-      dispatch(setCredentials(res));
       toast.success("Successfully added");
       navigate("/log-in")
     } catch (error) {

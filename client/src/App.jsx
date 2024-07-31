@@ -16,6 +16,7 @@ import AdminTasks from './pages/AdminTasks';
 import ForgotPassword from "./pages/ForgotPassword";
 import AddPopup from "./other/AddPopup";
 import CreateAcc from './pages/CreateAcc';
+import ResetPassword from "./pages/ResetPassword";
 
 
 function Layout() {
@@ -47,7 +48,7 @@ function App() {
     <main className="w-full min-h-screen bg-white">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/log-in" />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add" element={<AddPopup />} />
           <Route path="/tasks" element={<Tasks />} />
@@ -61,6 +62,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />
+        <Route path="/resetpass/:userId/:token" element={<ResetPassword />} />
       </Routes>
 
       <Toaster richColors />

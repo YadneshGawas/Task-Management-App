@@ -11,10 +11,8 @@ import Button from './Button';
 import AddPopup from "./AddPopup";
 import { useNavigate } from "react-router-dom";
 
-
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
-  const { user } = useSelector((state) => state.auth);
 
   const isLoading = false,
     isUpdating = false;
@@ -86,7 +84,7 @@ const AddUser = ({ open, setOpen, userData }) => {
             <div className='py-3 mt-4 sm:flex sm:flex-row-reverse'>
               <Button
                 type='submit'
-                className='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto'
+                className='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5'
                 label='Submit'
               />
 

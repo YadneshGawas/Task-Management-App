@@ -4,6 +4,10 @@ import User from "../schemas/user.js";
 import { createJWT } from "../components/index.js";
 import Notif from "./../schemas/notifications.js";
 import transporter from "./../components/nodeMailerConfig.js";
+import jwt from "jsonwebtoken";
+import bcrypt from 'bcryptjs';
+
+const JWT_SECRET = "hvdvay6ert72839289";
 
 export const registerUser = async (req, res) => {
   try {
@@ -254,24 +258,62 @@ export const deleteUserProfile = async (req, res) => {
 
 export const forgotUser = async (req, res) => {
   const { email } = req.body;
-  const mailOptions = {
-    from: "yadneshgawas.infipreintern@gmail.com",
-    to: email,
-    subject: "Password Reset",
-    text: `You requested a password reset. Use the following token to reset your password: `, // plain text body
-    html: `<p>You requested a password reset. Use the following token to reset your password: <b></b></p>`, // html body
-  };
   try {
-    const oldUser = await User.findOne({ email });
-    if (oldUser) {
-      //const info = await transporter.sendMail(mailOptions);
-      //console.log('Message sent: %s', info.messageId);
-      return res.json({ status: 'ok' });
-    } else {
-      return res.status(404).json({ message: "User not found" });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ status: "User not exists" });
+    }
+    const secret = JWT_SECRET + user.password;
+    const token = jwt.sign({ email: user.email, id: user.id }, secret, {
+      expiresIn: "10m",
+    });
+    const link = `http://localhost:4555/resetpass/${user._id}/${token}`;
+    const mailOptions = {
+      from: "yadneshgawas.infipreintern@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      text: `You requested a password reset. Use the following token to reset your password: `, // plain text body
+      html: link,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent to:" + info.response);
+      }
+    });
+    console.log(link);
+    return res.json({ status: "ok" });
+  } catch (error) {
+    return res.json({ status: "User not found" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { userId, token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.json({ status: 'Invalid link or user not found' });
+    }
+
+    const secret = JWT_SECRET + user.password;
+    try {
+      const decoded = jwt.verify(token, secret);
+      if (decoded.id !== userId) {
+        return res.json({ status: 'Invalid token' });
+      }
+      user.password = password;
+      await user.save();
+
+      return res.json({ message: 'Reset hogayaaaaaa' });
+    } catch (error) {
+      return res.json({ status: 'Invalid or expired token' });
     }
   } catch (error) {
-    //console.error('Error sending email: %s', error);
-    return res.json({ error, message: "User not found" });
+    return res.json({ status: 'An error occurred. Please try again later.' });
   }
 };

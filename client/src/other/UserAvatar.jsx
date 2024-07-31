@@ -8,10 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { getInitials } from "../assets/index";
 import { logout, setCredentials } from "../redux/slice/authS";
 import { toast } from "sonner";
+import UserInfo from "./UserInfo";
+import AddUser from "./AddUser";
+import ChangePassword from "./ChangePassword";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
+  const [viewOpen,setViewOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,11 +64,23 @@ const UserAvatar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      onClick={() => setOpen()}
+                      className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
+                    >
+                      <FaUser className='mr-2' aria-hidden='true' />
+                      View Profile
+                    </button>
+                  )}
+                </Menu.Item>
+
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
                       onClick={() => setOpen(true)}
                       className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
                       <FaUser className='mr-2' aria-hidden='true' />
-                      Profile
+                     Update Profile
                     </button>
                   )}
                 </Menu.Item>
@@ -96,8 +112,10 @@ const UserAvatar = () => {
             </Menu.Items>
           </Transition>
         </Menu>
-        {/* <UserInfo open={open}/> */}
       </div>
+      <AddUser open={open} setOpen={setOpen} userData={user}/>
+      {/* <ChangePassword open={openPassword} setOpen={setOpenPassword}/> */}
+      <UserInfo open={open} setOpen={setOpen}/>
     </>
   );
 };

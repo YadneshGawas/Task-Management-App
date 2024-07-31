@@ -4,11 +4,12 @@ import { Dialog } from "@headlessui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "./Button";
+import Loading from './Loader';
 import Wrapper from "./Wrapper";
 import Textbox from "./Textbox";
 import { toast } from "sonner";
 
-const UserInfo = ({open, setOpen}) => {
+const ChangePassword = ({open, setOpen}) => {
     const {
         register,
         handleSubmit,
@@ -118,4 +119,4 @@ const UserInfo = ({open, setOpen}) => {
     )
 };
 
-export default UserInfo;
+export default ChangePassword;

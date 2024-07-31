@@ -11,7 +11,7 @@ export const dbConnection = async () => {
   }
 };
 
-const JWT_SECRET = '123456';
+const JWT_SECRET = "hvdvay6ert72839289";
 
 export const createJWT = (res, userId) => {
   const token = jwt.sign({ userId }, JWT_SECRET, {
