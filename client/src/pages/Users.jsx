@@ -2,24 +2,48 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { getInitials } from './../assets/index';
-import Button from './../other/Button';
-import Title from './../other/Title';
-import { summary } from './../assets/data';
+import { toast } from "sonner";
+import { useDeleteUserMutation, useGetTeamListQuery, useUpdateUserMutation, useUserActionMutation } from "../redux/slice/api/userApi";
 import { allusers } from "./../assets/data";
+import { getInitials } from './../assets/index';
 import AddUser from './../other/AddUser';
+import Button from './../other/Button';
 import ConfirmatioDialog, { UserAction } from './../other/Dialogs';
-import { clsx } from 'clsx';
-
+import Title from './../other/Title';
 
 const Users = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAction, setOpenAction] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
-  const userActionHandler = () => {};
-  const deleteHandler = () => {};
+
+  const userActionHandler = async (user) => {
+    try {
+      const res = await updateUser(user);
+      toast.success(res.data.message);
+      setSelected(null);
+      setTimeout(() => {
+        setOpenAction(false);
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteHandler = async () => {
+    try {
+      const res = await deleteUser(selected);
+      setSelected(null);
+      setTimeout(() => {
+        setOpenDialog(false);
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteClick = (id) => {
     setSelected(id);
@@ -28,6 +52,12 @@ const Users = () => {
 
   const editClick = (el) => {
     setSelected(el);
+    console.log(selected?._id);
+    setOpen(true);
+  };
+
+  const addClick = () => {
+    setSelected(null);
     setOpen(true);
   };
 
@@ -56,9 +86,7 @@ const Users = () => {
       </td>
 
       <td className='p-2'>{user.title}</td>
-      <td className='p-2'>{user.email || "user.emal.com"}</td>
-      <td className='p-2'>{user.role}</td>
-
+      <td className='p-2'>{user.email || "user.email.com"}</td>
 
       <td className='p-2 flex gap-4 justify-end'>
         <Button
@@ -82,12 +110,12 @@ const Users = () => {
     <>
       <div className='w-full md:px-1 px-0 mb-6'>
         <div className='flex items-center justify-between mb-8'>
-          <Title title='  Team Members' />
+          <Title title='Team Members' />
           <Button
             label='Add New User'
             icon={<IoMdAdd className='text-lg' />}
             className='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5'
-            onClick={() => setOpen(true)}
+            onClick={addClick}
           />
         </div>
 
@@ -109,7 +137,7 @@ const Users = () => {
         open={open}
         setOpen={setOpen}
         userData={selected}
-        key={new Date().getTime().toString()}
+        key={selected ? selected._id : new Date().getTime().toString()}
       />
 
       <ConfirmatioDialog

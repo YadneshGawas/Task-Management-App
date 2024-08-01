@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import express from "express";
 
-import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, updateUserProfile } from "../controller/userCont.js";
-import { isAdminRoute, protectRoute, testingApis } from "../middleware/authWare.js";
+import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserProfile, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, testingApis, updateUserProfile } from "../controller/userCont.js";
+import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 
 const router = express.Router();
 /*OUTSIDE APP ROUTES*/
@@ -13,11 +14,12 @@ router.post("/reset/:userId/:token",resetPassword);
 
 
 /*INSIDE APP ROUTES*/
+router.post("/getuser/:userId", protectRoute, getUserProfile);
 router.post("/add", protectRoute,isAdminRoute, adduser);//New route added
 router.put("/update", protectRoute, updateUserProfile);
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
-router.put("/change-password", protectRoute, changeUserPassword);
+router.put("/changepassword", protectRoute, changeUserPassword);
 router.put("/read-noti", protectRoute, markNotificationRead);
 
 //FOR ADMIN ONLY - ADMIN ROUTES

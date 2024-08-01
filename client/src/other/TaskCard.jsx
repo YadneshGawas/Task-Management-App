@@ -13,7 +13,6 @@ import {
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate, BGSTYLES } from "../assets/index";
 import TaskDialog from "../other/task/TaskDialog";
 import UserInfo from "../other/UserInfo";
-import StatusBar from "./StatusBar";
 import { useSelector } from "react-redux";
 
 const ICONS = {
@@ -24,6 +23,8 @@ const ICONS = {
 
 const TaskCard = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
+
+  const [open,setOpen] = useState(false);
 
   const getTasks = () => {
     const isTasksPage = location.pathname.includes("/task");
@@ -97,7 +98,7 @@ const TaskCard = ({ task }) => {
                       BGS[index % BGS?.length]
                     )}
                   >
-                    <UserInfo user={m} />
+                  <UserInfo open={open} setOpen={open} user={m} />
                   </div>
                 ))}
               </div>

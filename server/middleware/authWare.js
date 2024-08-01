@@ -32,8 +32,8 @@ export const testingApis = async (req, res, next) => {
   // Log the request and response details, including cookies from the request
   const msg = res.cookies;
 
-  //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
-  return res.status(401).json({ msg });
+    //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
+    return res.status(401).json({ msg });
 };
 
 const isAdminRoute = (req, res, next) => {

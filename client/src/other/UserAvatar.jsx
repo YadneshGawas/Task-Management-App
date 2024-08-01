@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +16,8 @@ const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  let { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const logoutHandler = async () => {
     try {
@@ -30,13 +29,35 @@ const UserAvatar = () => {
         throw new Error('Logout failed');
       }
       dispatch(logout());
-      navigate("/log-in");
       toast.success("Logged out");
     } catch (error) {
       console.error('Error:', error);
       toast.error("Failed to log out");
     }
   };
+
+  const fetchLocal = async () => {
+    try {
+      const userJson = localStorage.getItem('userInfo');
+      console.log("Fetched from local unparsed storage", userJson);
+      console.log("user", user);
+      if(userJson){
+        const userObj = JSON.parse(userJson);
+        console.log("Fetched from local parsed storage", userObj);
+        user = userObj;
+      }else{
+        console.log("No object found in local storage");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchLocal();
+    }
+  }, []); 
 
   return (
     <>

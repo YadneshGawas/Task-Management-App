@@ -11,21 +11,41 @@ export const userApi = apiSlice.injectEndpoints({
                 body: data,
             })
         }),
-        addUser: builder.mutation({
+        chpassUser: builder.mutation({
             query: (data) =>({
-                url: `${USER_URL}/add`,
+                url: `${USER_URL}/changepassword`,
                 method: "PUT",
                 body: data,
             })
         }),
-        // getTeamList: builder.query({
-        //     query: () =>({
-        //         url: `${USER_URL}/get-team`,
-        //         method: "GET",
-        //         credentials: "include",
-        //     }),
-        // }),
+        addUser: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/add`,
+                method: "POST",
+                body: data,
+            })
+        }),
+        deleteUser: builder.mutation({
+            query: (id) =>({
+                url: `${USER_URL}/${id}`,
+                method: "DELETE",
+            })
+        }),
+        getUser: builder.query({
+            query: (data) =>({
+                url: `${USER_URL}/getuser`,
+                method: "GET",
+                body: data,
+            })
+        }),
+        getTeamList: builder.query({
+            query: () =>({
+                url: `${USER_URL}/get-team`,
+                method: "GET",
+                credentials: "include",
+            }),
+        }),
     }),
 });
 
-export const { useUpdateUserMutation , useAddUserMutation } =  userApi;
+export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUserQuery,  useGetTeamListQuery} =  userApi;

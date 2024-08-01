@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Notice from "../models/notification.js";
 import User from "../models/user.js";
 import Project from './../schemas/projects.js';
@@ -6,40 +7,34 @@ export const createProject = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const { title, team, stage, date, priority, assets } = req.body;
+    const { title, team, stage, date, due, priority, assets } = req.body;
 
-    let text = "New Project has been assigned to you";
+    let text = "New project has been assigned to you";
     if (team?.length > 1) {
       text = text + ` and ${team?.length - 1} others.`;
     }
 
     text =
       text +
-      ` The Project priority is set a ${priority} priority, so check and act accordingly. The Project date is ${new Date(
-        date
-      ).toDateString()}. Thank you!!!`;
+      ` The Project priority is set a ${priority} priority, so check and act accordingly. The project due date is ${due}. Thank you!!!`;
 
-    const activity = {
-      type: "assigned",
-      activity: text,
-      by: userId,
-    };
 
     const Project = await Project.create({
+      userId,
       title,
       team,
       stage: stage.toLowerCase(),
       date,
+      due,
       priority: priority.toLowerCase(),
       assets,
-      activities: activity,
     });
 
-    await Notice.create({
-      team,
-      text,
-      Project: Project._id,
-    });
+    // await Notice.create({
+    //   team,
+    //   text,
+    //   Project: Project._id,
+    // });
 
     res
       .status(200)

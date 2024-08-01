@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const projectSchema = new Schema({
+    userId: {type: String, required: true},
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
+    due: { type: Date, required: true },
     priority: {
         type: String,
         default: "normal",
@@ -15,7 +17,6 @@ const projectSchema = new Schema({
         enum: ["todo", "in progress", "completed"],
     },
     assets: [String],
-    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
     team: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
 {

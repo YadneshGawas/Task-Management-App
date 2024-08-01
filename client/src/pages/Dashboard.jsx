@@ -23,8 +23,6 @@ import { FaArrowsToDot } from "react-icons/fa6";
 import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
-import { GrCatalog } from "react-icons/gr";
-import { getInitials } from "./../assets/index";
 
 const TaskTb = ({ user, tsk }) => {
   // Receive user as a prop
@@ -193,8 +191,6 @@ const Dashboard = () => {
   } else {
     mems = usrTsk.flatMap((task) => task.team);
   }
-
-  console.log(mems);
 
   const uniqueArray = Object.values(
     mems.reduce((acc, obj) => {

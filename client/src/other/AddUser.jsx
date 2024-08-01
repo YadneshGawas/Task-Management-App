@@ -10,7 +10,6 @@ import Loading from "./Loader";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import { setCredentials } from "../redux/slice/authS";
-
 import { toast } from "sonner";
 import { useAddUserMutation, useUpdateUserMutation } from "../redux/slice/api/userApi";
 import { useDispatch } from 'react-redux';
@@ -39,9 +38,10 @@ const AddUser = ({ open, setOpen, userData }) => {
       if (userData) {
         const res = await updateuser(data).unwrap();
         toast.success("Successfully updated");
+        //window.location.reload();
         if(userData?._id === user._id)
         {
-          dispatch(setCredentials({...res.user}))
+          dispatch(setCredentials(userData));
         }
         console.log(userData);
       } else {
@@ -50,6 +50,7 @@ const AddUser = ({ open, setOpen, userData }) => {
         toast.success("Successfully added");
       }
     } catch (error) {
+      toast.error(error?.data?.message || error.message);
       console.log("Error", error);
     }
   };

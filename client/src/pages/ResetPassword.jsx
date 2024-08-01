@@ -21,6 +21,7 @@ const ResetPassword = () => {
   const password = watch("password");
 
   const submitHandler = async (data) => {
+    console.log(data);
     try {
       const res = await fetch(`/api/user/reset/${userId}/${token}`, {
         method: 'POST',

@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -94,7 +94,7 @@ export const logoutUser = async (req, res) => {
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -105,7 +105,7 @@ export const getTeamList = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -121,27 +121,41 @@ export const getNotificationsList = async (req, res) => {
     res.status(201).json(notice);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
+export const testingApis = async (req, res) => {
+  // Log the request and response details, including cookies from the request
+  const { userId, isAdmin } = req.user;
+  const { _id } = req.body;
+    //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
+  return res.status(200).json({ message: `Working ${userId}, ${isAdmin}, ${_id}` });
+};
+
 export const updateUserProfile = async (req, res) => {
-    const { userId, isAdmin } = req.user;
-    const { _id } = req.body;
+  const { userId, isAdmin } = req.user;
+  const { _id } = req.body;
+  const tst = userId;
 
-    const id = isAdmin && userId === _id ? userId : isAdmin && userId !== _id ? _id : userId;
+  const id =
+    isAdmin && userId === _id
+      ? userId
+      : isAdmin && userId !== _id
+        ? _id
+        : userId;
 
-    const user = await User.findById(id);
+  const user = await User.findById(id);
 
-    if (user) {
-      user.name = req.body.name || user.name;
-      user.role = req.body.role || user.role;
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.role = req.body.role || user.role;
 
-      const updatedUser = await user.save();
+    const updatedUser = await user.save();
 
-      user.password = undefined;
+    user.password = undefined;
 
-      res.status(501).json({ message: `${id}`});
+    res.status(200).json({ message: `REQ.BODY: ${tst}`});
 
     //   res.status(201).json({
     //     status: true,
@@ -176,7 +190,7 @@ export const markNotificationRead = async (req, res) => {
     res.status(201).json({ status: true, message: "Done" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -198,11 +212,11 @@ export const changeUserPassword = async (req, res) => {
         message: `Password chnaged successfully.`,
       });
     } else {
-      res.status(404).json({ status: false, message: "User not found" });
+      res.status(504).json({ status: false, message: "User not found" });
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -228,7 +242,7 @@ export const activateUserProfile = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -243,7 +257,7 @@ export const deleteUserProfile = async (req, res) => {
       .json({ status: true, message: "User deleted successfully" });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -288,27 +302,81 @@ export const resetPassword = async (req, res) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.json({ status: 'Invalid link or user not found' });
+      return res.json({ status: "Invalid link or user not found" });
     }
 
     const secret = JWT_SECRET + user.password;
     try {
       const decoded = jwt.verify(token, secret);
       if (decoded.id !== userId) {
-        return res.json({ status: 'Invalid token' });
+        return res.json({ status: "Invalid token" });
       }
       user.password = password;
       await user.save();
 
-      return res.json({ message: 'Reset hogayaaaaaa' });
+      return res.json({ message: "Reset hogayaaaaaa" });
     } catch (error) {
-      return res.json({ status: 'Invalid or expired token' });
+      return res.json({ status: "Invalid or expired token" });
     }
   } catch (error) {
-    return res.json({ status: 'An error occurred. Please try again later.' });
+    return res.json({ status: "An error occurred. Please try again later." });
   }
 };
 
-export const adduser = async(req,res) =>{
+export const adduser = async (req, res) => {
+  try {
+    const { name, email, role } = req.body;
 
+    const userExist = await User.findOne({ email });
+
+    if (userExist) {
+      return res.status(400).json({
+        status: false,
+        message: "User already exists",
+      });
+    }
+
+    const password = Math.random().toString(36).substring(2, 12);
+
+    const isAdmin = false;
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+      isAdmin,
+      role,
+    });
+
+    if (user) {
+      isAdmin ? createJWT(res, user._id) : null;
+
+      user.password = undefined;
+
+      res.status(201).json(user);
+    } else {
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid user data" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ status: false, message: "api is working" });
+  }
+
+
+};
+
+
+export const getUserProfile = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: `User not found ${userId}` });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ status: error.message, message: "Internal Server Error" });
+  }
 };

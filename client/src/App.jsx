@@ -16,10 +16,11 @@ import AdminTasks from './pages/AdminTasks';
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateAcc from './pages/CreateAcc';
 import ResetPassword from "./pages/ResetPassword";
+import { useSelector } from "react-redux";
 
 
 function Layout() {
-  const user = " "; // Replace with actual user authentication logic
+  const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
 

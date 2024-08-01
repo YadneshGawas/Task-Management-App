@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/slice/api/authApi";
 import Button from "./../other/Button";
 import Textbox from "./../other/Textbox";
-import { setCredentials } from "../redux/slice/authS";
+import { logout, setCredentials } from "../redux/slice/authS";
 import { toast } from "sonner";
 
 const Login = () => {
@@ -40,8 +40,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    user && navigate("/dashboard");
-  }, [user]);
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      dispatch(logout());
+    }
+  }, [user, navigate, dispatch]);
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
