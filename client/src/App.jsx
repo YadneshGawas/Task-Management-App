@@ -17,12 +17,15 @@ import ForgotPassword from "./pages/ForgotPassword";
 import CreateAcc from './pages/CreateAcc';
 import ResetPassword from "./pages/ResetPassword";
 import { useSelector } from "react-redux";
+import ChangePass from "./pages/ChangePass";
 
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
+
+  console.log("Logging from App=>",user);
 
   return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row">
@@ -32,7 +35,7 @@ function Layout() {
       {/* Mobile Sidebar */}
 
       <div className="flex-1 overflow-y-auto bg-gray-100">
-        <Navbar/>
+        <Navbar />
         <div className="p-4 2xl:px-10">
           <Outlet />
         </div>
@@ -62,6 +65,7 @@ function App() {
         <Route path="/log-in" element={<Login />} />
         <Route path="/create" element={<CreateAcc />} />
         <Route path="/resetpass/:userId/:token" element={<ResetPassword />} />
+        <Route path="/change/:userId/:token" element={<ChangePass />} />
       </Routes>
 
       <Toaster richColors />

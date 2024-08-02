@@ -10,7 +10,7 @@ const JWT_SECRET = "hvdvay6ert72839289";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, isAdmin, role } = req.body;
+    const { name, email, password, role } = req.body;
 
     const userExist = await User.findOne({ email });
 
@@ -20,6 +20,7 @@ export const registerUser = async (req, res) => {
         message: "User already exists",
       });
     }
+    const isAdmin = true;
 
     const user = await User.create({
       name,
@@ -30,7 +31,7 @@ export const registerUser = async (req, res) => {
     });
 
     if (user) {
-      isAdmin ? createJWT(res, user._id) : null;
+    //isAdmin ? createJWT(res, user._id) : null;
 
       user.password = undefined;
 
@@ -52,23 +53,29 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
 
+    const isAdmin = user.isAdmin;
+
     if (!user) {
       return res
         .status(401)
         .json({ status: false, message: "Invalid email or password." });
     }
 
-    if (!user?.isActive) {
-      return res.status(401).json({
-        status: false,
-        message: "User account has been deactivated, contact the administrator",
-      });
-    }
+    // if (!user?.isActive) {
+    //   return res.status(401).json({
+    //     status: false,
+    //     message: "User account has been deactivated, contact the administrator",
+    //   });
+    // }
 
     const isMatch = await user.matchPassword(password);
 
-    if (user && isMatch) {
+    if(isAdmin){
       createJWT(res, user._id);
+    }
+
+    if (user && isMatch) {
+      //isAdmin is added to make sure JWT is generated for members updated as admins
 
       user.password = undefined;
 
@@ -102,13 +109,15 @@ export const testingApis = async (req, res) => {
   // Log the request and response details, including cookies from the request
   const { userId, isAdmin } = req.user;
   const { _id } = req.body;
-    //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
-  return res.status(200).json({ message: `Working ${userId}, ${isAdmin}, ${_id}` });
+  //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
+  return res
+    .status(200)
+    .json({ message: `Working ${userId}, ${isAdmin}, ${_id}` });
 };
 
 export const getTeamList = async (req, res) => {
   try {
-    const users = await User.find().select("name role email isActive");
+    const users = await User.find().select("name role email");
 
     res.status(200).json(users);
   } catch (error) {
@@ -133,11 +142,10 @@ export const getNotificationsList = async (req, res) => {
   }
 };
 
-
 export const updateUserProfile = async (req, res) => {
   const { userId, isAdmin } = req.user;
   const { _id } = req.body;
-  const tst = userId;
+  const tst = req.user;
 
   const id =
     isAdmin && userId === _id
@@ -151,20 +159,22 @@ export const updateUserProfile = async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.role = req.body.role || user.role;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin || false;
 
     const updatedUser = await user.save();
 
     user.password = undefined;
 
-    res.status(200).json({ message: `REQ.BODY: ${tst}`});
-
-    //   res.status(201).json({
-    //     status: true,
-    //     message: "Profile Updated Successfully.",
-    //     user: updatedUser,
-    //   });
+    res.status(201).json({
+      status: true,
+      message: "Profile Updated Successfully.",
+      user: tst,  
+    });
     // } else {
     //   res.status(404).json({ status: false, message: "User not found" });
+  } else {
+    res.status(404).json({ status: false, message: "User not found" });
   }
 };
 
@@ -277,8 +287,7 @@ export const forgotUser = async (req, res) => {
       from: "yadneshgawas.infipreintern@gmail.com",
       to: email,
       subject: "Password Reset",
-      text: `You requested a password reset. Use the following token to reset your password: `, // plain text body
-      html: link,
+      text: `You requested a password reset. Use the following token to reset your password: ${link} `, // plain text body
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -288,8 +297,12 @@ export const forgotUser = async (req, res) => {
         console.log("Email sent to:" + info.response);
       }
     });
-    console.log(link);
-    return res.json({ status: "ok" });
+
+    res.status(201).json({
+      status: "ok",
+      message: "Profile Updated Successfully.",
+      content: mailOptions,
+    });
   } catch (error) {
     return res.json({ status: "User not found" });
   }
@@ -327,6 +340,9 @@ export const adduser = async (req, res) => {
   try {
     const { name, email, role, isAdmin } = req.body;
 
+    const usrName = req.body.name;
+    const usrRole = req.body.role;
+
     const userExist = await User.findOne({ email });
 
     if (userExist) {
@@ -346,11 +362,29 @@ export const adduser = async (req, res) => {
       role,
     });
 
+    const secret = JWT_SECRET + user.password;
+    const token = jwt.sign({ email: user.email, id: user.id }, secret, {
+      expiresIn: "10m",
+    });
+    const link = `http://localhost:4555/change/${user._id}/${token}`;
+    const mailOptions = {
+      from: "yadneshgawas.infipreintern@gmail.com",
+      to: email,
+      subject: "Account Creation",
+      text: `Hello ${usrName} .Your account has been created successfully. The role assigned to you is ${usrRole} .Please use this link to create a password for your account. You must use this password to log in to the application: ${link} `, // plain text body
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent to:" + info.response);
+      }
+    });
+
     if (user) {
-      isAdmin ? createJWT(res, user._id) : null;
-
+      //isAdmin ? createJWT(res, user._id) : null;// Don't create jwt for users updated as admins later
+      //JWT will be generated when the updated users login as admins
       user.password = undefined;
-
       res.status(201).json(user);
     } else {
       return res
@@ -361,10 +395,7 @@ export const adduser = async (req, res) => {
     console.log(error);
     return res.status(500).json({ status: false, message: "api is working" });
   }
-
-
 };
-
 
 export const getUserProfile = async (req, res) => {
   const { userId } = req.params;
@@ -375,6 +406,8 @@ export const getUserProfile = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ status: error.message, message: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ status: error.message, message: "Internal Server Error" });
   }
 };

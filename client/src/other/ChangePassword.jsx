@@ -42,20 +42,6 @@ const ChangePassword = ({ open, setOpen }) => {
         </Dialog.Title>
 
         <div className="mt-2 flex flex-col gap-6">
-          {/* <Textbox
-            placeholder="Old password"
-            type="password"
-            name="oldpassword"
-            label="Confirm password"
-            id="password"
-            className="w-full rounded-full"
-            register={register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-            error={errors.confirmPassword ? errors.confirmPassword.message : ""}
-          /> */}
           <Textbox
             placeholder="New Password"
             type="password"

@@ -4,11 +4,11 @@
 
 /* eslint-disable no-unused-vars */
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux"; // Import useSelector for Redux
 
-import { PRIOTITYSTYELS, TASK_TYPE } from "../assets/index";
+import { getInitials, PRIOTITYSTYELS, TASK_TYPE } from "../assets/index";
 import clsx from "clsx";
 /*icons*/
 import {
@@ -23,6 +23,7 @@ import { FaArrowsToDot } from "react-icons/fa6";
 import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
+import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 
 const TaskTb = ({ user, tsk }) => {
   // Receive user as a prop
@@ -120,17 +121,17 @@ const UserTb = ({ user, mems }) => {
   );
 
   // Table row part
-  const TbRow = ({ func }) => (
+  const TbRow = ({ usr }) => (
     <tr className="border-b border-gray-200  text-gray-600">
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
-            <span className="text-center">NA</span>
+            <span className="text-center">{getInitials(usr.name)}</span>
           </div>
 
           <div>
-            <p>{func.name}</p>
-            <span className="text-xs text-black">{func.title}</span>
+            <p>{usr.name}</p>
+            <span className="text-xs text-black">{usr.title}</span>
           </div>
         </div>
       </td>
@@ -145,8 +146,8 @@ const UserTb = ({ user, mems }) => {
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
-          {mems.map((mem, index) => (
-            <TbRow key={index} func={mem} />
+          {mems?.map((mem, index) => (
+            <TbRow key={index} usr={mem} />
           ))}
         </tbody>
       </table>
@@ -155,7 +156,17 @@ const UserTb = ({ user, mems }) => {
 };
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth);  
+  const { user } = useSelector((state) => state.auth); 
+
+  const { data, refetch } = useGetTeamListQuery();
+
+  //const userData = data;
+  console.log("DB FETCH=>",data);
+  console.log("DEFAULT=>",allusers);
+
+  useEffect(() => {
+    refetch(); // Ensure data is fetched on mount/reload
+  }, [refetch]);
 
   //Da; shboard Admin Logic
   const getComp = (projects) => {
@@ -282,7 +293,7 @@ const Dashboard = () => {
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
         <TaskTb user={user} tsk={usrTsk} />{" "}
         {/* Pass user as a prop to TaskTb */}
-        <UserTb user={user} tsk={usrTsk} mems={mems} />
+        <UserTb user={user} tsk={usrTsk} mems={data} />
       </div>
     </div>
   );

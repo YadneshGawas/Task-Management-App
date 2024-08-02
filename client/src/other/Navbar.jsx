@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import UserAvatar from "./UserAvatar";
@@ -7,8 +8,9 @@ import NotificationPanel from "./NotificationPanel";
 import { setOpenSidebar } from "../redux/slice/authS";
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [data,setData] = useState('null'); 
 
   return (
     <div className='flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky z-10 top-0'>
@@ -24,7 +26,7 @@ const Navbar = () => {
 
       <div className='flex gap-2 items-center'>
         <NotificationPanel />
-        <UserAvatar />
+        <UserAvatar/>
       </div>
     </div>
   );

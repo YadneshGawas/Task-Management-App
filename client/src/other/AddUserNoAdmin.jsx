@@ -60,9 +60,8 @@ const AddUser = ({ open, setOpen, userData }) => {
   const { refetch } = useGetTeamListQuery();
 
   const handleOnSubmit = async (data) => {
-    data.isAdmin = data.isAdmin === "true";
+    data.isAdmin== "true";
     console.log("Original=>", data);
-    console.log("Updating=>", userData);
     try {
       if (userData) {
         console.log(data);
@@ -132,23 +131,7 @@ const AddUser = ({ open, setOpen, userData }) => {
               })}
               error={errors.role ? errors.role.message : ""}
             />
-            {user.isAdmin && (
-              <div className="w-full flex flex-col gap-1">
-                <label className="text-slate-800">Admin User</label>
-                <select
-                  id="isAdmin"
-                  name="isAdmin"
-                  className="bg-transparent px-2.5 py-2.5 2xl:py-3 border border-gray-300 placeholder-gray-400 text-gray-900 outline-none text-base focus:ring-2 ring-blue-300 rounded-sm"
-                  {...register("isAdmin", {
-                    required: "Selection is required!",
-                  })}
-                  defaultValue="false"
-                >
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </select>
-              </div>
-            )}
+          
           </div>
 
           {isLoading || isUpdating ? (

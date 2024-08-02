@@ -9,6 +9,7 @@ import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "./../other/task/AddTask";
 import TaskDialog from "./../other/task/TaskDialog";
+import AddProject from "../other/task/AddProject";
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -111,7 +112,7 @@ const Projects = () => {
       </div>
 
       <BoardView tasks={filteredProjects} />
-      <AddTask proj={filteredProjects} open={open} setOpen={setOpen} />
+      <AddProject proj={filteredProjects} open={open} setOpen={setOpen} />
     </div>
   );
 };

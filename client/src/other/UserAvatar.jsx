@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
@@ -9,8 +10,9 @@ import { getInitials } from "../assets/index";
 import { logout } from "../redux/slice/authS";
 import { toast } from "sonner";
 import UserInfo from "./UserInfo";
-import AddUser from "./AddUser";
 import ChangePassword from "./ChangePassword";
+import AddUserNoAdmin from "./AddUserNoAdmin";
+import AddUser from "./AddUser";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -36,25 +38,25 @@ const UserAvatar = () => {
     }
   };
 
-  const fetchLocal = async () => {
-    try {
-      const userJson = localStorage.getItem('userInfo');
-      if(userJson){
-        const userObj = JSON.parse(userJson);
-        user = userObj;
-      }else{
-        console.log("No object found in local storage");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchLocal = async () => {
+  //   try {
+  //     const userJson = localStorage.getItem('userInfo');
+  //     if(userJson){
+  //       const userObj = JSON.parse(userJson);
+  //       user = userObj;
+  //     }else{
+  //       console.log("No object found in local storage");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (user) {
-      fetchLocal();
-    }
-  }, []); 
+  // useEffect(() => {
+  //   if (user) {
+  //     fetchLocal();
+  //   }
+  // }, []); 
 
   return (
     <>
@@ -132,7 +134,7 @@ const UserAvatar = () => {
           </Transition>
         </Menu>
       </div>
-      <AddUser open={open} setOpen={setOpen} userData={user}/>
+      <AddUserNoAdmin open={open} setOpen={setOpen} userData={user}/>
       <ChangePassword open={openPassword} setOpen={setOpenPassword}/>
       <UserInfo user={user} open={viewOpen} setOpen={setViewOpen} userData={user}/>
     </>

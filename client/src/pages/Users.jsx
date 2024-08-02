@@ -3,13 +3,19 @@
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { toast } from "sonner";
-import { useDeleteUserMutation, useGetTeamListQuery, useUpdateUserMutation, useUserActionMutation } from "../redux/slice/api/userApi";
+import {
+  useDeleteUserMutation,
+  useGetTeamListQuery,
+  useUpdateUserMutation,
+  useUserActionMutation,
+} from "../redux/slice/api/userApi";
 import { allusers } from "./../assets/data";
-import { getInitials } from './../assets/index';
-import AddUser from './../other/AddUser';
-import Button from './../other/Button';
-import ConfirmatioDialog, { UserAction } from './../other/Dialogs';
-import Title from './../other/Title';
+import { getInitials } from "./../assets/index";
+import AddUser from "./../other/AddUser";
+import Button from "./../other/Button";
+import ConfirmatioDialog, { UserAction } from "./../other/Dialogs";
+import Title from "./../other/Title";
+import { useSelector } from "react-redux";
 
 const Users = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -21,6 +27,8 @@ const Users = () => {
 
   const { data, refetch } = useGetTeamListQuery();
 
+  const { user } = useSelector((state) => state.auth);
+
   const userActionHandler = async (user) => {
     try {
       const res = await updateUser(user);
@@ -29,7 +37,8 @@ const Users = () => {
       setTimeout(() => {
         setOpenAction(false);
       }, 500);
-      refetch();
+      const refetchResult = await refetch();
+      console.log("Refetch result:", refetchResult);
     } catch (error) {
       console.log(error);
     }
@@ -66,68 +75,70 @@ const Users = () => {
   };
 
   const TableHeader = () => (
-    <thead className='border-b border-gray-300'>
-      <tr className='text-black text-left'>
-        <th className='py-2'>Full Name</th>
-        <th className='py-2'>Email</th>
-        <th className='py-2'>Role</th>
+    <thead className="border-b border-gray-300">
+      <tr className="text-black text-left">
+        <th className="py-2">Full Name</th>
+        <th className="py-2">Email</th>
+        <th className="py-2">Role</th>
       </tr>
     </thead>
   );
 
-  const TableRow = ({ user }) => (
-    <tr className='border-b border-gray-200 text-gray-600 hover:bg-gray-400/10'>
-      <td className='p-2'>
-        <div className='flex items-center gap-3'>
-          <div className='w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-blue-700'>
-            <span className='text-xs md:text-sm text-center'>
-              {getInitials(user.name)}
+  const TableRow = ({ users }) => (
+    <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
+      <td className="p-2">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-blue-700">
+            <span className="text-xs md:text-sm text-center">
+              {getInitials(users.name)}
             </span>
           </div>
-          {user.name}
+          {users.name}
         </div>
-      </td> 
-      <td className='p-2'>{user.email || "user.email.com"}</td>
-      <td className='p-2'>{user.role || "User"}</td>
-
-      <td className='p-2 flex gap-4 justify-end'>
-        <Button
-          className='text-blue-600 hover:text-blue-500 font-semibold sm:px-0'
-          label='Edit'
-          type='button'
-          onClick={() => editClick(user)}
-        />
-
-        <Button
-          className='text-red-700 hover:text-red-500 font-semibold sm:px-0'
-          label='Delete'
-          type='button'
-          onClick={() => deleteClick(user)}
-        />
       </td>
+      <td className="p-2">{users.email || "users.email.com"}</td>
+      <td className="p-2">{users.role || "users"}</td>
+
+      {user._id != users._id && (
+        <td className="p-2 flex gap-4 justify-end">
+          <Button
+            className="text-blue-600 hover:text-blue-500 font-semibold sm:px-0"
+            label="Edit"
+            type="button"
+            onClick={() => editClick(users)}
+          />
+
+          <Button
+            className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
+            label="Delete"
+            type="button"
+            onClick={() => deleteClick(users)}
+          />
+        </td>
+      )}
     </tr>
   );
 
   return (
     <>
-      <div className='w-full md:px-1 px-0 mb-6'>
-        <div className='flex items-center justify-between mb-8'>
-          <Title title='Team Members' />
+      <div className="w-full md:px-1 px-0 mb-6">
+        <div className="flex items-center justify-between mb-8">
+          <Title title="Team Members" />
           <Button
-            label='Add New User'
-            icon={<IoMdAdd className='text-lg' />}
-            className='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5'
+            label="Add New User"
+            icon={<IoMdAdd className="text-lg" />}
+            className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5"
             onClick={addClick}
           />
         </div>
 
-        <div className='bg-white px-2 md:px-4 py-4 shadow-md rounded'>
-          <div className='overflow-x-auto'>
-            <table className='w-full mb-5'>
+        <div className="bg-white px-2 md:px-4 py-4 shadow-md rounded">
+          <div className="overflow-x-auto">
+            <table className="w-full mb-5">
               <TableHeader />
               <tbody>
                 {data?.map((user, index) => (
-                  <TableRow key={index} user={user} />
+                  <TableRow key={index} users={user} />
                 ))}
               </tbody>
             </table>

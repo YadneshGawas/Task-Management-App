@@ -27,6 +27,7 @@ const Login = () => {
 
   const submitHandler = async (data) => {
     try {
+      console.log("Logging in",data);
       const res = await loginUser(data).unwrap(); // Call the login mutation and unwrap the response
       //navigate("/home");
       console.log("Server response=>",res);
