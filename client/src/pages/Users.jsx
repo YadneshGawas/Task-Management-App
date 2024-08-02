@@ -19,6 +19,7 @@ const Users = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [updateUser] = useUpdateUserMutation();
 
+  const { data, refetch } = useGetTeamListQuery();
 
   const userActionHandler = async (user) => {
     try {
@@ -28,6 +29,7 @@ const Users = () => {
       setTimeout(() => {
         setOpenAction(false);
       }, 500);
+      refetch();
     } catch (error) {
       console.log(error);
     }
@@ -35,11 +37,13 @@ const Users = () => {
 
   const deleteHandler = async () => {
     try {
-      const res = await deleteUser(selected);
+      const res = await deleteUser(selected?._id).unwrap();
+      console.log(res);
       setSelected(null);
       setTimeout(() => {
         setOpenDialog(false);
       }, 500);
+      refetch();
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +69,6 @@ const Users = () => {
     <thead className='border-b border-gray-300'>
       <tr className='text-black text-left'>
         <th className='py-2'>Full Name</th>
-        <th className='py-2'>Title</th>
         <th className='py-2'>Email</th>
         <th className='py-2'>Role</th>
       </tr>
@@ -83,10 +86,9 @@ const Users = () => {
           </div>
           {user.name}
         </div>
-      </td>
-
-      <td className='p-2'>{user.title}</td>
+      </td> 
       <td className='p-2'>{user.email || "user.email.com"}</td>
+      <td className='p-2'>{user.role || "User"}</td>
 
       <td className='p-2 flex gap-4 justify-end'>
         <Button
@@ -100,7 +102,7 @@ const Users = () => {
           className='text-red-700 hover:text-red-500 font-semibold sm:px-0'
           label='Delete'
           type='button'
-          onClick={() => deleteClick(user?._id)}
+          onClick={() => deleteClick(user)}
         />
       </td>
     </tr>
@@ -124,7 +126,7 @@ const Users = () => {
             <table className='w-full mb-5'>
               <TableHeader />
               <tbody>
-                {allusers?.map((user, index) => (
+                {data?.map((user, index) => (
                   <TableRow key={index} user={user} />
                 ))}
               </tbody>

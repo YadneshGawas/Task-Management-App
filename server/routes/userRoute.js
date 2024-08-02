@@ -14,9 +14,13 @@ router.post("/reset/:userId/:token",resetPassword);
 
 
 /*INSIDE APP ROUTES*/
+/*MANIPULATION DATA*/
 router.post("/getuser/:userId", protectRoute, getUserProfile);
-router.post("/add", protectRoute,isAdminRoute, adduser);//New route added
+router.post("/add", protectRoute, isAdminRoute, adduser);//New route added
 router.put("/update", protectRoute, updateUserProfile);
+router.post("/delete", deleteUserProfile);
+
+/*VIEWING DATA*/
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
 router.put("/changepassword", protectRoute, changeUserPassword);

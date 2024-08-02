@@ -98,6 +98,14 @@ export const logoutUser = async (req, res) => {
   }
 };
 
+export const testingApis = async (req, res) => {
+  // Log the request and response details, including cookies from the request
+  const { userId, isAdmin } = req.user;
+  const { _id } = req.body;
+    //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
+  return res.status(200).json({ message: `Working ${userId}, ${isAdmin}, ${_id}` });
+};
+
 export const getTeamList = async (req, res) => {
   try {
     const users = await User.find().select("name role email isActive");
@@ -125,13 +133,6 @@ export const getNotificationsList = async (req, res) => {
   }
 };
 
-export const testingApis = async (req, res) => {
-  // Log the request and response details, including cookies from the request
-  const { userId, isAdmin } = req.user;
-  const { _id } = req.body;
-    //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
-  return res.status(200).json({ message: `Working ${userId}, ${isAdmin}, ${_id}` });
-};
 
 export const updateUserProfile = async (req, res) => {
   const { userId, isAdmin } = req.user;
@@ -248,13 +249,12 @@ export const activateUserProfile = async (req, res) => {
 
 export const deleteUserProfile = async (req, res) => {
   try {
-    const { id } = req.params;
-
+    const { id } = req.body;
     await User.findByIdAndDelete(id);
 
     res
       .status(200)
-      .json({ status: true, message: "User deleted successfully" });
+      .json({ status: true, message: `User deleted successfully ${id}` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ status: false, message: error.message });
@@ -325,7 +325,7 @@ export const resetPassword = async (req, res) => {
 
 export const adduser = async (req, res) => {
   try {
-    const { name, email, role } = req.body;
+    const { name, email, role, isAdmin } = req.body;
 
     const userExist = await User.findOne({ email });
 
@@ -337,8 +337,6 @@ export const adduser = async (req, res) => {
     }
 
     const password = Math.random().toString(36).substring(2, 12);
-
-    const isAdmin = false;
 
     const user = await User.create({
       name,

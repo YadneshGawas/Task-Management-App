@@ -11,7 +11,7 @@ import { getInitials } from "./../../assets/index";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-const UserList = ({ setTeam, team }) => {
+const   UserList = ({ setTeam, team }) => {
   const { user } = useSelector((state) => state.auth);
   const data = summary.users;
   const [selectedUsers, setSelectedUsers] = useState([]);

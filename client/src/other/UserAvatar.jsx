@@ -39,11 +39,8 @@ const UserAvatar = () => {
   const fetchLocal = async () => {
     try {
       const userJson = localStorage.getItem('userInfo');
-      console.log("Fetched from local unparsed storage", userJson);
-      console.log("user", user);
       if(userJson){
         const userObj = JSON.parse(userJson);
-        console.log("Fetched from local parsed storage", userObj);
         user = userObj;
       }else{
         console.log("No object found in local storage");
