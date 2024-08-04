@@ -23,7 +23,7 @@ router.post("/delete", deleteUserProfile);
 router.post("/getuser/:userId", getUserProfile);
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
-router.put("/changepassword", changeUserPassword);
+router.put("/changepassword",protectRoute, changeUserPassword);
 router.put("/read-noti", protectRoute, markNotificationRead);
 
 //FOR ADMIN ONLY - ADMIN ROUTES

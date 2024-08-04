@@ -70,9 +70,9 @@ export const loginUser = async (req, res) => {
 
     const isMatch = await user.matchPassword(password);
 
-    if(isAdmin){
+    // if(isAdmin){
       createJWT(res, user._id);
-    }
+    //}
 
     if (user && isMatch) {
       //isAdmin is added to make sure JWT is generated for members updated as admins
@@ -166,10 +166,11 @@ export const updateUserProfile = async (req, res) => {
 
     user.password = undefined;
 
+
     res.status(201).json({
       status: true,
       message: "Profile Updated Successfully.",
-      user: tst,  
+      user: updatedUser,  
     });
     // } else {
     //   res.status(404).json({ status: false, message: "User not found" });
@@ -211,17 +212,25 @@ export const changeUserPassword = async (req, res) => {
 
     const user = await User.findById(userId);
 
+    const oldPassword = req.body.oldPassword;
+
     if (user) {
-      user.password = req.body.password;
+      if(user.password === req.body.oldPassword){
 
-      await user.save();
-
-      user.password = undefined;
-
-      res.status(201).json({
-        status: true,
-        message: `Password chnaged successfully.`,
-      });
+        user.password = req.body.password;
+  
+        await user.save();
+  
+        user.password = undefined;
+  
+        res.status(201).json({
+          status: true,
+          message: `Password chnaged successfully.`,
+        });
+      }
+      else{
+        res.status(404).json({ status: false, message:"Old password is incorrect"})
+      }
     } else {
       res.status(504).json({ status: false, message: "User not found" });
     }

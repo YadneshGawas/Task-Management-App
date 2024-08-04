@@ -10,6 +10,7 @@ import Textbox from "./Textbox";
 import { toast } from "sonner";
 import { useChpassUserMutation } from "../redux/slice/api/userApi";
 
+
 const ChangePassword = ({ open, setOpen }) => {
   const {
     register,
@@ -19,14 +20,16 @@ const ChangePassword = ({ open, setOpen }) => {
   } = useForm();
 
   const password = watch("password");
-  const [chPass] = useChpassUserMutation();
+  const [cgPass] = useChpassUserMutation();
 
   const handleOnSubmit = async (data) => {
     try {
-      const res = await chPass(data).unwrap();
-      console.log(res);
-      toast.success("Password changed successfully");
+      const res = await cgPass(data).unwrap();
+      console.log(res.message );
+      toast.success(res.message);
+      //res.error.data.message
     } catch (error) {
+      toast.error(error?.data?.message || error.message);
       console.log(error);
     }
   };
@@ -42,12 +45,33 @@ const ChangePassword = ({ open, setOpen }) => {
         </Dialog.Title>
 
         <div className="mt-2 flex flex-col gap-6">
+        <Textbox
+            placeholder="Old Password"
+            type="password"
+            name="oldPassword"
+            label="Enter your old password"
+            className="w-full rounded-full"
+            register={register("oldPassword", {
+              required: "Password is required!",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long",
+              },
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+                message:
+                  "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+              },
+            })}
+            error={errors.password ? errors.password.message : ""}
+          />
           <Textbox
             placeholder="New Password"
             type="password"
             name="password"
             id="password"
-            label="Create Password"
+            label="Enter your new password"
             className="w-full rounded-full"
             register={register("password", {
               required: "Password is required!",

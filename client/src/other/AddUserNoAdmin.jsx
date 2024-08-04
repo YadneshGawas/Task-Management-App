@@ -1,24 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { Fragment, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { Dialog, Listbox, Transition } from "@headlessui/react";
-import Wrapper from "./Wrapper";
-import Textbox from "./Textbox";
-import Loading from "./Loader";
-import Button from "./Button";
-import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../redux/slice/authS";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import {
   useAddUserMutation,
   useGetTeamListQuery,
   useUpdateUserMutation,
 } from "../redux/slice/api/userApi";
-import { useDispatch } from "react-redux";
-import { MdCheckCircleOutline } from "react-icons/md";
-import { isAction } from "redux";
+import { setCredentials } from "../redux/slice/authS";
+import Button from "./Button";
+import Loading from "./Loader";
+import Textbox from "./Textbox";
+import Wrapper from "./Wrapper";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
