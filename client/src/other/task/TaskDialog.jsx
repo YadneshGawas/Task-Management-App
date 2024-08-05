@@ -19,7 +19,6 @@ const TaskDialog = ({ task }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-  const projectId = task._id;
   const duplicateHandler = () => {};
   const deleteClicks = () => {};
   const deleteHandler = () => {};
@@ -27,6 +26,7 @@ const TaskDialog = ({ task }) => {
 
   const isTasksPage = location.pathname.includes("/task");
 
+  const projectId = task.id;
 
   const items = [
     {
@@ -35,10 +35,10 @@ const TaskDialog = ({ task }) => {
       onClick: () => 
         {
         if (user.isAdmin && isTasksPage) {
-          navigate('/taskdetails', { state: { projectId } } );
+          navigate(`/taskdetails`, { state: { projectId } } );
         } 
         else if(user.isAdmin) {
-          navigate('/projects/task', { state: { projectId } });
+          navigate(`/projects/${projectId}`);
         }
         else
         {

@@ -9,6 +9,8 @@ import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
 import { useLocation } from 'react-router-dom';
+import { toast } from "sonner";
+import { useGetTasksQuery } from "../redux/slice/api/projApi";
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -17,31 +19,28 @@ const TASK_TYPE = {
 };
 
 const AdminTasks = () => {
+  
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-    
-  const location = useLocation();
-  const { projectId } = location.state || {};
+  
+  const { projectId } = useParams();
   console.log(projectId);
+  
   
   const [filters, setFilters] = useState({
     priority: "all",
     stage: "all",
   });
-
-  useEffect(() => {
-    console.log("Open variable status", open);
-  }, [open]);
-
+  
   const handleFilterChange = (filterName, value) => {
     setFilters({
       ...filters,
       [filterName]: value,
     });
   };
-
+  
   // Filter tasks based on the projectId and the filters
   const filteredTasks = tasks.filter((task) => {
     const priorityMatch = filters.priority === "all" || task.priority === filters.priority;
@@ -49,6 +48,11 @@ const AdminTasks = () => {
     const projectMatch = task.pid === projectId; // Ensure task belongs to the current project
     return priorityMatch && stageMatch && projectMatch;
   });
+  
+  
+  useEffect(() => {
+    console.log("Open variable status", open);
+  }, [open]);
 
   return loading ? (
     <div className="py-10">

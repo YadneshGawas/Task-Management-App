@@ -21,7 +21,7 @@ router.put("/update", protectRoute, updateUserProfile);
 router.post("/delete", deleteUserProfile);
 
 /*VIEWING DATA*/
-router.get("/getuser/:userId", getUserProfile);
+//router.post("/getuser/:userId", getUserProfile);
 
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);

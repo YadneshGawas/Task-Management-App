@@ -38,26 +38,6 @@ const UserAvatar = () => {
     }
   };
 
-  // const fetchLocal = async () => {
-  //   try {
-  //     const userJson = localStorage.getItem('userInfo');
-  //     if(userJson){
-  //       const userObj = JSON.parse(userJson);
-  //       user = userObj;
-  //     }else{
-  //       console.log("No object found in local storage");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (user) {
-  //     fetchLocal();
-  //   }
-  // }, []); 
-
   return (
     <>
       <div>

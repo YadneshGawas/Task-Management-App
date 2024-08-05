@@ -22,38 +22,38 @@ const UserInfo = ({ open, setOpen }) => {
 
   //const [getUser] = useGetUserQuery();
 
-  const refreshData = async () => {
-    try {
-      const res = await fetch(`api/user/getuser/${userId}`, {
-        method: "POST",
-        body: JSON.stringify({ userId }),
-      });
-      if (!res.ok) {
-        throw new Error("Response not ok", ...res.data);
-      }
-      // Parse the JSON response
-      const userData = await res.json();
-      console.log("User data:", userData);
-      dispatch(setCredentials(userData));
-      // Create an object from the response data
-      const userObject = {
-        id: userData._id,
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-        // Add other properties as needed
-      };
-      setUserObject(userObject);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const refreshData = async () => {
+  //   try {
+  //     const res = await fetch(`api/user/getuser/${userId}`, {
+  //       method: "POST",
+  //       body: JSON.stringify({ userId }),
+  //     });
+  //     if (!res.ok) {
+  //       throw new Error("Response not ok", ...res.data);
+  //     }
+  //     // Parse the JSON response
+  //     const userData = await res.json();
+  //     console.log("User data:", userData);
+  //     dispatch(setCredentials(userData));
+  //     // Create an object from the response data
+  //     const userObject = {
+  //       id: userData._id,
+  //       name: userData.name,
+  //       email: userData.email,
+  //       role: userData.role,
+  //       // Add other properties as needed
+  //     };
+  //     setUserObject(userObject);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (open) {
-      refreshData();
-    }
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     refreshData();
+  //   }
+  // }, [open]);
 
   return (
     <Wrapper open={open} setOpen={setOpen}>
@@ -63,19 +63,19 @@ const UserInfo = ({ open, setOpen }) => {
       >
         User Profile
       </Dialog.Title>
-      {userObject ? (
+      {user ? (
       <div className="mt-2 flex flex-col gap-6">
         <div className="flex items-center gap-4 bg-white p-8">
           <div className="w-16 h-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl ">
             <span className="text-center font-bold">
-              {getInitials(userObject.name)}
+              {getInitials(user.name)}
             </span>
           </div>
           <div className="flex flex-col gap-y-1">
-            <p className="text-black text-xl font-bold">{userObject.name}</p>
-            <span className="text-base text-gray-500">{userObject.role}</span>
+            <p className="text-black text-xl font-bold">{user.name}</p>
+            <span className="text-base text-gray-500">{user.role}</span>
             <span className="text-blue-500">
-              {userObject.email ?? "email@example.com"}
+              {user.email ?? "email@example.com"}
             </span>
           </div>
         </div>

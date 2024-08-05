@@ -58,7 +58,7 @@ function App() {
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
           <Route path="/taskdetails" element={<TaskDetails />} />
-          <Route path="/projects/task" element={<AdminTasks />} />
+          <Route path="/projects/:projectId" element={<AdminTasks />} />
         </Route>
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<ForgotPassword />} />

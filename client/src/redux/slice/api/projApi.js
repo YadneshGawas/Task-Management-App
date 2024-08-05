@@ -17,7 +17,13 @@ export const projApi = apiSlice.injectEndpoints({
                 method: "GET",
             })
         }),
+        getTasks: builder.query({
+            query: (id) => ({
+                url: `${USER_URL}/getTasks/${id}`,
+                method: "GET",
+            })
+        })
     }),
 });
 
-export const { useAddProjectMutation, useGetProjectQuery } =  projApi;
+export const { useAddProjectMutation, useGetProjectQuery, useGetTasksQuery } =  projApi;
