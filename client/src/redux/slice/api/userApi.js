@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { apiSlice } from "../apiS";
 
 const USER_URL = "/user";
@@ -36,7 +37,7 @@ export const userApi = apiSlice.injectEndpoints({
             query: (data) =>({
                 url: `${USER_URL}/getuser`,
                 method: "GET",
-                body: data,
+                //body: data,
             })
         }),
         getTeamList: builder.query({

@@ -1,0 +1,10 @@
+[
+  {
+    "caller": "POST /getuser/:userId",
+    "callee": "controller/userCont"
+  },
+  {
+    "caller": "POST /getuser/:userId",
+    "callee": "mongodb/users"
+  }
+]

@@ -1,0 +1,60 @@
+[
+  {
+    "name": "controller",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "projectCont",
+        "children": [
+          {
+            "type": "function",
+            "name": "getProjects",
+            "static": true,
+            "location": "controller\\projectCont.js:56"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "mongodb",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "projects",
+        "children": [
+          {
+            "type": "function",
+            "name": "find",
+            "static": false,
+            "location": "mongodb/projects:1"
+          }
+        ]
+      },
+      {
+        "type": "class",
+        "name": "users",
+        "children": [
+          {
+            "type": "function",
+            "name": "createIndex",
+            "static": false,
+            "location": "mongodb/users:2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "GET /getproject"
+      }
+    ]
+  }
+]

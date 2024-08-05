@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /createproject",
+    "parameters": "(date,title,due,lTeam,uTeam,stage,priority)",
+    "status": 200
+  }
+]

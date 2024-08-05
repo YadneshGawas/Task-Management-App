@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /api/user/getuser/66af9db7479f7ad5afe7161b",
+    "parameters": "()",
+    "status": 404
+  }
+]

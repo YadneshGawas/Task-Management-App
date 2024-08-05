@@ -2,10 +2,12 @@
 import express from 'express';
 import userRoute from './userRoute.js';
 import taskRoute from './taskRoute.js';
+import projectRoute from './projectRoute.js';
 
 const router = express.Router();
 
 router.use("/user",userRoute); //api/user/login
 router.use("/task",taskRoute);
+router.use("/project", projectRoute);
 
 export default router;

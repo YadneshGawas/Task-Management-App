@@ -1,0 +1,22 @@
+[
+  {
+    "caller": "GET /api/project/getproject",
+    "callee": "controller/projectCont"
+  },
+  {
+    "caller": "GET /api/project/getproject",
+    "callee": "middleware/authWare"
+  },
+  {
+    "caller": "GET /api/project/getproject",
+    "callee": "mongodb/projects"
+  },
+  {
+    "caller": "GET /api/project/getproject",
+    "callee": "mongodb/users"
+  },
+  {
+    "caller": "middleware/authWare",
+    "callee": "controller/userCont"
+  }
+]

@@ -1,33 +1,41 @@
 /* eslint-disable no-unused-vars */
-import Notice from "../models/notification.js";
-import User from "../models/user.js";
+import Notif from '../schemas/notifications.js';
+import User from '../schemas/user.js';
 import Project from './../schemas/projects.js';
+
+export const testingApis = async (req, res) => {
+  // Log the request and response details, including cookies from the request
+  const { title} = req.body;
+  //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
+  return res
+    .status(200)
+    .json({ message: `Working ${title}` });
+};
 
 export const createProject = async (req, res) => {
   try {
     const { userId } = req.user;
+    const { title, lTeam, uTeam, stage, date, due, priority, assets } = req.body;
 
-    const { title, team, stage, date, due, priority, assets } = req.body;
+    // let text = "New project has been assigned to you";
+    // if (team?.length > 1) {
+    //   text = text + ` and ${team?.length - 1} others.`;
+    // }
 
-    let text = "New project has been assigned to you";
-    if (team?.length > 1) {
-      text = text + ` and ${team?.length - 1} others.`;
-    }
+    // text =
+    //   text +
+    //   ` The Project priority is set a ${priority} priority, so check and act accordingly. The project due date is ${due}. Thank you!!!`;
 
-    text =
-      text +
-      ` The Project priority is set a ${priority} priority, so check and act accordingly. The project due date is ${due}. Thank you!!!`;
-
-
-    const Project = await Project.create({
-      userId,
+    const project = await Project.create({
       title,
-      team,
-      stage: stage.toLowerCase(),
-      date,
       due,
+      lTeam,
+      uTeam,
       priority: priority.toLowerCase(),
+      stage: stage.toLowerCase(),
       assets,
+      date,
+      creator: userId,
     });
 
     // await Notice.create({
@@ -38,25 +46,46 @@ export const createProject = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, Project, message: "Project created successfully." });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
+      .json({ status: true,userId, Project, message: "Project created successfully.", project: Project });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ status: false, message: error.message });
+    }
+  };
 
-
-export const dashboardStatistics = async (req, res) => {
-  try {
-    const { userId, isAdmin } = req.user;
-
-    const allProjects = isAdmin
+  export const getProjects = async (req, res) => {
+    try {
+      const { userId } = req.user; // Assuming req.user contains the authenticated user's information
+      //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+  
+      // Find projects where the userId is in the leads array
+      const projects = await Project.find({ lTeam: { $in: [userId] } })
+        // .populate({
+        //   path: "team",
+        //   select: "name title role email",
+        // })
+  
+      res.status(200).json({
+        projects, // Return the array of projects
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ status: false, message: error.message });
+    }
+  };
+  
+  
+  export const dashboardStatistics = async (req, res) => {
+    try {
+      const { userId, isAdmin } = req.user;
+      
+      const allProjects = isAdmin
       ? await Project.find({
-          isTrashed: false,
-        })
-          .populate({
-            path: "team",
-            select: "name role title email",
+        isTrashed: false,
+      })
+      .populate({
+        path: "team",
+        select: "name role title email",
           })
           .sort({ _id: -1 })
       : await Project.find({
@@ -120,7 +149,7 @@ export const dashboardStatistics = async (req, res) => {
   }
 };
 
-export const getProjects = async (req, res) => {
+export const getProject = async (req, res) => {
   try {
     const { stage, isTrashed } = req.query;
 
@@ -149,29 +178,6 @@ export const getProjects = async (req, res) => {
   }
 };
 
-export const getProject = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const Project = await Project.findById(id)
-      .populate({
-        path: "team",
-        select: "name title role email",
-      })
-      .populate({
-        path: "activities.by",
-        select: "name",
-      });
-
-    res.status(200).json({
-      status: true,
-      Project,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
 
 export const updateProject = async (req, res) => {
   try {
@@ -182,9 +188,9 @@ export const updateProject = async (req, res) => {
 
     Project.title = title;
     Project.date = date;
-    Project.priority = priority.toLowerCase();
+    Project.priority = priority;
     Project.assets = assets;
-    Project.stage = stage.toLowerCase();
+    Project.stage = stage;
     Project.team = team;
 
     await Project.save();

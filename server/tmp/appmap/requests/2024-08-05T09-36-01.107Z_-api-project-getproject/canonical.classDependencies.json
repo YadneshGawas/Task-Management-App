@@ -1,0 +1,6 @@
+[
+  {
+    "caller": "POST /api/project/getproject",
+    "callee": "middleware/errorWare"
+  }
+]

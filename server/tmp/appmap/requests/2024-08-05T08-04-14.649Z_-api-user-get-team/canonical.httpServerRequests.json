@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /get-team",
+    "parameters": "()",
+    "status": 200
+  }
+]

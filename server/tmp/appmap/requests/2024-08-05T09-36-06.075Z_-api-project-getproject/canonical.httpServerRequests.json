@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /getproject",
+    "parameters": "(title,date,due,priority,stage,assets,lTeam,uTeam,__v)",
+    "status": 200
+  }
+]

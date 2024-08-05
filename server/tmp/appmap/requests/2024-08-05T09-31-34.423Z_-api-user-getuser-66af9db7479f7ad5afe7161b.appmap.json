@@ -1,0 +1,143 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/user/getuser/66af9db7479f7ad5afe7161b",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "close",
+          "Content-Length": "37",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "text/plain;charset=UTF-8",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/projects",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1"
+      },
+      "id": 1,
+      "thread_id": 0
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "routeNotFound",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /api/user/getuser/66af9db7479f7ad5afe7161b]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "errorWare",
+      "path": "middleware\\errorWare.js",
+      "lineno": 2
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "elapsed": 0.00016089999917312525
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 404,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Security-Policy": "default-src 'none'",
+          "X-Content-Type-Options": "nosniff",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "1583"
+        },
+        "return_value": {
+          "class": "[ResponseBody]",
+          "value": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Error: Route not found: /api/user/getuser/66af9db7479f7ad5afe7161b<br> &nbsp; &nbsp;at file:///C:/Users/yadne/Desktop/VSProjects/TaskManager/main_app/server/middleware/errorWare.js:46:17<br> &nbsp; &nbsp;at record (C:\\Users\\yadne\\AppData\\Local\\npm-cache\\_npx\\c76987c9a3c183fa\\node_modules\\appmap-node\\dist\\recorder.js:94:28)<br> &nbsp; &nbsp;at routeNotFound (file:///C:/Users/yadne/Desktop/VSProjects/TaskManager/main_app/server/middleware/errorWare.js:45:60)<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\layer.js:95:5)<br> &nbsp; &nbsp;at trim_prefix (C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:328:13)<br> &nbsp; &nbsp;at C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:286:9<br> &nbsp; &nbsp;at Function.process_params (C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:346:12)<br> &nbsp; &nbsp;at next (C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:280:10)<br> &nbsp; &nbsp;at C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:646:15<br> &nbsp; &nbsp;at next (C:\\Users\\yadne\\Desktop\\VSProjects\\TaskManager\\main_app\\server\\node_modules\\express\\lib\\router\\index.js:265:14)</pre>\n</body>\n</html>\n"
+        }
+      },
+      "id": 4,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.010158500001125503
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "POST /api/user/getuser/66af9db7479f7ad5afe7161b (404) — 2024-08-05T09:31:34.423Z"
+  },
+  "classMap": [
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "errorWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "routeNotFound",
+              "static": true,
+              "location": "middleware\\errorWare.js:2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /api/user/getuser/66af9db7479f7ad5afe7161b"
+        }
+      ]
+    }
+  ]
+}

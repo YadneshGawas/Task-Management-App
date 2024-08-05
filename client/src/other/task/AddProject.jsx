@@ -11,18 +11,22 @@ import SelectList from "../SelectList";
 import Button from "../Button";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import LeadsList from "./LeadsList";
+import { toast } from "sonner";
+import { useAddProjectMutation } from "../../redux/slice/api/projApi.js";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
-const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
+const PRIORIRY = ["HIGH", "MEDIUM", "LOW"];
 
 const uploadedFileURLs = [];
 
-const AddProject = ({ proj, open, setOpen }) => {
-  const { user } = useSelector((state) => state.auth);
+const AddProject = ({ open, setOpen }) => {
+
+  //Getch details of person reatong the proj from local storage
+  const user = (JSON.parse(localStorage.getItem("userInfo")));
+  const userid = user._id;
 
   const location = useLocation();
-
-  const id = proj?._id;
 
   const getTitle = () => {
     const isTasksPage = location.pathname.includes("/task");
@@ -56,7 +60,7 @@ const AddProject = ({ proj, open, setOpen }) => {
     return "Project Stage";
   };
 
-  const task = "";
+
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -70,15 +74,37 @@ const AddProject = ({ proj, open, setOpen }) => {
     }
   });
 
-  const [team, setTeam] = useState(task?.team || []);
-  const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
-  const [priority, setPriority] = useState(
-    task?.priority?.toUpperCase() || PRIORIRY[2]
-  );
+  const [lTeam, setLTeam] = useState([]);
+
+  const [uTeam, setUTeam] = useState([]);
+
+  const [stage, setStage] = useState('');
+  const [priority, setPriority] = useState('');
+
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  const submitHandler = () => {};
+  const [addproj] = useAddProjectMutation();
+ 
+  const submitHandler = async(data) => {
+    try{
+      const projData = {...data, lTeam, uTeam, stage, priority};
+      console.log(projData);
+      const res = await addproj(projData).unwrap();
+      console.log(res);
+      toast.success("Success");
+    }catch(error){
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+  console.log("uteam:", uTeam);
+  console.log("lteam:", lTeam);
+  console.log("Stage:", stage);
+  console.log("Priority:", priority);
+}, [lTeam,uTeam,stage,priority]);
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
@@ -92,25 +118,27 @@ const AddProject = ({ proj, open, setOpen }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {user.isAdmin ? getTitle(): "ADD TASK"}
+            {getTitle()}
           </Dialog.Title>
 
           <div className="mt-2 flex flex-col gap-6">
             <Textbox
-              placeholder={user.isAdmin ? getPlaceholder(): "Task Title"}
+              placeholder={getPlaceholder()}
               type="text"
               name="title"
-              label={user.isAdmin ? getPlaceholder(): "Task Title"}
+              label={getPlaceholder()}
               className="w-full rounded"
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : ""}
             />
 
-            <UserList setTeam={setTeam} team={team} />
+            <LeadsList setLTeam={setLTeam} admin={userid} lTeam={lTeam} />
+
+            <UserList setUTeam={setUTeam} uTeam={uTeam} />
 
             <div className="flex gap-4">
               <SelectList
-                label={user.isAdmin ? getStage() : "Task Stage"}
+                label={getStage()}
                 lists={LISTS}
                 selected={stage}
                 setSelected={setStage}
@@ -120,7 +148,7 @@ const AddProject = ({ proj, open, setOpen }) => {
                 placeholder="Date"
                 type="date"
                 name="default"
-                label={user.isAdmin ? getDate() : "Task Date"}
+                label={getDate()}
                 read={true}
                 className="w-full rounded"
                 defaultValue={new Date().toISOString().split("T")[0]}
@@ -135,11 +163,11 @@ const AddProject = ({ proj, open, setOpen }) => {
               <Textbox
                 placeholder="Date"
                 type="date"
-                name="date"
+                name="due"
                 label="Due Date"
                 read={false}
                 className="w-full rounded"
-                register={register("date", {
+                register={register("due", {
                   required: "Date is required!",
                 })}
                 error={errors.date ? errors.date.message : ""}

@@ -1,0 +1,102 @@
+[
+  {
+    "name": "controller",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "projectCont",
+        "children": [
+          {
+            "type": "function",
+            "name": "getProjects",
+            "static": true,
+            "location": "controller\\projectCont.js:56"
+          }
+        ]
+      },
+      {
+        "type": "class",
+        "name": "userCont",
+        "children": [
+          {
+            "type": "function",
+            "name": "getTeamList",
+            "static": true,
+            "location": "controller\\userCont.js:118"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "middleware",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "authWare",
+        "children": [
+          {
+            "type": "function",
+            "name": "isAdminRoute",
+            "static": true,
+            "location": "middleware\\authWare.js:39"
+          },
+          {
+            "type": "function",
+            "name": "protectRoute",
+            "static": true,
+            "location": "middleware\\authWare.js:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "mongodb",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "projects",
+        "children": [
+          {
+            "type": "function",
+            "name": "find",
+            "static": false,
+            "location": "mongodb/projects:4"
+          }
+        ]
+      },
+      {
+        "type": "class",
+        "name": "users",
+        "children": [
+          {
+            "type": "function",
+            "name": "findOne",
+            "static": false,
+            "location": "mongodb/users:2"
+          },
+          {
+            "type": "function",
+            "name": "find",
+            "static": false,
+            "location": "mongodb/users:3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "GET /api/user/get-team"
+      }
+    ]
+  }
+]

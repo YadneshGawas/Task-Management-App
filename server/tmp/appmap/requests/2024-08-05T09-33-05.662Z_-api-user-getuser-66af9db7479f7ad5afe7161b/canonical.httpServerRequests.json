@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /getuser/:userId",
+    "parameters": "(userId)",
+    "status": 200
+  }
+]

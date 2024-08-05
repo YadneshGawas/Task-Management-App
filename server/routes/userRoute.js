@@ -3,6 +3,7 @@ import express from "express";
 
 import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserProfile, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, testingApis, updateUserProfile } from "../controller/userCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
+import { createProject, getProjects } from "../controller/projectCont.js";
 
 const router = express.Router();
 /*OUTSIDE APP ROUTES*/
@@ -20,7 +21,8 @@ router.put("/update", protectRoute, updateUserProfile);
 router.post("/delete", deleteUserProfile);
 
 /*VIEWING DATA*/
-router.post("/getuser/:userId", getUserProfile);
+router.get("/getuser/:userId", getUserProfile);
+
 router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
 router.put("/changepassword",protectRoute, changeUserPassword);

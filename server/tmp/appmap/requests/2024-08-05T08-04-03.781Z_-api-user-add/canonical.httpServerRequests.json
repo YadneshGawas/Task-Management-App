@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /add",
+    "parameters": "(name,email,role,isAdmin)",
+    "status": 400
+  }
+]

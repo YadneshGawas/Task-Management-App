@@ -1,0 +1,7 @@
+[
+  {
+    "route": "OPTIONS /api/user/delete",
+    "parameters": "()",
+    "status": 204
+  }
+]

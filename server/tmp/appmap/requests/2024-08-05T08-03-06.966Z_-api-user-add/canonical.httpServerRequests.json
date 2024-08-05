@@ -1,0 +1,7 @@
+[
+  {
+    "route": "OPTIONS /api/user/add",
+    "parameters": "()",
+    "status": 204
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "controller",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "projectCont",
+        "children": [
+          {
+            "type": "function",
+            "name": "testingApis",
+            "static": true,
+            "location": "controller\\projectCont.js:6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /createproject"
+      }
+    ]
+  }
+]

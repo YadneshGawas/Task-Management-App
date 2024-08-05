@@ -1,0 +1,527 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/user/add",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "83",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "application/json",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/add"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "name",
+          "class": "String",
+          "value": "'Yadnesh'"
+        },
+        {
+          "name": "email",
+          "class": "String",
+          "value": "'21co73@aitdgoa.edu.in'"
+        },
+        {
+          "name": "role",
+          "class": "String",
+          "value": "'Student'"
+        },
+        {
+          "name": "isAdmin",
+          "class": "Boolean",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "protectRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 8
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 8
+      },
+      "elapsed": 0.04210200000125042
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 9,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 10,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 2,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 5,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 9,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 10,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 6,
+      "parent_id": 5,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 11
+      },
+      "elapsed": 0.001467199999751756
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 7,
+      "parent_id": 4,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    _id: new ObjectId('66af9db7479f7ad5afe7161b'),\n    email: 'yadnesh.gawas@gmail.com',\n    isAdmin: true\n  }\n}",
+        "object_id": 12
+      },
+      "elapsed": 0.009956599998986349
+    },
+    {
+      "event": "call",
+      "id": 8,
+      "thread_id": 0,
+      "method_id": "isAdminRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 39
+    },
+    {
+      "event": "call",
+      "id": 9,
+      "thread_id": 0,
+      "method_id": "adduser",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "userCont",
+      "path": "controller\\userCont.js",
+      "lineno": 348
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 10,
+      "parent_id": 9,
+      "return_value": {
+        "class": "Promise<ServerResponse>",
+        "value": "Promise {\n  ServerResponse {\n    _events: [Object: null prototype],\n    _eventsCount: 2,\n    _maxListeners: undefined,\n    outputData: [],\n    outputSize: 0,\n    writable: true,\n    destroyed: false,\n    _last: false,\n    chunkedEncoding: false,\n    shouldKeepAlive: true,\n    maxRequestsOnConnectionReached: false,\n    _defaultKeepAlive: true,\n    useChunkedEncodingByDefault: true,\n    sendDate: true,\n    _removedConnection: false,\n    _removedContLen: false,\n    _removedTE: false,\n    strictContentLength: false,\n    _contentLength: '48',\n    _hasBody: true,\n    _trailer: '',\n    finished: true,\n    _headerSent: true,\n    _closed: false,\n    socket: [Socket],\n    _header: 'HTTP/1.1 400 Bad Request\\r\\n' +\n      'X-Powered-By: Express\\r\\n' +\n      'Access-Control-Allow-Origin: http://localhost:4555\\r\\n' +\n      'Vary: Origin\\r\\n' +\n      'Access-Control-Allow-Credentials: true\\r\\n' +\n      'Content-Type: application/json; charset=utf-8\\r\\n' +\n      'Content-Length: 48\\r\\n' +\n      'ETag: W/\"30-3uJZIelE9AYBtQwPW1DSfVErcyA\"\\r\\n' +\n      'Date: Mon, 05 Aug 2024 08:04:03 GMT\\r\\n' +\n      'Connection: keep-alive\\r\\n' +\n      'Keep-Alive: timeout=5\\r\\n' +\n      '\\r\\n',\n    _keepAliveTimeout: 5000,\n    _onPendingData: [Function: bound updateOutgoingData],\n    req: [IncomingMessage],\n    _sent100: false,\n    _expect_continue: false,\n    _maxRequestsPerSocket: 0,\n    write: [Function (anonymous)],\n    end: [Function (anonymous)],\n    locals: [Object: null prototype] {},\n    _startAt: [Array],\n    _startTime: 2024-08-05T08:04:03.868Z,\n    writeHead: [Function: writeHead],\n    __onFinished: [Function],\n    statusCode: 400,\n    statusMessage: 'Bad Request',\n    [Symbol(shapeMode)]: false,\n    [Symbol(kCapture)]: false,\n    [Symbol(kBytesWritten)]: 0,\n    [Symbol(kNeedDrain)]: false,\n    [Symbol(corked)]: 0,\n    [Symbol(kOutHeaders)]: [Object: null prototype],\n    [Symbol(errored)]: null,\n    [Symbol(kHighWaterMark)]: 16384,\n    [Symbol(kRejectNonStandardBodyWrites)]: false,\n    [Symbol(kUniqueHeaders)]: null\n  }\n}",
+        "object_id": 13
+      },
+      "elapsed": 0.01511949999985518
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 11,
+      "parent_id": 8,
+      "elapsed": 0.0019147999992128462
+    },
+    {
+      "event": "call",
+      "id": 12,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "email",
+              "class": "String"
+            }
+          ],
+          "value": "{ email: '21co73@aitdgoa.edu.in' }",
+          "object_id": 14,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 15,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 2,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 13,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "email",
+              "class": "String"
+            }
+          ],
+          "value": "{ email: '21co73@aitdgoa.edu.in' }",
+          "object_id": 14,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 15,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 14,
+      "parent_id": 13,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 16
+      },
+      "elapsed": 0.0003546999996615341
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 15,
+      "parent_id": 12,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    _id: new ObjectId('66af9dc3479f7ad5afe7161e'),\n    name: 'admin',\n    email: '21co73@aitdgoa.edu.in',\n    role: 'Admin',\n    password: 'Beste@123',\n    isAdmin: false,\n    isActive: true,\n    createdAt: 2024-08-04T15:26:59.495Z,\n    updatedAt: 2024-08-04T15:37:53.451Z,\n    __v: 0\n  }\n}",
+        "object_id": 17
+      },
+      "elapsed": 0.005309599999236525
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 400,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "48",
+          "Etag": "W/\"30-3uJZIelE9AYBtQwPW1DSfVErcyA\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "status",
+              "class": "Boolean"
+            },
+            {
+              "name": "message",
+              "class": "String"
+            }
+          ],
+          "value": "{ status: false, message: 'User already exists' }",
+          "object_id": 18
+        }
+      },
+      "id": 16,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.08744359999946028
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "POST /api/user/add (400) — 2024-08-05T08:04:03.781Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "userCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "adduser",
+              "static": true,
+              "location": "controller\\userCont.js:348"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "authWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "isAdminRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:39"
+            },
+            {
+              "type": "function",
+              "name": "protectRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "users",
+          "children": [
+            {
+              "type": "function",
+              "name": "findOne",
+              "static": false,
+              "location": "mongodb/users:2"
+            },
+            {
+              "type": "function",
+              "name": "find",
+              "static": false,
+              "location": "mongodb/users:3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /add"
+        }
+      ]
+    }
+  ]
+}

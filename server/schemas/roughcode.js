@@ -47,3 +47,22 @@ const createProject = async () => {
   }
 };
 
+//REMOVE LEAD USING METHODS
+const removeLeadFromProject = async (req, res) => {
+  try {
+    const { projectId, userId } = req.body; // Assuming projectId and userId are passed in the request body
+
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    await project.removeLead(userId);
+
+    res.status(200).json({ message: 'Lead removed successfully', project });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+

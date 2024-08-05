@@ -1,0 +1,30 @@
+[
+  {
+    "name": "middleware",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "authWare",
+        "children": [
+          {
+            "type": "function",
+            "name": "protectRoute",
+            "static": true,
+            "location": "middleware\\authWare.js:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "GET /getproject"
+      }
+    ]
+  }
+]

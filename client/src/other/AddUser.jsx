@@ -13,12 +13,14 @@ import { setCredentials } from "../redux/slice/authS";
 import { toast } from "sonner";
 import {
   useAddUserMutation,
+  useChpassUserMutation,
   useGetTeamListQuery,
   useUpdateUserMutation,
 } from "../redux/slice/api/userApi";
 import { useDispatch } from "react-redux";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { isAction } from "redux";
+import { useAddProjectMutation } from "../redux/slice/api/projApi";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};

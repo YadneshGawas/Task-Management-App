@@ -1,0 +1,10 @@
+[
+  {
+    "caller": "POST /delete",
+    "callee": "controller/userCont"
+  },
+  {
+    "caller": "POST /delete",
+    "callee": "mongodb/users"
+  }
+]

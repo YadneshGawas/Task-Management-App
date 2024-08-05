@@ -1,0 +1,171 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/project/createproject",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "61",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "application/json",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/createproject"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "date",
+          "class": "String",
+          "value": "'2024-08-05'"
+        },
+        {
+          "name": "title",
+          "class": "String",
+          "value": "'Pdxcrfccfe'"
+        },
+        {
+          "name": "due",
+          "class": "String",
+          "value": "'2024-08-15'"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "testingApis",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /createproject]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "projectCont",
+      "path": "controller\\projectCont.js",
+      "lineno": 6
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise",
+        "value": "Promise {\n  ServerResponse {\n    _events: [Object: null prototype],\n    _eventsCount: 2,\n    _maxListeners: undefined,\n    outputData: [],\n    outputSize: 0,\n    writable: true,\n    destroyed: false,\n    _last: false,\n    chunkedEncoding: false,\n    shouldKeepAlive: true,\n    maxRequestsOnConnectionReached: false,\n    _defaultKeepAlive: true,\n    useChunkedEncodingByDefault: true,\n    sendDate: true,\n    _removedConnection: false,\n    _removedContLen: false,\n    _removedTE: false,\n    strictContentLength: false,\n    _contentLength: '32',\n    _hasBody: true,\n    _trailer: '',\n    finished: true,\n    _headerSent: true,\n    _closed: false,\n    socket: [Socket],\n    _header: 'HTTP/1.1 200 OK\\r\\n' +\n      'X-Powered-By: Express\\r\\n' +\n      'Access-Control-Allow-Origin: http://localhost:4555\\r\\n' +\n      'Vary: Origin\\r\\n' +\n      'Access-Control-Allow-Credentials: true\\r\\n' +\n      'Content-Type: application/json; charset=utf-8\\r\\n' +\n      'Content-Length: 32\\r\\n' +\n      'ETag: W/\"20-8VqZFt5XV465xKgTNm9VturAnpU\"\\r\\n' +\n      'Date: Mon, 05 Aug 2024 08:08:31 GMT\\r\\n' +\n      'Connection: keep-alive\\r\\n' +\n      'Keep-Alive: timeout=5\\r\\n' +\n      '\\r\\n',\n    _keepAliveTimeout: 5000,\n    _onPendingData: [Function: bound updateOutgoingData],\n    req: [IncomingMessage],\n    _sent100: false,\n    _expect_continue: false,\n    _maxRequestsPerSocket: 0,\n    write: [Function (anonymous)],\n    end: [Function (anonymous)],\n    locals: [Object: null prototype] {},\n    _startAt: [Array],\n    _startTime: 2024-08-05T08:08:31.132Z,\n    writeHead: [Function: writeHead],\n    __onFinished: [Function],\n    statusCode: 200,\n    statusMessage: 'OK',\n    [Symbol(shapeMode)]: false,\n    [Symbol(kCapture)]: false,\n    [Symbol(kBytesWritten)]: 0,\n    [Symbol(kNeedDrain)]: false,\n    [Symbol(corked)]: 0,\n    [Symbol(kOutHeaders)]: [Object: null prototype],\n    [Symbol(errored)]: null,\n    [Symbol(kHighWaterMark)]: 16384,\n    [Symbol(kRejectNonStandardBodyWrites)]: false,\n    [Symbol(kUniqueHeaders)]: null\n  }\n}",
+        "object_id": 8
+      },
+      "elapsed": 0.0036799000008613802
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "32",
+          "Etag": "W/\"20-8VqZFt5XV465xKgTNm9VturAnpU\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "message",
+              "class": "String"
+            }
+          ],
+          "value": "{ message: 'Working Pdxcrfccfe' }",
+          "object_id": 9
+        }
+      },
+      "id": 4,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.030926399998861598
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "POST /api/project/createproject (200) — 2024-08-05T08:08:31.101Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "projectCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "testingApis",
+              "static": true,
+              "location": "controller\\projectCont.js:6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /createproject"
+        }
+      ]
+    }
+  ]
+}

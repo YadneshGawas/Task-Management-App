@@ -10,15 +10,16 @@ import { summary } from "./../../assets/data";
 import { getInitials } from "./../../assets/index";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useGetTeamListQuery } from "../../redux/slice/api/userApi";
 
-const   UserList = ({ setTeam, team }) => {
+const   UserList = ({ setUTeam, uTeam }) => {
   const { user } = useSelector((state) => state.auth);
-  const data = summary.users;
+  const { data, refetch } = useGetTeamListQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const handleChange = (el) => {
     setSelectedUsers(el);
-    setTeam(el?.map((u) => u._id));
+    setUTeam(el?.map((u) => u._id));
   };
 
   const location = useLocation();

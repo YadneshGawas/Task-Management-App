@@ -1,0 +1,231 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/user/delete",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "33",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "application/json",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/delete"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "id",
+          "class": "String",
+          "value": "'66af9dc3479f7ad5afe7161e'"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "deleteUserProfile",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /delete]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "userCont",
+      "path": "controller\\userCont.js",
+      "lineno": 269
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 8
+      },
+      "elapsed": 0.012245899999470566
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "findOneAndDelete",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 9,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 10,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 2,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 5,
+      "parent_id": 4,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    _id: new ObjectId('66af9dc3479f7ad5afe7161e'),\n    name: 'admin',\n    email: '21co73@aitdgoa.edu.in',\n    role: 'Admin',\n    password: 'Beste@123',\n    isAdmin: false,\n    isActive: true,\n    createdAt: 2024-08-04T15:26:59.495Z,\n    updatedAt: 2024-08-04T15:37:53.451Z,\n    __v: 0\n  }\n}",
+        "object_id": 11
+      },
+      "elapsed": 0.0025255999989894917
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "78",
+          "Etag": "W/\"4e-iNxI8GEuCT3h9yemMg9y1/SjRgs\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "status",
+              "class": "Boolean"
+            },
+            {
+              "name": "message",
+              "class": "String"
+            }
+          ],
+          "value": "{\n  status: true,\n  message: 'User deleted successfully 66af9dc3479f7ad5afe7161e'\n}",
+          "object_id": 12
+        }
+      },
+      "id": 6,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.02625110000008135
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "POST /api/user/delete (200) — 2024-08-05T08:04:14.487Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "userCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "deleteUserProfile",
+              "static": true,
+              "location": "controller\\userCont.js:269"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "users",
+          "children": [
+            {
+              "type": "function",
+              "name": "findOneAndDelete",
+              "static": false,
+              "location": "mongodb/users:2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /delete"
+        }
+      ]
+    }
+  ]
+}

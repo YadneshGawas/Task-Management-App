@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /api/user/get-team",
+    "parameters": "()",
+    "status": null
+  }
+]

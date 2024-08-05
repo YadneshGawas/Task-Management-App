@@ -1,0 +1,48 @@
+[
+  {
+    "name": "controller",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "userCont",
+        "children": [
+          {
+            "type": "function",
+            "name": "deleteUserProfile",
+            "static": true,
+            "location": "controller\\userCont.js:269"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "mongodb",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "users",
+        "children": [
+          {
+            "type": "function",
+            "name": "findOneAndDelete",
+            "static": false,
+            "location": "mongodb/users:2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /delete"
+      }
+    ]
+  }
+]

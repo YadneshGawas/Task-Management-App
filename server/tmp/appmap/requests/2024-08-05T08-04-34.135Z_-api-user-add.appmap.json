@@ -1,0 +1,645 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/user/add",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "81",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "application/json",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/add"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "name",
+          "class": "String",
+          "value": "'admin'"
+        },
+        {
+          "name": "email",
+          "class": "String",
+          "value": "'21co73@aitdgoa.edu.in'"
+        },
+        {
+          "name": "role",
+          "class": "String",
+          "value": "'Student'"
+        },
+        {
+          "name": "isAdmin",
+          "class": "Boolean",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "protectRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 8
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 8
+      },
+      "elapsed": 0.08698549999826355
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 9,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 10,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 2,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 5,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 9,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 10,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 6,
+      "parent_id": 5,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 11
+      },
+      "elapsed": 0.0014985999987402465
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 7,
+      "parent_id": 4,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    _id: new ObjectId('66af9db7479f7ad5afe7161b'),\n    email: 'yadnesh.gawas@gmail.com',\n    isAdmin: true\n  }\n}",
+        "object_id": 12
+      },
+      "elapsed": 0.019061299997702008
+    },
+    {
+      "event": "call",
+      "id": 8,
+      "thread_id": 0,
+      "method_id": "isAdminRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 39
+    },
+    {
+      "event": "call",
+      "id": 9,
+      "thread_id": 0,
+      "method_id": "adduser",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /add]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "userCont",
+      "path": "controller\\userCont.js",
+      "lineno": 348
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 10,
+      "parent_id": 9,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 13
+      },
+      "elapsed": 0.069805200000701
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 11,
+      "parent_id": 8,
+      "elapsed": 0.0027943999994022306
+    },
+    {
+      "event": "call",
+      "id": 12,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "email",
+              "class": "String"
+            }
+          ],
+          "value": "{ email: '21co73@aitdgoa.edu.in' }",
+          "object_id": 14,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 15,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 2,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 13,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "email",
+              "class": "String"
+            }
+          ],
+          "value": "{ email: '21co73@aitdgoa.edu.in' }",
+          "object_id": 14,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 15,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 14,
+      "parent_id": 13,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 16
+      },
+      "elapsed": 0.00030890000198269263
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 15,
+      "parent_id": 12,
+      "return_value": {
+        "class": "Promise<object>",
+        "value": "Promise { null }",
+        "object_id": 17
+      },
+      "elapsed": 0.005509599999641068
+    },
+    {
+      "event": "call",
+      "id": 16,
+      "thread_id": 0,
+      "method_id": "insertOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "name",
+              "class": "String"
+            },
+            {
+              "name": "email",
+              "class": "String"
+            },
+            {
+              "name": "role",
+              "class": "String"
+            },
+            {
+              "name": "password",
+              "class": "String"
+            },
+            {
+              "name": "isAdmin",
+              "class": "Boolean"
+            },
+            {
+              "name": "isActive",
+              "class": "Boolean"
+            },
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            },
+            {
+              "name": "createdAt",
+              "class": "Date"
+            },
+            {
+              "name": "updatedAt",
+              "class": "Date"
+            },
+            {
+              "name": "__v",
+              "class": "Number"
+            }
+          ],
+          "value": "{\n  name: 'admin',\n  email: '21co73@aitdgoa.edu.in',\n  role: 'Student',\n  password: '6rsew91dpn',\n  isAdmin: false,\n  isActive: true,\n  _id: ObjectId { buffer: [Buffer [Uint8Array]] },\n  createdAt: 2024-08-05T08:04:34.424Z,\n  updatedAt: 2024-08-05T08:04:34.424Z,\n  __v: 0\n}",
+          "object_id": 18,
+          "name": "doc"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 19,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 4,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 17,
+      "parent_id": 16,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    acknowledged: true,\n    insertedId: new ObjectId('66b0879247868b5e2e60bc22')\n  }\n}",
+        "object_id": 20
+      },
+      "elapsed": 0.015596599998389138
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 201,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "216",
+          "Etag": "W/\"d8-WkleYOxLEkCemwYBoPjqF9ZJ5KQ\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "name",
+              "class": "String"
+            },
+            {
+              "name": "email",
+              "class": "String"
+            },
+            {
+              "name": "role",
+              "class": "String"
+            },
+            {
+              "name": "isAdmin",
+              "class": "Boolean"
+            },
+            {
+              "name": "isActive",
+              "class": "Boolean"
+            },
+            {
+              "name": "_id",
+              "class": "String"
+            },
+            {
+              "name": "createdAt",
+              "class": "String"
+            },
+            {
+              "name": "updatedAt",
+              "class": "String"
+            },
+            {
+              "name": "__v",
+              "class": "Number"
+            }
+          ],
+          "value": "{\n  name: 'admin',\n  email: '21co73@aitdgoa.edu.in',\n  role: 'Student',\n  isAdmin: false,\n  isActive: true,\n  _id: '66b0879247868b5e2e60bc22',\n  createdAt: '2024-08-05T08:04:34.424Z',\n  updatedAt: '2024-08-05T08:04:34.424Z',\n  __v: 0\n}",
+          "object_id": 21
+        }
+      },
+      "id": 18,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.33203770000181976
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "POST /api/user/add (201) — 2024-08-05T08:04:34.135Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "userCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "adduser",
+              "static": true,
+              "location": "controller\\userCont.js:348"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "authWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "isAdminRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:39"
+            },
+            {
+              "type": "function",
+              "name": "protectRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "users",
+          "children": [
+            {
+              "type": "function",
+              "name": "findOne",
+              "static": false,
+              "location": "mongodb/users:2"
+            },
+            {
+              "type": "function",
+              "name": "find",
+              "static": false,
+              "location": "mongodb/users:3"
+            },
+            {
+              "type": "function",
+              "name": "insertOne",
+              "static": false,
+              "location": "mongodb/users:4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /add"
+        }
+      ]
+    }
+  ]
+}

@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { useParams } from "react-router-dom";
-import { projects } from "../assets/data";
 import BoardView from "../other/BoardView";
-import Loading from "../other/Loader";
-import Title from "../other/Title";
 import Button from "../other/Button";
-import AddTask from "./../other/task/AddTask";
-import TaskDialog from "./../other/task/TaskDialog";
 import AddProject from "../other/task/AddProject";
+import Title from "../other/Title";
+//import { projects } from './../assets/data';
+import { useGetProjectQuery } from "../redux/slice/api/projApi";
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -18,13 +15,31 @@ const TASK_TYPE = {
 };
 
 const Projects = () => {
-  const params = useParams();
-
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const status = params?.status || "";
+  const { data, refetch } = useGetProjectQuery();
+  console.log("Data=>",data.projects);
+
+  const projects = data.projects.map(project => ({
+    id: project._id,
+    lTeam: project.lTeam,
+    title: project.title,
+    date: project.date,
+    due: project.due,
+    priority: project.priority,
+    stage: project.stage,
+    assets: project.assets,
+    uTeam: project.uTeam,
+    creator: project.creator,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt
+}));
+
+ console.log("Project=>", projects);
+
+  //const { data: projects, isLoading } = useGetProjectsQuery();
 
   const [filters, setFilters] = useState({
     priority: "all",
@@ -38,31 +53,43 @@ const Projects = () => {
     });
   };
 
-  const filteredProjects = projects.filter((projects) => {
+  useEffect(() => {
+    if (projects) {
+      setLoading(false);
+    }
+  }, [projects]);
+
+  const filteredProjects = projects?.filter((project) => {
     const priorityMatch =
-      filters.priority === "all" || projects.priority === filters.priority;
+      filters.priority === "all" || project.priority === filters.priority;
     const stageMatch =
-      filters.stage === "all" || projects.stage === filters.stage;
+      filters.stage === "all" || project.stage === filters.stage;
     return priorityMatch && stageMatch;
   });
 
-  return loading ? (
-    <div className="py-10">
-      <Loading />
-    </div>
-  ) : (
+  // if (isLoading) {
+  //   return (
+  //     <div className="py-10">
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
+
+  return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <Title title={status ? `${status} Tasks` : "Projects"} />
+        <Title title="Projects" />
 
-  
-          <Button
-            onClick={() => setOpen(true)}
-            label="Create Project"
-            icon={<IoMdAdd className="text-lg" />}
-            className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-          />
-  
+        <Button
+          onClick={() => setOpen(true)}
+          label="Create Project"
+          icon={<IoMdAdd className="text-lg" />}
+          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+        />
       </div>
 
       <div className="flex gap-4 mb-4">

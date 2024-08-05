@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /api/project/getproject",
+    "parameters": "(title,date,due,priority,stage,assets,lTeam,uTeam,__v)",
+    "status": 404
+  }
+]

@@ -1,0 +1,482 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/user/get-team",
+        "request_method": "GET",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ",
+          "If-None-Match": "W/\"cf-i17W4BN1mo65XXjMtaWWKLiNbXc\""
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/get-team"
+      },
+      "id": 1,
+      "thread_id": 0
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "protectRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: GET /get-team]",
+          "object_id": 13,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 14,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 8
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 15
+      },
+      "elapsed": 0.01409349999812548
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 16,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 17,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 5,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 16,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 17,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 4,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 6,
+      "parent_id": 5,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 18
+      },
+      "elapsed": 0.000534999999217689
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 7,
+      "parent_id": 4,
+      "return_value": {
+        "class": "Promise<Object>",
+        "value": "Promise {\n  {\n    _id: new ObjectId('66af9db7479f7ad5afe7161b'),\n    email: 'yadnesh.gawas@gmail.com',\n    isAdmin: true\n  }\n}",
+        "object_id": 19
+      },
+      "elapsed": 0.004869500000495464
+    },
+    {
+      "event": "call",
+      "id": 8,
+      "thread_id": 0,
+      "method_id": "isAdminRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: GET /get-team]",
+          "object_id": 13,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 14,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 39
+    },
+    {
+      "event": "call",
+      "id": 9,
+      "thread_id": 0,
+      "method_id": "getTeamList",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: GET /get-team]",
+          "object_id": 13,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 14,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "userCont",
+      "path": "controller\\userCont.js",
+      "lineno": 118
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 10,
+      "parent_id": 9,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 20
+      },
+      "elapsed": 0.006903200002852827
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 11,
+      "parent_id": 8,
+      "elapsed": 0.0006701999991491903
+    },
+    {
+      "event": "call",
+      "id": 12,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 21,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "name",
+                  "class": "Number"
+                },
+                {
+                  "name": "role",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { name: 1, role: 1, email: 1 } }",
+          "object_id": 22,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 4,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 13,
+      "parent_id": 12,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 23
+      },
+      "elapsed": 0.00014259999807109125
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Access-Control-Allow-Origin": "http://localhost:4555",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "108",
+          "Etag": "W/\"6c-w48i4DRh1JkLZGfrOgmtsmzRfD0\""
+        },
+        "return_value": {
+          "class": "Array",
+          "items": {
+            "class": "Object",
+            "properties": [
+              {
+                "name": "_id",
+                "class": "String"
+              },
+              {
+                "name": "name",
+                "class": "String"
+              },
+              {
+                "name": "email",
+                "class": "String"
+              },
+              {
+                "name": "role",
+                "class": "String"
+              }
+            ]
+          },
+          "value": "[\n  {\n    _id: '66af9db7479f7ad5afe7161b',\n    name: 'Yadnesh Gawas',\n    email: 'yadnesh.gawas@gmail.com',\n    role: 'Admin'\n  }\n]",
+          "size": 1,
+          "object_id": 24
+        }
+      },
+      "id": 14,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.022260499998083105
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "GET /api/user/get-team (200) — 2024-08-05T08:05:01.945Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "userCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "getTeamList",
+              "static": true,
+              "location": "controller\\userCont.js:118"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "authWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "isAdminRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:39"
+            },
+            {
+              "type": "function",
+              "name": "protectRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "users",
+          "children": [
+            {
+              "type": "function",
+              "name": "findOne",
+              "static": false,
+              "location": "mongodb/users:3"
+            },
+            {
+              "type": "function",
+              "name": "find",
+              "static": false,
+              "location": "mongodb/users:4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /get-team"
+        }
+      ]
+    }
+  ]
+}

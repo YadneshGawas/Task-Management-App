@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /createproject",
+    "parameters": "(name,email,role,isAdmin)",
+    "status": 200
+  }
+]

@@ -2,6 +2,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 //import { user } from "../../assets/data";
 
+if (!sessionStorage.getItem("hasClearedLocalStorage")) {
+  localStorage.clear();
+  sessionStorage.setItem("hasClearedLocalStorage", "true");
+}
+
 const initialState = {
   user: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))

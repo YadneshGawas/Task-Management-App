@@ -1,0 +1,289 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/project/getproject",
+        "request_method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "User-Agent": "PostmanRuntime/7.40.0",
+          "Accept": "*/*",
+          "Cache-Control": "no-cache",
+          "Postman-Token": "335ed21f-df3f-40c2-959b-e423959037a7",
+          "Host": "localhost:5000",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Connection": "keep-alive",
+          "Content-Length": "48"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/getproject"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "userId",
+          "class": "String",
+          "value": "'66af9db7479f7ad5afe7161b'"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "getProjects",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: GET /getproject]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]"
+        }
+      ],
+      "defined_class": "projectCont",
+      "path": "controller\\projectCont.js",
+      "lineno": 56
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise<undefined>",
+        "value": "Promise { undefined }",
+        "object_id": 8
+      },
+      "elapsed": 0.05640089999724296
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection projects]",
+        "object_id": 9
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "lTeam",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "$in",
+                  "class": "Array",
+                  "items": {
+                    "class": "ObjectId"
+                  }
+                }
+              ]
+            }
+          ],
+          "value": "{ lTeam: { '$in': [Array] } }",
+          "object_id": 10,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [],
+          "value": "{}",
+          "object_id": 11,
+          "name": "options"
+        }
+      ],
+      "defined_class": "projects",
+      "lineno": 2,
+      "path": "mongodb/projects"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 5,
+      "parent_id": 4,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.projects]",
+        "object_id": 12
+      },
+      "elapsed": 0.0009322000005340669
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "805",
+          "Etag": "W/\"325-nXWEpy6eKXD2F5rWHaKzXHCkUvs\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projects",
+              "class": "Array",
+              "items": {
+                "class": "Object",
+                "properties": [
+                  {
+                    "name": "_id",
+                    "class": "String"
+                  },
+                  {
+                    "name": "lTeam",
+                    "class": "Array",
+                    "items": {
+                      "class": "String"
+                    }
+                  },
+                  {
+                    "name": "title",
+                    "class": "String"
+                  },
+                  {
+                    "name": "date",
+                    "class": "String"
+                  },
+                  {
+                    "name": "due",
+                    "class": "String"
+                  },
+                  {
+                    "name": "priority",
+                    "class": "String"
+                  },
+                  {
+                    "name": "stage",
+                    "class": "String"
+                  },
+                  {
+                    "name": "assets",
+                    "class": "Array"
+                  },
+                  {
+                    "name": "uTeam",
+                    "class": "Array",
+                    "items": {
+                      "class": "String"
+                    }
+                  },
+                  {
+                    "name": "creator",
+                    "class": "String"
+                  },
+                  {
+                    "name": "createdAt",
+                    "class": "String"
+                  },
+                  {
+                    "name": "updatedAt",
+                    "class": "String"
+                  },
+                  {
+                    "name": "__v",
+                    "class": "Number"
+                  }
+                ]
+              }
+            }
+          ],
+          "value": "{ projects: [ [Object], [Object] ] }",
+          "object_id": 13
+        }
+      },
+      "id": 6,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.09048059999986435
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "GET /api/project/getproject (200) — 2024-08-05T09:46:42.524Z"
+  },
+  "classMap": [
+    {
+      "name": "controller",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "projectCont",
+          "children": [
+            {
+              "type": "function",
+              "name": "getProjects",
+              "static": true,
+              "location": "controller\\projectCont.js:56"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "projects",
+          "children": [
+            {
+              "type": "function",
+              "name": "find",
+              "static": false,
+              "location": "mongodb/projects:2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /getproject"
+        }
+      ]
+    }
+  ]
+}

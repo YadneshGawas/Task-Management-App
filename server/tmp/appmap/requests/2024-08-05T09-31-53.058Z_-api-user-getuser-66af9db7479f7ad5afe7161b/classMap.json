@@ -1,0 +1,30 @@
+[
+  {
+    "name": "middleware",
+    "type": "package",
+    "children": [
+      {
+        "type": "class",
+        "name": "errorWare",
+        "children": [
+          {
+            "type": "function",
+            "name": "routeNotFound",
+            "static": true,
+            "location": "middleware\\errorWare.js:2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /api/user/getuser/66af9db7479f7ad5afe7161b"
+      }
+    ]
+  }
+]

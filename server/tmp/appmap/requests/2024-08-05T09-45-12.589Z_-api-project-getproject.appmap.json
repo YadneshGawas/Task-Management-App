@@ -1,0 +1,156 @@
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/project/getproject",
+        "request_method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "User-Agent": "PostmanRuntime/7.40.0",
+          "Accept": "*/*",
+          "Cache-Control": "no-cache",
+          "Postman-Token": "e31d9a50-9475-4c6c-a4f0-1563723fe9ea",
+          "Host": "localhost:5000",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Connection": "keep-alive",
+          "Content-Length": "48"
+        },
+        "protocol": "HTTP/1.1",
+        "normalized_path_info": "/getproject"
+      },
+      "id": 1,
+      "thread_id": 0,
+      "message": [
+        {
+          "name": "userId",
+          "class": "String",
+          "value": "'66af9db7479f7ad5afe7161b'"
+        }
+      ]
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "protectRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: GET /getproject]",
+          "object_id": 6,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 7,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 8
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise",
+        "value": "Promise {\n  ServerResponse {\n    _events: [Object: null prototype],\n    _eventsCount: 2,\n    _maxListeners: undefined,\n    outputData: [],\n    outputSize: 0,\n    writable: true,\n    destroyed: false,\n    _last: false,\n    chunkedEncoding: false,\n    shouldKeepAlive: true,\n    maxRequestsOnConnectionReached: false,\n    _defaultKeepAlive: true,\n    useChunkedEncodingByDefault: true,\n    sendDate: true,\n    _removedConnection: false,\n    _removedContLen: false,\n    _removedTE: false,\n    strictContentLength: false,\n    _contentLength: '44',\n    _hasBody: true,\n    _trailer: '',\n    finished: true,\n    _headerSent: true,\n    _closed: false,\n    socket: [Socket],\n    _header: 'HTTP/1.1 401 Unauthorized\\r\\n' +\n      'X-Powered-By: Express\\r\\n' +\n      'Vary: Origin\\r\\n' +\n      'Access-Control-Allow-Credentials: true\\r\\n' +\n      'Content-Type: application/json; charset=utf-8\\r\\n' +\n      'Content-Length: 44\\r\\n' +\n      'ETag: W/\"2c-KcJ/JtGtxZyMhe8jpxXDJqCg518\"\\r\\n' +\n      'Date: Mon, 05 Aug 2024 09:45:12 GMT\\r\\n' +\n      'Connection: keep-alive\\r\\n' +\n      'Keep-Alive: timeout=5\\r\\n' +\n      '\\r\\n',\n    _keepAliveTimeout: 5000,\n    _onPendingData: [Function: bound updateOutgoingData],\n    req: [IncomingMessage],\n    _sent100: false,\n    _expect_continue: false,\n    _maxRequestsPerSocket: 0,\n    write: [Function (anonymous)],\n    end: [Function (anonymous)],\n    locals: [Object: null prototype] {},\n    _startAt: [Array],\n    _startTime: 2024-08-05T09:45:12.612Z,\n    writeHead: [Function: writeHead],\n    __onFinished: [Function],\n    statusCode: 401,\n    statusMessage: 'Unauthorized',\n    [Symbol(shapeMode)]: false,\n    [Symbol(kCapture)]: false,\n    [Symbol(kBytesWritten)]: 0,\n    [Symbol(kNeedDrain)]: false,\n    [Symbol(corked)]: 0,\n    [Symbol(kOutHeaders)]: [Object: null prototype],\n    [Symbol(errored)]: null,\n    [Symbol(kHighWaterMark)]: 16384,\n    [Symbol(kRejectNonStandardBodyWrites)]: false,\n    [Symbol(kUniqueHeaders)]: null\n  }\n}",
+        "object_id": 8
+      },
+      "elapsed": 0.003689400000439491
+    },
+    {
+      "event": "return",
+      "http_server_response": {
+        "status_code": 401,
+        "headers": {
+          "X-Powered-By": "Express",
+          "Vary": "Origin",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "44",
+          "Etag": "W/\"2c-KcJ/JtGtxZyMhe8jpxXDJqCg518\""
+        },
+        "return_value": {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "status",
+              "class": "Boolean"
+            },
+            {
+              "name": "message",
+              "class": "String"
+            }
+          ],
+          "value": "{ status: false, message: 'Token not found' }",
+          "object_id": 9
+        }
+      },
+      "id": 4,
+      "thread_id": 0,
+      "parent_id": 1,
+      "elapsed": 0.022458699997514486
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "GET /api/project/getproject (401) — 2024-08-05T09:45:12.589Z"
+  },
+  "classMap": [
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "authWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "protectRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /getproject"
+        }
+      ]
+    }
+  ]
+}

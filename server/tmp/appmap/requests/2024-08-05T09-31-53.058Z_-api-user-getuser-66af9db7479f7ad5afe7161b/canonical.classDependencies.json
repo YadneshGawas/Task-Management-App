@@ -1,0 +1,6 @@
+[
+  {
+    "caller": "POST /api/user/getuser/66af9db7479f7ad5afe7161b",
+    "callee": "middleware/errorWare"
+  }
+]

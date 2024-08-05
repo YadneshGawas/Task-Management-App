@@ -1,0 +1,6 @@
+[
+  "controller/projectCont",
+  "middleware/authWare",
+  "mongodb/projects",
+  "mongodb/users"
+]
