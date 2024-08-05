@@ -26,6 +26,8 @@ const TaskCard = ({ task }) => {
 
   const [open,setOpen] = useState(false);
 
+  const [selected,setSelected] = useState(null);
+
   const getTasks = () => {
     const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage && user.isAdmin) {
@@ -35,6 +37,11 @@ const TaskCard = ({ task }) => {
     } else {
       return task?.subTasks?.length;
     }
+  };
+
+  const editClick = (el) => {
+    setSelected(el);
+    console.log(selected?._id);
   };
 
   return (

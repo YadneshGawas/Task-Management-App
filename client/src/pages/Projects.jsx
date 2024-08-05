@@ -5,7 +5,7 @@ import BoardView from "../other/BoardView";
 import Button from "../other/Button";
 import AddProject from "../other/task/AddProject";
 import Title from "../other/Title";
-//import { projects } from './../assets/data';
+import { projects } from './../assets/data';
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 
 const TASK_TYPE = {
@@ -20,26 +20,25 @@ const Projects = () => {
   const [loading, setLoading] = useState(false);
 
   const { data, refetch } = useGetProjectQuery();
-  console.log("Data=>",data.projects);
+  console.log("Data=>", data );
 
-  const projects = data.projects.map(project => ({
-    id: project._id,
-    lTeam: project.lTeam,
-    title: project.title,
-    date: project.date,
-    due: project.due,
-    priority: project.priority,
-    stage: project.stage,
-    assets: project.assets,
-    uTeam: project.uTeam,
-    creator: project.creator,
-    createdAt: project.createdAt,
-    updatedAt: project.updatedAt
-}));
-
- console.log("Project=>", projects);
-
-  //const { data: projects, isLoading } = useGetProjectsQuery();
+  let projects = [];
+  if (data && data.projects) {
+    projects = data.projects.map((project) => ({
+      id: project._id,
+      lTeam: project.lTeam,
+      title: project.title,
+      date: project.date,
+      due: project.due,
+      priority: project.priority,
+      stage: project.stage,
+      assets: project.assets,
+      uTeam: project.uTeam,
+      creator: project.creator,
+      createdAt: project.createdAt,
+      updatedAt: project.updatedAt,
+    }));
+  }
 
   const [filters, setFilters] = useState({
     priority: "all",
@@ -53,11 +52,11 @@ const Projects = () => {
     });
   };
 
-  useEffect(() => {
-    if (projects) {
-      setLoading(false);
-    }
-  }, [projects]);
+  // useEffect(() => {
+  //   if (projects) {
+  //     setLoading(false);
+  //   }
+  // }, [projects]);
 
   const filteredProjects = projects?.filter((project) => {
     const priorityMatch =

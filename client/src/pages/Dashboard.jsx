@@ -24,8 +24,9 @@ import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
+import { useGetProjectQuery } from "../redux/slice/api/projApi";
 
-const TaskTb = ({ user, tsk }) => {
+const TaskTb = ({ user, proj }) => {
   // Receive user as a prop
   //Icons references
   const icons = {
@@ -44,7 +45,6 @@ const TaskTb = ({ user, tsk }) => {
           <th className="py-2 px-5">Task Title</th>
         )}
         <th className="py-2 px-5">Priority</th>
-        {user.isAdmin && <th className="py-2 px-5">Team</th>}
         <th className="py-2 px-5">Created At</th>
       </tr>
     </thead>
@@ -76,13 +76,6 @@ const TaskTb = ({ user, tsk }) => {
         </div>
       </td>
 
-      {user.isAdmin && (
-        <td className="py-2 pl-4">
-          <div className="flex items-center justify-start">
-            <p>TeamA</p>
-          </div>
-        </td>
-      )}
 
       <td className="py-2 pl-7">
         <div className="flex items-center justify-start">
@@ -98,7 +91,7 @@ const TaskTb = ({ user, tsk }) => {
         <table className="w-full">
           <TbHeader />
           <tbody>
-            {tsk.map((task, index) => (
+            {proj?.map((task, index) => (
               <TbRow key={index} task={task} />
             ))}
           </tbody>
@@ -108,7 +101,11 @@ const TaskTb = ({ user, tsk }) => {
   );
 };
 
-const UserTb = ({ user, mems }) => {
+const UserTb = ({ user }) => {
+
+const { data } = useGetTeamListQuery();
+console.log("USERTB=>", data)
+
   // Table header part
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
@@ -146,7 +143,7 @@ const UserTb = ({ user, mems }) => {
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
-          {mems?.map((mem, index) => (
+          {data?.map((mem, index) => (
             <TbRow key={index} usr={mem} />
           ))}
         </tbody>
@@ -158,11 +155,25 @@ const UserTb = ({ user, mems }) => {
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth); 
 
-  const { data, refetch } = useGetTeamListQuery();
-
-  //const userData = data;
-  console.log("DB FETCH=>",data);
-  console.log("DEFAULT=>",allusers);
+  const { data, refetch } = useGetProjectQuery();
+  console.log("TASKTB=>", data)
+  let projects = [];
+  if (data && data.projects) {
+    projects = data.projects.map((project) => ({
+      id: project._id,
+      lTeam: project.lTeam,
+      title: project.title,
+      date: project.date,
+      due: project.due,
+      priority: project.priority,
+      stage: project.stage,
+      assets: project.assets,
+      uTeam: project.uTeam,
+      creator: project.creator,
+      createdAt: project.createdAt,
+      updatedAt: project.updatedAt,
+    }));
+  }
 
   useEffect(() => {
     refetch(); // Ensure data is fetched on mount/reload
@@ -291,9 +302,9 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTb user={user} tsk={usrTsk} />{" "}
+        <TaskTb user={user} proj={projects} />{" "}
         {/* Pass user as a prop to TaskTb */}
-        <UserTb user={user} tsk={usrTsk} mems={data} />
+        <UserTb user={user} />
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ export const createProject = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true,userId, Project, message: "Project created successfully.", project: Project });
+      .json({ status: true,userId, project, message: "Project created successfully.", project: Project });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ status: false, message: error.message });
@@ -55,8 +55,8 @@ export const createProject = async (req, res) => {
 
   export const getProjects = async (req, res) => {
     try {
-      const { userId } = req.user; // Assuming req.user contains the authenticated user's information
-      //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+      //const { userId } = req.user; // Assuming req.user contains the authenticated user's information
+      const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
   
       // Find projects where the userId is in the leads array
       const projects = await Project.find({ lTeam: { $in: [userId] } })

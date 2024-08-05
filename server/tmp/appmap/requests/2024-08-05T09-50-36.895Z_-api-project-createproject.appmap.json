@@ -1,1 +1,279 @@
-{"version":"1.12","events":[{"event":"call","http_server_request":{"path_info":"/api/project/createproject","request_method":"POST","headers":{"Host":"localhost:5000","Connection":"keep-alive","Content-Length":"176","Sec-Ch-Ua":"\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"","Content-Type":"application/json","Dnt":"1","Sec-Ch-Ua-Mobile":"?0","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36","Sec-Ch-Ua-Platform":"\"Windows\"","Accept":"*/*","Origin":"http://localhost:4555","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http://localhost:4555/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9","Cookie":"token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"},"protocol":"HTTP/1.1"},"id":1,"thread_id":0},{"event":"call","id":2,"thread_id":0,"method_id":"protectRoute","static":true,"parameters":[{"class":"IncomingMessage","value":"[IncomingMessage: POST /createproject]","object_id":19,"name":"req"},{"class":"ServerResponse","value":"[ServerResponse: 200]","object_id":20,"name":"res"},{"class":"Function","value":"[Function: next]","name":"next"}],"defined_class":"authWare","path":"middleware\\authWare.js","lineno":8},{"event":"return","thread_id":0,"id":3,"parent_id":2,"return_value":{"class":"Promise","value":"Promise { <pending> }","object_id":21},"elapsed":0.0034422999997332226},{"event":"call","id":4,"thread_id":0,"method_id":"findOne","static":false,"receiver":{"class":"Collection","value":"[Collection users]","object_id":2},"parameters":[{"class":"Object","properties":[{"name":"_id","class":"ObjectId"}],"value":"{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }","object_id":22,"name":"filter"},{"class":"Object","properties":[{"name":"projection","class":"Object","properties":[{"name":"isAdmin","class":"Number"},{"name":"email","class":"Number"}]}],"value":"{ projection: { isAdmin: 1, email: 1 } }","object_id":23,"name":"options"}],"defined_class":"users","lineno":3,"path":"mongodb/users"},{"event":"call","id":5,"thread_id":0,"method_id":"find","static":false,"receiver":{"class":"Collection","value":"[Collection users]","object_id":2},"parameters":[{"class":"Object","properties":[{"name":"_id","class":"ObjectId"}],"value":"{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }","object_id":22,"name":"filter"},{"class":"Object","properties":[{"name":"projection","class":"Object","properties":[{"name":"isAdmin","class":"Number"},{"name":"email","class":"Number"}]}],"value":"{ projection: { isAdmin: 1, email: 1 } }","object_id":23,"name":"options"}],"defined_class":"users","lineno":4,"path":"mongodb/users"},{"event":"return","thread_id":0,"id":6,"parent_id":5,"return_value":{"class":"FindCursor","value":"[FindCursor lastDB.users]","object_id":24},"elapsed":0.00012649999916902743},{"event":"return","thread_id":0,"id":7,"parent_id":4,"return_value":{"class":"Promise","value":"Promise { <pending> }","object_id":25},"elapsed":0.0007106999983079731}],"classMap":[{"name":"middleware","type":"package","children":[{"type":"class","name":"authWare","children":[{"type":"function","name":"protectRoute","static":true,"location":"middleware\\authWare.js:8"}]}]},{"name":"mongodb","type":"package","children":[{"type":"class","name":"users","children":[{"type":"function","name":"findOne","static":false,"location":"mongodb/users:3"},{"type":"function","name":"find","static":false,"location":"mongodb/users:4"}]}]}],"metadata":{"client":{"name":"appmap-node","version":"2.23.2","url":"https://github.com/getappmap/appmap-node"},"language":{"name":"javascript","engine":"Node.js","version":"v20.15.1"},"app":"server","recorder":{"type":"requests","name":"requests"},"name":"GET /api/project/getproject (304) — 2024-08-05T09:50:36.885Z"}}
+{
+  "events": [
+    {
+      "event": "call",
+      "http_server_request": {
+        "path_info": "/api/project/createproject",
+        "request_method": "POST",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "176",
+          "Sec-Ch-Ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
+          "Content-Type": "application/json",
+          "Dnt": "1",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Accept": "*/*",
+          "Origin": "http://localhost:4555",
+          "Sec-Fetch-Site": "same-site",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:4555/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmFmOWRiNzQ3OWY3YWQ1YWZlNzE2MWIiLCJpYXQiOjE3MjI4Mjk4OTAsImV4cCI6MTcyMjkxNjI5MH0.8673E17lSGZq5_O44QRP7AYu6rCn4Wi2hxtSoO59myQ"
+        },
+        "protocol": "HTTP/1.1"
+      },
+      "id": 1,
+      "thread_id": 0
+    },
+    {
+      "event": "call",
+      "id": 2,
+      "thread_id": 0,
+      "method_id": "protectRoute",
+      "static": true,
+      "parameters": [
+        {
+          "class": "IncomingMessage",
+          "value": "[IncomingMessage: POST /createproject]",
+          "object_id": 19,
+          "name": "req"
+        },
+        {
+          "class": "ServerResponse",
+          "value": "[ServerResponse: 200]",
+          "object_id": 20,
+          "name": "res"
+        },
+        {
+          "class": "Function",
+          "value": "[Function: next]",
+          "name": "next"
+        }
+      ],
+      "defined_class": "authWare",
+      "path": "middleware\\authWare.js",
+      "lineno": 8
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 3,
+      "parent_id": 2,
+      "return_value": {
+        "class": "Promise",
+        "value": "Promise { <pending> }",
+        "object_id": 21
+      },
+      "elapsed": 0.0034422999997332226
+    },
+    {
+      "event": "call",
+      "id": 4,
+      "thread_id": 0,
+      "method_id": "findOne",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 22,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 23,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 3,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "call",
+      "id": 5,
+      "thread_id": 0,
+      "method_id": "find",
+      "static": false,
+      "receiver": {
+        "class": "Collection",
+        "value": "[Collection users]",
+        "object_id": 2
+      },
+      "parameters": [
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "_id",
+              "class": "ObjectId"
+            }
+          ],
+          "value": "{ _id: ObjectId { buffer: [Buffer [Uint8Array]] } }",
+          "object_id": 22,
+          "name": "filter"
+        },
+        {
+          "class": "Object",
+          "properties": [
+            {
+              "name": "projection",
+              "class": "Object",
+              "properties": [
+                {
+                  "name": "isAdmin",
+                  "class": "Number"
+                },
+                {
+                  "name": "email",
+                  "class": "Number"
+                }
+              ]
+            }
+          ],
+          "value": "{ projection: { isAdmin: 1, email: 1 } }",
+          "object_id": 23,
+          "name": "options"
+        }
+      ],
+      "defined_class": "users",
+      "lineno": 4,
+      "path": "mongodb/users"
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 6,
+      "parent_id": 5,
+      "return_value": {
+        "class": "FindCursor",
+        "value": "[FindCursor lastDB.users]",
+        "object_id": 24
+      },
+      "elapsed": 0.00012649999916902743
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "id": 7,
+      "parent_id": 4,
+      "return_value": {
+        "class": "Promise",
+        "value": "Promise { <pending> }",
+        "object_id": 25
+      },
+      "elapsed": 0.0007106999983079731
+    },
+    {
+      "event": "return",
+      "thread_id": 0,
+      "parent_id": 1
+    }
+  ],
+  "version": "1.12",
+  "metadata": {
+    "client": {
+      "name": "appmap-node",
+      "version": "2.23.2",
+      "url": "https://github.com/getappmap/appmap-node"
+    },
+    "language": {
+      "name": "javascript",
+      "engine": "Node.js",
+      "version": "v20.15.1"
+    },
+    "app": "server",
+    "recorder": {
+      "type": "requests",
+      "name": "requests"
+    },
+    "name": "GET /api/project/getproject (304) — 2024-08-05T09:50:36.885Z"
+  },
+  "classMap": [
+    {
+      "name": "middleware",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "authWare",
+          "children": [
+            {
+              "type": "function",
+              "name": "protectRoute",
+              "static": true,
+              "location": "middleware\\authWare.js:8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "type": "package",
+      "children": [
+        {
+          "type": "class",
+          "name": "users",
+          "children": [
+            {
+              "type": "function",
+              "name": "findOne",
+              "static": false,
+              "location": "mongodb/users:3"
+            },
+            {
+              "type": "function",
+              "name": "find",
+              "static": false,
+              "location": "mongodb/users:4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /api/project/createproject"
+        }
+      ]
+    }
+  ]
+}
