@@ -32,6 +32,19 @@ const   UserList = ({ setUTeam, uTeam }) => {
     return "Assign Project To";
   };
 
+  useEffect(() => {
+    if (data) {
+      let initialUsers = [];
+      if (uTeam) {
+        initialUsers = uTeam
+          .map((teamId) => data.find((user) => user._id === teamId))
+          .filter(Boolean); // Remove any undefined values
+      }
+
+      setSelectedUsers(initialUsers);
+    }
+  }, [data, uTeam]);
+
 
   // useEffect(() => {
   //   if (team?.length < 1) {

@@ -12,6 +12,9 @@ import AddTask from "./AddTask";
 import ConfirmatioDialog from "../Dialogs";
 import AddSubTask from "./AddSubTask";
 import { useSelector } from "react-redux";
+import { useDelProjMutation, useGetProjectQuery } from "../../redux/slice/api/projApi";
+import { toast } from "sonner";
+import AddProject from "./AddProject";
 
 const TaskDialog = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
@@ -19,14 +22,32 @@ const TaskDialog = ({ task }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-  const duplicateHandler = () => {};
-  const deleteClicks = () => {};
-  const deleteHandler = () => {};
+  const [del] = useDelProjMutation();
+  const { refetch } = useGetProjectQuery();
+   
+  const deleteClicks = () => {
+    setOpenDialog(true);
+  };
+
+  const deleteHandler = async() => {
+    try{
+      const res = await del({
+        id: task.id,
+      }).unwrap();
+      toast.success(res?.message);
+      refetch();
+    }catch(error){
+      console.log(error);
+      toast.error(error.message)
+    }
+  };
   const location = useLocation();
 
   const isTasksPage = location.pathname.includes("/task");
 
   const projectId = task.id;
+  const taskId = task.id;
+  console.log("TASK ID HERE=>", taskId)
 
   const items = [
     {
@@ -35,10 +56,10 @@ const TaskDialog = ({ task }) => {
       onClick: () => 
         {
         if (user.isAdmin && isTasksPage) {
-          navigate(`/taskdetails`, { state: { projectId } } );
+          navigate(`/tasks/${taskId}`);
         } 
         else if(user.isAdmin) {
-          navigate(`/projects/${projectId}`);
+          navigate(`/projects/${projectId}/tasks`);
         }
         else
         {
@@ -113,12 +134,13 @@ const TaskDialog = ({ task }) => {
         </Menu>
       </div>
 
-      <AddTask
+{openEdit &&
+      <AddProject
         open={openEdit}
         setOpen={setOpenEdit}
-        task={task}
-        key={new Date().getTime()}
+        taskData={task}
       />
+}
 
       <AddSubTask open={open} setOpen={setOpen} />
 

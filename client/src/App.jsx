@@ -57,8 +57,8 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/team" element={<Users />} />
           <Route path="/trashed" element={<Trash />} />
-          <Route path="/taskdetails" element={<TaskDetails />} />
-          <Route path="/projects/:projectId" element={<AdminTasks />} />
+          <Route path="/tasks/:taskId" element={<TaskDetails />} />
+          <Route path="/projects/:projectId/tasks" element={<AdminTasks />} />
         </Route>
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<ForgotPassword />} />

@@ -4,16 +4,12 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdCheck } from "react-icons/md";
-
 import clsx from "clsx";
-import { summary } from "./../../assets/data";
-import { getInitials } from "./../../assets/index";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { useGetTeamListQuery } from "../../redux/slice/api/userApi";
+import { getInitials } from "./../../assets/index";
 
 const   UserList = ({ setLTeam, lTeam, admin }) => {
-  const { user } = useSelector((state) => state.auth);
   const { data, refetch } = useGetTeamListQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -26,13 +22,21 @@ const   UserList = ({ setLTeam, lTeam, admin }) => {
   //for defaulting to admin
   useEffect(() => {
     if (data) {
-      // Initialize selectedUsers with the admin user if not already present
-      const adminUser = data.find((user) => user._id === admin);
-      if (adminUser && !selectedUsers.includes(adminUser)) {
-        setSelectedUsers((prevSelectedUsers) => [ adminUser]);
+      let initialUsers = [];
+      if (lTeam) {
+        initialUsers = lTeam.map((teamId) =>
+          data.find((user) => user._id === teamId)
+        )
       }
+
+      const adminUser = data.find((user) => user._id === admin);
+      if (adminUser && !initialUsers.includes(adminUser)) {
+        initialUsers = [adminUser, ...initialUsers];
+      }
+
+      setSelectedUsers(initialUsers);
     }
-  }, [data]);
+  }, [data, lTeam, admin]);
 
   // useEffect(() => {
   //   if (team?.length < 1) {

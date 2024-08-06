@@ -138,7 +138,11 @@ const Projects = () => {
       </div>
 
       <BoardView tasks={filteredProjects} />
-      <AddProject proj={filteredProjects} open={open} setOpen={setOpen} />
+
+      {open &&
+      <AddProject open={open} setOpen={setOpen} />
+      }
+      
     </div>
   );
 };

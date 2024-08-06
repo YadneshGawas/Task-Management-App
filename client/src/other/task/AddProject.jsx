@@ -1,29 +1,31 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { BiImages } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Wrapper from "../Wrapper";
-import Textbox from "../Textbox";
-import UserList from "./UserList";
-import SelectList from "../SelectList";
-import Button from "../Button";
-import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import LeadsList from "./LeadsList";
+import { BiImages } from "react-icons/bi";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { useAddProjectMutation } from "../../redux/slice/api/projApi.js";
+import { useAddProjectMutation, useGetProjectQuery } from "../../redux/slice/api/projApi.js";
+import Button from "../Button";
+import SelectList from "../SelectList";
+import Textbox from "../Textbox";
+import Wrapper from "../Wrapper";
+import LeadsList from "./LeadsList";
+import UserList from "./UserList";
 
-const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
-const PRIORIRY = ["HIGH", "MEDIUM", "LOW"];
+const LISTS = ["todo", "in progress", "completed"];
+const PRIORITY = ["high", "medium", "low"];
 
 const uploadedFileURLs = [];
 
-const AddProject = ({ open, setOpen }) => {
+const AddProject = ({ open, setOpen, taskData }) => {
+  //console.log(taskData);
+
+  const { refetch } = useGetProjectQuery();
 
   //Getch details of person reatong the proj from local storage
-  const user = (JSON.parse(localStorage.getItem("userInfo")));
+  const user = JSON.parse(localStorage.getItem("userInfo"));
   const userid = user._id;
 
   const location = useLocation();
@@ -60,8 +62,6 @@ const AddProject = ({ open, setOpen }) => {
     return "Project Stage";
   };
 
-
-
   const today = new Date().toISOString().split("T")[0];
 
   const {
@@ -70,41 +70,54 @@ const AddProject = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: today
-    }
+      date: today,
+      title: taskData?.title,
+    },
   });
 
   const [lTeam, setLTeam] = useState([]);
 
   const [uTeam, setUTeam] = useState([]);
 
-  const [stage, setStage] = useState('');
-  const [priority, setPriority] = useState('');
+  const [stage, setStage] = useState(null);
+  const [priority, setPriority] = useState(null);
 
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const [addproj] = useAddProjectMutation();
- 
-  const submitHandler = async(data) => {
-    try{
-      const projData = {...data, lTeam, uTeam, stage, priority};
+
+  const projId = taskData?.id;
+
+  const submitHandler = async (data) => {
+    try {
+      const projData = { ...data, lTeam, uTeam, stage, priority, projId };
       console.log(projData);
       const res = await addproj(projData).unwrap();
       console.log(res);
-      toast.success("Success");
-    }catch(error){
+      refetch();
+      toast.success(res?.message);
+    } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   };
 
   useEffect(() => {
-  console.log("uteam:", uTeam);
-  console.log("lteam:", lTeam);
-  console.log("Stage:", stage);
-  console.log("Priority:", priority);
-}, [lTeam,uTeam,stage,priority]);
+    if (taskData) {
+      if (
+        taskData?.lTeam &&
+        taskData?.uTeam &&
+        taskData?.priority &&
+        taskData?.stage
+      ) {
+        setLTeam(taskData?.lTeam);
+        setUTeam(taskData?.uTeam);
+        setPriority(taskData?.priority);
+        setStage(taskData?.stage);
+      }
+    }
+  }, [taskData]);
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
@@ -118,7 +131,7 @@ const AddProject = ({ open, setOpen }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {getTitle()}
+            {taskData ? "UPDATE PROJECT" : getTitle()}
           </Dialog.Title>
 
           <div className="mt-2 flex flex-col gap-6">
@@ -175,7 +188,7 @@ const AddProject = ({ open, setOpen }) => {
 
               <SelectList
                 label="Priority Level"
-                lists={PRIORIRY}
+                lists={PRIORITY}
                 selected={priority}
                 setSelected={setPriority}
               />

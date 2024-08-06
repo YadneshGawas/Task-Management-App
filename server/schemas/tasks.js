@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const taskSchema = new Schema({
-  pid: { type: Schema.Types.ObjectId, ref: "Project" },
+  projId: { type: String },//afterwards refrence to Project both down fields
+  projectId: { type: String },
   title: { type: String, required: true },
   date: { type: Date, default: new Date() },
   desc: { type: String, required: true },
@@ -16,22 +17,23 @@ const taskSchema = new Schema({
     default: "todo",
     enum: ["todo", "in progress", "completed"],
   },
-  activities: {
-    type: {
-      type: String,
-      default: "assigned",
-      enum: [
-        "assigned",
-        "started",
-        "in progress",
-        "bug",
-        "commented",
-        "completed",
-      ],
-    },
-    activities: String,
-    date: { type: Date, default: new Date() },
-  },
+  activities: [String],
+  //{
+  //   type: {
+  //     type: String,
+  //     default: "assigned",
+  //     enum: [
+  //       "assigned",
+  //       "started",
+  //       "in progress",
+  //       "bug",
+  //       "commented",
+  //       "completed",
+  //     ],
+  //   },
+  //   activities: String,
+  //   date: { type: Date, default: new Date() },
+  // },
   by: { type: Schema.Types.ObjectId, ref: "User" },
   subTasks: [
     {
@@ -40,7 +42,7 @@ const taskSchema = new Schema({
       tag: { type: String, required: true },
     },
   ],
-  team: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  uTeam: [{ type: Schema.Types.ObjectId, ref: "User" }],
   assets: [String],
 },
 {

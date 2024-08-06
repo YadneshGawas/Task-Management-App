@@ -22,8 +22,14 @@ export const projApi = apiSlice.injectEndpoints({
                 url: `${USER_URL}/getTasks/${id}`,
                 method: "GET",
             })
-        })
+        }),
+        delProj: builder.mutation({
+            query: ({id}) => ({
+                url: `${USER_URL}/delete/${id}`,
+                method: "PUT",
+            })
+        }),
     }),
 });
 
-export const { useAddProjectMutation, useGetProjectQuery, useGetTasksQuery } =  projApi;
+export const { useAddProjectMutation, useGetProjectQuery, useGetTasksQuery, useDelProjMutation } =  projApi;

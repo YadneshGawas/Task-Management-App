@@ -10,7 +10,7 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate, BGSTYLES } from "../assets/index";
+import { BGS, TASK_TYPE, formatDate, BGSTYLES, PRIORITYSTYLES } from "../assets/index";
 import TaskDialog from "../other/task/TaskDialog";
 import UserInfo from "../other/UserInfo";
 import { useSelector } from "react-redux";
@@ -54,7 +54,7 @@ const TaskCard = ({ task }) => {
               <div
                 className={clsx(
                   "flex flex-1 gap-1 items-center text-sm font-medium",
-                  PRIOTITYSTYELS[task?.priority]
+                  PRIORITYSTYLES[task?.priority]
                 )}
               >
                 <span className="text-lg">{ICONS[task?.priority]}</span>

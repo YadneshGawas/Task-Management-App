@@ -2,15 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import { tasks } from "../assets/data";
+//import { tasks } from "../assets/data";
 import BoardView from "../other/BoardView";
 import Loading from "../other/Loader";
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
-import { useLocation } from 'react-router-dom';
-import { toast } from "sonner";
-import { useGetTasksQuery } from "../redux/slice/api/projApi";
+import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
 const TASK_TYPE = {
   todo: "bg-blue-600",
@@ -19,39 +17,65 @@ const TASK_TYPE = {
 };
 
 const AdminTasks = () => {
-  
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
   const { projectId } = useParams();
-  console.log(projectId);
+  const { data, refetch } = useGetTaskQuery();
+
+ console.log("Data",data);
   
-  
+  let tasks = [];
+  if (data && data.tasks) {
+    tasks = data.tasks.map((task) => ({
+      id: task._id,
+      lTeam: task.lTeam,
+      title: task.title,
+      date: task.date,
+      due: task.due,
+      priority: task.priority,
+      projectId: task.projectId,
+      stage: task.stage,
+      assets: task.assets,
+      uTeam: task.uTeam,
+      creator: task.creator,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+    }));
+  }
+
+  console.log("Tasks",tasks);
+  console.log("ProjectID",projectId);
+
+  // const projname = (projects.find((obj) => obj.id === projectId).title);
+  // console.log(projname)
+
   const [filters, setFilters] = useState({
     priority: "all",
     stage: "all",
   });
-  
+
   const handleFilterChange = (filterName, value) => {
     setFilters({
       ...filters,
       [filterName]: value,
     });
   };
-  
+
   // Filter tasks based on the projectId and the filters
-  const filteredTasks = tasks.filter((task) => {
-    const priorityMatch = filters.priority === "all" || task.priority === filters.priority;
+  const filteredTasks = tasks?.filter((task) => {
+    const priorityMatch =
+    filters.priority === "all" || task.priority === filters.priority;
     const stageMatch = filters.stage === "all" || task.stage === filters.stage;
-    const projectMatch = task.pid === projectId; // Ensure task belongs to the current project
-    return priorityMatch && stageMatch && projectMatch;
+    const projectMatch = task.projectId === projectId; // Ensure task belongs to the current project
+    return priorityMatch && stageMatch && projectMatch ;
   });
-  
-  
+
   useEffect(() => {
     console.log("Open variable status", open);
+    refetch();
   }, [open]);
 
   return loading ? (
@@ -61,7 +85,7 @@ const AdminTasks = () => {
   ) : (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <Title title={`Tasks for Project ${projectId}`} />
+        <Title title={`Tasks for `} />
 
         <Button
           onClick={() => setOpen(true)}
@@ -69,7 +93,6 @@ const AdminTasks = () => {
           icon={<IoMdAdd className="text-lg" />}
           className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
         />
-
       </div>
 
       <div className="flex gap-4 mb-4">
@@ -119,7 +142,8 @@ const AdminTasks = () => {
       </div>
 
       <BoardView tasks={filteredTasks} />
-      <AddTask open={open} setOpen={setOpen} />
+
+      {open && <AddTask open={open} setOpen={setOpen} />}
     </div>
   );
 };

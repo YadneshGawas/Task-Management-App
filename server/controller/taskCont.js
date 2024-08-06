@@ -1,46 +1,49 @@
-
-import Notif from '../schemas/notifications.js';
-import User from '../schemas/user.js';
-import Task from './../schemas/tasks.js';
+/* eslint-disable no-unused-vars */
+import Notif from "../schemas/notifications.js";
+import User from "../schemas/user.js";
+import Task from "./../schemas/tasks.js";
 
 export const createTask = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const userId = "66af9db7479f7ad5afe7161b";
+    //const { userId } = req.user;
 
-    const { title, team, stage, date, priority, assets } = req.body;
+    const { title, due, stage, date, priority, uTeam, desc, projectId, projId } = req.body;
 
-    let text = "New task has been assigned to you";
-    if (team?.length > 1) {
-      text = text + ` and ${team?.length - 1} others.`;
-    }
+    // let text = "New task has been assigned to you";
+    // if (team?.length > 1) {
+    //   text = text + ` and ${team?.length - 1} others.`;
+    // }
 
-    text =
-      text +
-      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
-        date
-      ).toDateString()}. Thank you!!!`;
+    // text =
+    //   text +
+    //   ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
+    //     date
+    //   ).toDateString()}. Thank you!!!`;
 
-    const activity = {
-      type: "assigned",
-      activity: text,
-      by: userId,
-    };
+    // const activity = {
+    //   type: "assigned",
+    //   activity: text,
+    //   by: userId,
+    // };
 
     const task = await Task.create({
       title,
-      team,
-      stage: stage.toLowerCase(),
+      due,
+      stage,
       date,
-      priority: priority.toLowerCase(),
-      assets,
-      activities: activity,
+      priority,
+      uTeam,
+      desc,
+      projId,
+      projectId,
     });
 
-    await Notif.create({
-      team,
-      text,
-      task: task._id,
-    });
+    // await Notif.create({
+    //   team,
+    //   text,
+    //   task: task._id,
+    // });
 
     res
       .status(200)
@@ -50,7 +53,6 @@ export const createTask = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
-
 
 export const postTaskActivity = async (req, res) => {
   try {
@@ -184,21 +186,18 @@ export const getTasks = async (req, res) => {
 
 export const getTask = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const task = await Task.findById(id)
-      .populate({
-        path: "team",
-        select: "name title role email",
-      })
-      .populate({
-        path: "activities.by",
-        select: "name",
-      });
+    //const { userId } = req.body; // Assuming req.user contains the authenticated user's information
+    const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+   
+    // Find projects where the userId is in the leads array
+    const tasks = await Task.find({ uTeam: { $in: [userId] } });
+    // .populate({
+    //   path: "team",
+    //   select: "name title role email",
+    // })
 
     res.status(200).json({
-      status: true,
-      task,
+      tasks, // Return the array of projects
     });
   } catch (error) {
     console.log(error);
@@ -257,4 +256,3 @@ export const updateTask = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
-

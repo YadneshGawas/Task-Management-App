@@ -31,7 +31,7 @@ export const registerUser = async (req, res) => {
     });
 
     if (user) {
-    //isAdmin ? createJWT(res, user._id) : null;
+      //isAdmin ? createJWT(res, user._id) : null;
 
       user.password = undefined;
 
@@ -71,7 +71,7 @@ export const loginUser = async (req, res) => {
     const isMatch = await user.matchPassword(password);
 
     // if(isAdmin){
-      createJWT(res, user._id);
+    createJWT(res, user._id);
     //}
 
     if (user && isMatch) {
@@ -166,11 +166,10 @@ export const updateUserProfile = async (req, res) => {
 
     user.password = undefined;
 
-
     res.status(201).json({
       status: true,
       message: "Profile Updated Successfully.",
-      user: updatedUser,  
+      user: updatedUser,
     });
     // } else {
     //   res.status(404).json({ status: false, message: "User not found" });
@@ -215,21 +214,21 @@ export const changeUserPassword = async (req, res) => {
     const oldPassword = req.body.oldPassword;
 
     if (user) {
-      if(user.password === req.body.oldPassword){
-
+      if (user.password === req.body.oldPassword) {
         user.password = req.body.password;
-  
+
         await user.save();
-  
+
         user.password = undefined;
-  
+
         res.status(201).json({
           status: true,
           message: `Password chnaged successfully.`,
         });
-      }
-      else{
-        res.status(404).json({ status: false, message:"Old password is incorrect"})
+      } else {
+        res
+          .status(404)
+          .json({ status: false, message: "Old password is incorrect" });
       }
     } else {
       res.status(504).json({ status: false, message: "User not found" });
@@ -270,7 +269,6 @@ export const deleteUserProfile = async (req, res) => {
   try {
     const { id } = req.body;
     await User.findByIdAndDelete(id);
-
     res
       .status(200)
       .json({ status: true, message: `User deleted successfully ${id}` });

@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux"; // Import useSelector for Redux
 
-import { getInitials, PRIOTITYSTYELS, TASK_TYPE } from "../assets/index";
+import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 import clsx from "clsx";
 /*icons*/
 import {
@@ -20,7 +20,6 @@ import {
 import { FaNewspaper } from "react-icons/fa";
 import { LuClipboardEdit } from "react-icons/lu";
 import { FaArrowsToDot } from "react-icons/fa6";
-import { projects } from "../assets/data";
 import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
@@ -69,7 +68,7 @@ const TaskTb = ({ user, proj }) => {
 
       <td className="py-2">
         <div className="flex items-center justify-start gap-2">
-          <span className={clsx("text-lg", PRIOTITYSTYELS[task.priority])}>
+          <span className={clsx("text-lg", PRIORITYSTYLES[task.priority])}>
             {icons["high"]}
           </span>
           <span className="capitalize">{task.priority}</span>

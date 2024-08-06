@@ -17,7 +17,6 @@ import {
 import { RxActivityLog } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 import Tabs from "./../other/Tabs";
-import { PRIOTITYSTYELS } from "../assets";
 import { TASK_TYPE, getInitials } from "./../assets/index";
 import Loading from "./../other/Loader";
 import Button from "./../other/Button";
@@ -29,6 +28,7 @@ import Title from "../other/Title";
 import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "../other/task/AddSubTask";
 import { useSelector } from 'react-redux';
+import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
 const assets = [];
 
@@ -39,9 +39,15 @@ const ICONS = {
 };
 
 const bgColor = {
-  high: "bg-red-200",
+  high: "bg-red-300",
   medium: "bg-yellow-200",
   low: "bg-blue-200",
+};
+
+const PRIORITYSTYLES = {
+  high: "text-red-700",
+  medium: "text-yellow-700",
+  low: "text-blue-700",
 };
 
 const TABS = [
@@ -102,13 +108,37 @@ const TaskDetails = () => {
 
   const { user } = useSelector((state) => state.auth);
 
-  const task = tasks.find((task) => task._id === taskid);
+  const { data } = useGetTaskQuery();
+  console.log(data);
 
-  console.log("Desc=>", task?.desc.length);
+  let tasks = [];
+  if (data && data.tasks) {
+    tasks = data.tasks.map((task) => ({
+      id: task._id,
+      lTeam: task.lTeam,
+      title: task.title,
+      date: task.date,
+      due: task.due,
+      priority: task.priority,
+      projectId: task.projectId,
+      stage: task.stage,
+      assets: task.assets,
+      uTeam: task.uTeam,
+      creator: task.creator,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+    }));
+  }
 
-  const descStat = (task?.desc.length > 0);
+  const { taskId } = useParams();
+  console.log(tasks);
 
-  console.log("descStat=>",descStat)
+  const task = tasks.find((task) => task.id === taskId);
+  console.log(task);
+
+  //const task = tasks.find((task) => task._id === taskid);
+
+  const descStat = true;
 
   const getDesc = () => {
     if (descStat) {
@@ -150,7 +180,7 @@ const TaskDetails = () => {
       </div>
 
       <div>
-        <p>Task ID:{taskid}</p>
+        <p>Task ID:{task.id}</p>
       </div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
@@ -163,7 +193,7 @@ const TaskDetails = () => {
                   <div
                     className={clsx(
                       "flex gap-1 items-center text-xs font-semibold px-3 py-1 rounded-full",
-                      PRIOTITYSTYELS[task?.priority],
+                      PRIORITYSTYLES[task?.priority],
                       bgColor[task?.priority]
                     )}
                   >
@@ -175,7 +205,7 @@ const TaskDetails = () => {
                     <div
                       className={clsx(
                         "w-4 h-4 rounded-full",
-                        TASK_TYPE[task.stage]
+                        TASK_TYPE[task?.stage]
                       )}
                     />
                     <span className="text-black uppercase text-sm">
@@ -191,14 +221,14 @@ const TaskDetails = () => {
                 <div className="flex items-center gap-0 p-2 border-y border-gray-200">
                   <div className="space-x-2">
                     <span className="font-semibold">Assets :</span>
-                    <span>{task?.assets?.length}</span>
+                    {/* <span>{task?.assets?.length}</span> */}
                   </div>
 
                   <span className="text-gray-400">&nbsp;|&nbsp;</span>
 
                   <div className="space-x-2">
                     <span className="font-semibold">Sub-Task :</span>
-                    <span>{task?.subTasks?.length}</span>
+                    {/* <span>{task?.subTasks?.length}</span> */}
                   </div>
                 </div>
 
@@ -360,7 +390,7 @@ const Activities = ({ activity, id }) => {
       <div className="w-full md:w-1/2">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
 
-        <div className="w-full">
+        {/* <div className="w-full">
           {activity?.map((el, index) => (
             <Card
               key={index}
@@ -368,7 +398,7 @@ const Activities = ({ activity, id }) => {
               isConnected={index < activity.length - 1}
             />
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full md:w-1/3">
