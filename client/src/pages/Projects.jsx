@@ -19,7 +19,7 @@ const Projects = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { data, refetch } = useGetProjectQuery();
+  const { data } = useGetProjectQuery();
   console.log("Data=>", data );
 
   let projects = [];

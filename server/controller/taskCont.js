@@ -8,7 +8,17 @@ export const createTask = async (req, res) => {
     const userId = "66af9db7479f7ad5afe7161b";
     //const { userId } = req.user;
 
-    const { title, due, stage, date, priority, uTeam, desc, projectId, projId } = req.body;
+    const {
+      title,
+      due,
+      stage,
+      date,
+      priority,
+      uTeam,
+      desc,
+      projectId,
+      taskId,
+    } = req.body;
 
     // let text = "New task has been assigned to you";
     // if (team?.length > 1) {
@@ -27,27 +37,71 @@ export const createTask = async (req, res) => {
     //   by: userId,
     // };
 
-    const task = await Task.create({
-      title,
-      due,
-      stage,
-      date,
-      priority,
-      uTeam,
-      desc,
-      projId,
-      projectId,
-    });
-
     // await Notif.create({
     //   team,
     //   text,
     //   task: task._id,
     // });
 
-    res
-      .status(200)
-      .json({ status: true, task, message: "Task created successfully." });
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      try {
+        const task = await Task.create({
+          title,
+          due,
+          stage,
+          date,
+          priority,
+          uTeam,
+          desc,
+          taskId,
+          projectId,
+        });
+        res
+          .status(200)
+          .json({ status: true, task, message: "Task created successfully." });
+      } catch (error) {
+        console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+      }
+    } else{
+      try{
+        task.id = taskId,
+        task.date = date,
+        task.stage = stage,
+        task.title = title,
+        task.priority = priority,
+        task.uTeam = uTeam,
+        task.desc = desc? desc: " ",
+        task.projectId = projectId,
+
+        await task.save();
+
+        res.status(200).json({ status: true, message: "Task updated successfully"})
+      }
+    catch(error){
+      console.log(error);
+      res.status(400).json({status: false, message: "Failed to update task"})
+    }
+  };
+}
+catch(error){
+  console.log(error);
+  res.status(200).json({ status: false, message: "Failed Creation"})
+}
+};
+
+export const delTasks = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await Task.findByIdAndDelete(id);
+
+    res.status(200).json({
+      status: true,
+      message: `Task ${id} deleted successfully`,
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -187,10 +241,10 @@ export const getTasks = async (req, res) => {
 export const getTask = async (req, res) => {
   try {
     //const { userId } = req.body; // Assuming req.user contains the authenticated user's information
-    const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
-   
+    //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+    const projId = "66b2ff5599de302fb3720f75";
     // Find projects where the userId is in the leads array
-    const tasks = await Task.find({ uTeam: { $in: [userId] } });
+    const tasks = await Task.find({projectId: projId });
     // .populate({
     //   path: "team",
     //   select: "name title role email",

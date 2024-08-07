@@ -96,7 +96,7 @@ const TaskCard = ({ task }) => {
                 </div>
               </div>
 
-              <div className="flex flex-row-reverse">
+              {/* <div className="flex flex-row-reverse">
                 {task?.team?.map((m, index) => (
                   <div
                     key={index}
@@ -108,7 +108,7 @@ const TaskCard = ({ task }) => {
                   <UserInfo open={open} setOpen={open} user={m} />
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* sub tasks */}

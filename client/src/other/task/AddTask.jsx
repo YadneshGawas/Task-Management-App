@@ -6,17 +6,12 @@ import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import {
-  useAddProjectMutation,
-  useGetProjectQuery,
-} from "../../redux/slice/api/projApi.js";
 import Button from "../Button";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import Wrapper from "../Wrapper";
-import LeadsList from "./LeadsList";
 import UserList from "./UserList";
-import { useAddTaskMutation } from "../../redux/slice/api/taskApi.js";
+import { useAddTaskMutation, useGetTaskQuery } from "../../redux/slice/api/taskApi.js";
 
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
@@ -27,7 +22,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
   //console.log(taskData);
 
   const { projectId } = useParams();
-  const { refetch } = useGetProjectQuery();
+  const { refetch } = useGetTaskQuery();
 
   //Getch details of person reatong the proj from local storage
   const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -77,31 +72,27 @@ const AddTask = ({ open, setOpen, taskData }) => {
     defaultValues: {
       date: today,
       title: taskData?.title,
+      desc: taskData?.desc,
     },
   });
 
-  const [lTeam, setLTeam] = useState([]);
-
   const [uTeam, setUTeam] = useState([]);
-
   const [stage, setStage] = useState(null);
   const [priority, setPriority] = useState(null);
-
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
-
   const [addtask] = useAddTaskMutation();
-
-  const projId = taskData?.id;
+  const taskId = taskData?.id;
 
   const submitHandler = async (data) => {
     try {
-      const tskData = { ...data, uTeam, stage, priority, projId, projectId };
+      const tskData = { ...data, uTeam, stage, priority, taskId, projectId };
       console.log(tskData);
       const res = await addtask(tskData).unwrap();
       console.log(res);
       refetch();
       toast.success(res?.message);
+      setOpen(false);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -111,12 +102,10 @@ const AddTask = ({ open, setOpen, taskData }) => {
   useEffect(() => {
     if (taskData) {
       if (
-        taskData?.lTeam &&
         taskData?.uTeam &&
         taskData?.priority &&
         taskData?.stage
       ) {
-        setLTeam(taskData?.lTeam);
         setUTeam(taskData?.uTeam);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
@@ -136,7 +125,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {taskData ? "UPDATE PROJECT" : getTitle()}
+            {taskData ? "UPDATE TASK" : getTitle()}
           </Dialog.Title>
 
           <div className="mt-2 flex flex-col gap-6">

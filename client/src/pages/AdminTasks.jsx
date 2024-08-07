@@ -35,6 +35,7 @@ const AdminTasks = () => {
       title: task.title,
       date: task.date,
       due: task.due,
+      desc: task.desc,
       priority: task.priority,
       projectId: task.projectId,
       stage: task.stage,

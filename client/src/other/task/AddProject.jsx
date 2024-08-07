@@ -131,15 +131,15 @@ const AddProject = ({ open, setOpen, taskData }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {taskData ? "UPDATE PROJECT" : getTitle()}
+            {taskData ? "UPDATE PROJECT" : "ADD PROJECT"}
           </Dialog.Title>
 
           <div className="mt-2 flex flex-col gap-6">
             <Textbox
-              placeholder={getPlaceholder()}
+              placeholder="Project Name"
               type="text"
               name="title"
-              label={getPlaceholder()}
+              label="Project Name"
               className="w-full rounded"
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : ""}
@@ -151,7 +151,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
 
             <div className="flex gap-4">
               <SelectList
-                label={getStage()}
+                label="Project Stage"
                 lists={LISTS}
                 selected={stage}
                 setSelected={setStage}
@@ -161,7 +161,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
                 placeholder="Date"
                 type="date"
                 name="default"
-                label={getDate()}
+                label="Project Created On"
                 read={true}
                 className="w-full rounded"
                 defaultValue={new Date().toISOString().split("T")[0]}

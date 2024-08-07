@@ -12,9 +12,14 @@ import AddTask from "./AddTask";
 import ConfirmatioDialog from "../Dialogs";
 import AddSubTask from "./AddSubTask";
 import { useSelector } from "react-redux";
-import { useDelProjMutation, useGetProjectQuery } from "../../redux/slice/api/projApi";
+import {
+  useDelProjMutation,
+  useGetProjectQuery,
+} from "../../redux/slice/api/projApi";
 import { toast } from "sonner";
 import AddProject from "./AddProject";
+import { useDelTaskMutation, useGetTaskQuery } from "../../redux/slice/api/taskApi";
+
 
 const TaskDialog = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
@@ -22,48 +27,64 @@ const TaskDialog = ({ task }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-  const [del] = useDelProjMutation();
-  const { refetch } = useGetProjectQuery();
-   
+  const [delTask] = useDelTaskMutation();
+  const [delProj] = useDelProjMutation();
+  const { refetch: refetchProjects } = useGetProjectQuery();
+  const { refetch: refetchTasks } = useGetTaskQuery();
+  
   const deleteClicks = () => {
     setOpenDialog(true);
   };
 
-  const deleteHandler = async() => {
-    try{
-      const res = await del({
-        id: task.id,
-      }).unwrap();
-      toast.success(res?.message);
-      refetch();
-    }catch(error){
-      console.log(error);
-      toast.error(error.message)
+  console.log(task);
+  const location = useLocation();
+  const isTasksPage = location.pathname.includes("/tasks");
+  console.log("isTasksPage=>", isTasksPage);
+
+  const deleteHandler = async () => {
+  
+    if (isTasksPage) {
+      try {
+        setOpenDialog(false);
+        const res = await delTask({
+          id: task.id,
+        }).unwrap();
+        toast.success(res?.message);
+        refetchTasks();
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    } else {
+      try {
+        const res = await delProj({
+          id: task.id,
+        }).unwrap();
+        toast.success(res?.message);
+        refetchProjects();
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
     }
   };
-  const location = useLocation();
 
-  const isTasksPage = location.pathname.includes("/task");
 
   const projectId = task.id;
   const taskId = task.id;
-  console.log("TASK ID HERE=>", taskId)
+  console.log("TASK ID HERE=>", taskId);
 
   const items = [
     {
       label: "Open",
       icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
-      onClick: () => 
-        {
+      onClick: () => {
         if (user.isAdmin && isTasksPage) {
           navigate(`/tasks/${taskId}`);
-        } 
-        else if(user.isAdmin) {
+        } else if (user.isAdmin) {
           navigate(`/projects/${projectId}/tasks`);
-        }
-        else
-        {
-          navigate('/taskdetails', { state: { projectId } } );
+        } else {
+          navigate("/taskdetails", { state: { projectId } });
         }
       },
     },
@@ -134,13 +155,12 @@ const TaskDialog = ({ task }) => {
         </Menu>
       </div>
 
-{openEdit &&
-      <AddProject
-        open={openEdit}
-        setOpen={setOpenEdit}
-        taskData={task}
-      />
-}
+      {openEdit &&
+        (isTasksPage ? (
+          <AddTask open={openEdit} setOpen={setOpenEdit} taskData={task} />
+        ) : (
+          <AddProject open={openEdit} setOpen={setOpenEdit} taskData={task} />
+        ))}
 
       <AddSubTask open={open} setOpen={setOpen} />
 
