@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import Projects from './pages/pro';
+import TextEditor from './other/TextEditor';
 
 const App1 = () => {
   return (
-    <div><Projects /></div>
+    <div><TextEditor /></div>
   )
 }
 

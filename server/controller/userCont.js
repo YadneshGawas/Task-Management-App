@@ -5,6 +5,7 @@ import { createJWT } from "../components/index.js";
 import Notif from "./../schemas/notifications.js";
 import transporter from "./../components/nodeMailerConfig.js";
 import jwt from "jsonwebtoken";
+import Task from "../schemas/tasks.js";
 
 const JWT_SECRET = "hvdvay6ert72839289";
 
@@ -418,3 +419,18 @@ export const getUserProfile = async (req, res) => {
       .json({ status: error.message, message: "Internal Server Error" });
   }
 };
+
+export const getUsers = async (req, res) => {
+  const { taskId } = req.params;
+  try {
+    const tasks = await Task.find({ _id: taskId});
+    const task = tasks[0];
+    const userIds = task.uTeam; 
+    const users = await User.find({ _id: { $in: userIds } });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users', error });
+  
+  }
+};
+

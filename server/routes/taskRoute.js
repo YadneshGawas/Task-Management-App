@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
-import { createSubTask, createTask, dashboardStatistics, delTasks, getTask, getTasks, postTaskActivity, updateTask } from "../controller/taskCont.js";
+import { createSubTask, createTask, dashboardStatistics, deleteSubtask, delTasks, getTask, getTasks, postTaskActivity } from "../controller/taskCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 
 const router = express.Router();
@@ -8,6 +8,9 @@ const router = express.Router();
 router.post("/createtask" , createTask);
 router.post("/gettask" , getTask);
 router.put("/delete/:id",delTasks);
+router.put("/createsubtask",createSubTask);
+router.put("/deletesubtask",deleteSubtask);
+//router.put("/updatesubtask",updateSubTask);
 // router.post("/activity/:id", protectRoute, postTaskActivity);
 
 // router.get("/dashboard", protectRoute, dashboardStatistics);

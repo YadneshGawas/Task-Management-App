@@ -11,6 +11,20 @@ export const taskApi = apiSlice.injectEndpoints({
                 body: data,
             })
         }),
+        addSubTask: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/createsubtask`,
+                method: "PUT",
+                body: data ,
+            })
+        }),
+        deleteSubtask: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/deletesubtask`,
+                method: "PUT",
+                body: data ,
+            })
+        }),
         getTask: builder.query({
             query: () =>({
                 url: `${USER_URL}/gettask`,
@@ -29,7 +43,8 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: "PUT",
             })
         }),
+
     }),
 });
 
-export const { useAddTaskMutation, useDelTaskMutation, useGetTaskDetailsQuery, useGetTaskQuery } =  taskApi;
+export const { useAddTaskMutation, useDelTaskMutation, useGetTaskDetailsQuery, useGetTaskQuery, useAddSubTaskMutation, useDeleteSubtaskMutation} =  taskApi;

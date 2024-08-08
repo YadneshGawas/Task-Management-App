@@ -5,22 +5,60 @@ import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
 import Button from "../Button";
 import Wrapper from "./../Wrapper";
-import { useSelector } from "react-redux";
+import {
+  useAddSubTaskMutation,
+  useGetTaskDetailsQuery,
+} from "../../redux/slice/api/taskApi";
+import { toast } from "sonner";
+import SelectList from "../SelectList";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+const LISTS = ["todo", "in progress", "completed"];
 
-const AddSubTask = ({ open, setOpen, id }) => {
-  const { user } = useSelector((state) => state.auth);
-  const today = new Date().toISOString().split("T")[0];
+const AddSubTask = ({ open, setOpen, taskData }) => {
+  const [stage, setStage] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: today,
+      title: taskData?.title,
+      desc: taskData?.desc,
     },
   });
 
-  const handleOnSubmit = () => {};
+  const { taskId } = useParams();
+
+  let subId = ""
+  if(taskData){
+     subId = taskData._id;
+  }else{
+     subId = "";
+  }
+
+  const [addsub] = useAddSubTaskMutation();
+
+  const handleOnSubmit = async (data) => {
+    try {
+      const d = { ...data, subId, stage, taskId };
+      const res = await addsub(d).unwrap();
+      console.log(res);
+      toast.success(res?.message);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message || error.error);
+    }
+  };
+
+  useEffect(() => {
+    if (taskData) {
+      if (taskData?.stage) {
+        setStage(taskData?.stage);
+      }
+    }
+  }, [taskData]);
 
   return (
     <>
@@ -30,7 +68,7 @@ const AddSubTask = ({ open, setOpen, id }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            <span>{"ADD SUB-TASK"}</span>
+            <span>{taskData ? "UPDATE SUB-TASK" : "ADD SUB-TASK"}</span>
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6">
             <Textbox
@@ -45,53 +83,33 @@ const AddSubTask = ({ open, setOpen, id }) => {
               error={errors.title ? errors.title.message : ""}
             />
 
-            <div className="flex items-center gap-4">
-              <Textbox
-                placeholder="Date"
-                type="date"
-                name="date"
-                label="Sub Task Date"
-                className="w-full rounded"
-                register={register("date", {
-                  required: "Date is required!",
-                })}
-                error={errors.date ? errors.date.message : ""}
-              />
+            <SelectList
+              label="Stage"
+              lists={LISTS}
+              selected={stage}
+              setSelected={setStage}
+            />
 
-              <Textbox
-                placeholder="Date"
-                type="date"
-                name="default"
-                label={"Due Date"}
-                read={true}
-                className="w-full rounded"
-                register={register("date", {})}
-                error={errors.date ? errors.date.message : ""}
-              />
-
-            </div>
             <Textbox
-                placeholder="Tag"
-                type="text"
-                name="tag"
-                label="Tag"
-                className="w-full rounded"
-                register={register("tag", {
-                  required: "Tag is required!",
-                })}
-                error={errors.tag ? errors.tag.message : ""}
-              />
+              placeholder="Description"
+              type="text"
+              name="desc"
+              label="Description"
+              className="w-full rounded"
+              register={register("desc")}
+              error={errors.desc ? errors.desc.message : ""}
+            />
           </div>
           <div className="py-3 mt-4 flex sm:flex-row-reverse gap-4">
             <Button
               type="submit"
-              className="bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto"
-              label="Add Task"
+              className="bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto rounded-md"
+              label={taskData ? "Update Task" : "Add Task"}
             />
 
             <Button
               type="button"
-              className="bg-white border text-sm font-semibold text-gray-900 sm:w-auto"
+              className="bg-white border text-sm font-semibold text-gray-900 sm:w-auto rounded-md"
               onClick={() => setOpen(false)}
               label="Cancel"
             />

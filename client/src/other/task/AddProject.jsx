@@ -70,8 +70,9 @@ const AddProject = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: today,
+      date: taskData ? new Date(taskData?.date).toISOString().split('T')[0] : today,
       title: taskData?.title,
+      due: taskData ? new Date(taskData?.due).toISOString().split('T')[0] : today,
     },
   });
 
@@ -134,7 +135,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
             {taskData ? "UPDATE PROJECT" : "ADD PROJECT"}
           </Dialog.Title>
 
-          <div className="mt-2 flex flex-col gap-6">
+          <div className="mt-2 flex flex-col gap-3">
             <Textbox
               placeholder="Project Name"
               type="text"
@@ -172,7 +173,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <Textbox
                 placeholder="Date"
                 type="date"

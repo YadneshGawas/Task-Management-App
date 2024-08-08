@@ -33,11 +33,10 @@ export const userApi = apiSlice.injectEndpoints({
                 body: { id },
             })
         }),
-        getUser: builder.query({
-            query: (data) =>({
-                url: `${USER_URL}/getuser`,
+        getUsers: builder.query({
+            query: (id) =>({
+                url: `${USER_URL}/getusers/${id}`,
                 method: "GET",
-                //body: data,
             })
         }),
         getTeamList: builder.query({
@@ -50,4 +49,4 @@ export const userApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUserQuery,  useGetTeamListQuery} =  userApi;
+export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUsersQuery ,useGetTeamListQuery} =  userApi;

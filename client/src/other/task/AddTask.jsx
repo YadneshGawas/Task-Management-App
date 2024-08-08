@@ -70,9 +70,10 @@ const AddTask = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: today,
+      date: taskData ? new Date(taskData?.date).toISOString().split('T')[0] : today,
       title: taskData?.title,
       desc: taskData?.desc,
+      due: taskData ? new Date(taskData?.due).toISOString().split('T')[0] : today,
     },
   });
 
@@ -87,7 +88,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
   const submitHandler = async (data) => {
     try {
       const tskData = { ...data, uTeam, stage, priority, taskId, projectId };
-      console.log(tskData);
+      console.log(data);
       const res = await addtask(tskData).unwrap();
       console.log(res);
       refetch();
@@ -128,7 +129,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
             {taskData ? "UPDATE TASK" : getTitle()}
           </Dialog.Title>
 
-          <div className="mt-2 flex flex-col gap-6">
+          <div className="mt-2 flex flex-col gap-3">
             <Textbox
               placeholder={getPlaceholder()}
               type="text"
@@ -139,19 +140,9 @@ const AddTask = ({ open, setOpen, taskData }) => {
               error={errors.title ? errors.title.message : ""}
             />
 
-            <Textbox
-              placeholder="Enter description"
-              type="text"
-              name="desc"
-              label={getPlaceholder()}
-              className="w-full rounded"
-              register={register("desc")}
-              error={errors.title ? errors.title.message : ""}
-            />
-
             <UserList setUTeam={setUTeam} uTeam={uTeam} />
 
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <SelectList
                 label={getStage()}
                 lists={LISTS}
@@ -174,7 +165,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <Textbox
                 placeholder="Date"
                 type="date"

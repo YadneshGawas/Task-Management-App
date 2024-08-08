@@ -10,7 +10,6 @@ const Button = ({ icon, className, label, type, onClick = () => {}, status }) =>
       className={clsx("px-3 py-2 outline-none", className)}
       disabled={status}
       onClick={() => {
-        console.log("Button clicked");  // Log button click
         onClick();  // Call the onClick function passed as a prop
       }}
     >

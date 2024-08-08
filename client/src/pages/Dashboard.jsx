@@ -37,7 +37,7 @@ const TaskTb = ({ user, proj }) => {
   //Tbale header part
   const TbHeader = () => (
     <thead className="border-b border-gray-300">
-      <tr className="text-black text-left">
+      <tr className="text-black text-left text-lg">
         {user.isAdmin ? (
           <th className="py-2 px-5">Project Title</th>
         ) : (
@@ -108,32 +108,35 @@ console.log("USERTB=>", data)
   // Table header part
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
-      <tr className="text-black  text-left">
+    <tr className="border-b border-gray-300 ">
+
+    <th className="text-black text-left text-lg pb-2">Users</th>
+    </tr>
+      <tr className="text-md text-black  text-left">
         <th className="py-2">{user.isAdmin ? "Full Name" : "Team Members"}</th>
-        <th className="py-2">Status</th>
-        <th className="py-2">Created At</th>
+        <th className="py-2">Role</th>
       </tr>
     </thead>
   );
 
   // Table row part
-  const TbRow = ({ usr }) => (
+  const TbRow = ({ user }) => (
     <tr className="border-b border-gray-200  text-gray-600">
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
-            <span className="text-center">{getInitials(usr.name)}</span>
+            <span className="text-center">{getInitials(user.name)}</span>
           </div>
 
           <div>
-            <p>{usr.name}</p>
-            <span className="text-xs text-black">{usr.title}</span>
+            <p>{user.name}</p>
+            <span className="text-xs text-black">{user.title}</span>
           </div>
         </div>
       </td>
 
-      <td className="py-2">Active</td>
-      <td className="py-2">10-Jul-24</td>
+      <td className="py-2">{user.role}</td>
+  
     </tr>
   );
 
@@ -142,8 +145,8 @@ console.log("USERTB=>", data)
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
-          {data?.map((mem, index) => (
-            <TbRow key={index} usr={mem} />
+          {data?.map((users, index) => (
+            <TbRow key={index} user={users} />
           ))}
         </tbody>
       </table>
@@ -153,6 +156,9 @@ console.log("USERTB=>", data)
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth); 
+
+  const { data: usersdata } = useGetTeamListQuery();
+  console.log(usersdata);
 
   const { data, refetch } = useGetProjectQuery();
   console.log("TASKTB=>", data)

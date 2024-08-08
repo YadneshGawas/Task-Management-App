@@ -9,8 +9,7 @@ import Textbox from "./Textbox";
 import { toast } from "sonner";
 import { getInitials } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserQuery } from "../redux/slice/api/userApi";
-import { setCredentials } from "../redux/slice/authS";
+
 
 const UserInfo = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.auth);

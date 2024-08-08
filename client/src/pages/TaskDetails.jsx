@@ -3,9 +3,10 @@
 /* eslint-disable react/prop-types */
 import clsx from "clsx";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
+import { IoMdAdd } from "react-icons/io";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
@@ -15,22 +16,32 @@ import {
   MdTaskAlt,
 } from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
-import { useParams } from "react-router-dom";
-import Tabs from "./../other/Tabs";
-import { TASK_TYPE, getInitials } from "./../assets/index";
-import Loading from "./../other/Loader";
-import Button from "./../other/Button";
-import { tasks } from "./../assets/data";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
-import { compose } from "redux";
-import Title from "../other/Title";
-import { IoMdAdd } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import AddSubTask from "../other/task/AddSubTask";
-import { useSelector } from 'react-redux';
+import SubTaskDialog from "../other/task/SubTaskDialog";
+import Title from "../other/Title";
 import { useGetTaskQuery } from "../redux/slice/api/taskApi";
-
+import { useGetUsersQuery } from "../redux/slice/api/userApi";
+import { TASK_TYPE, getInitials } from "./../assets/index";
+import Button from "./../other/Button";
+import Loading from "./../other/Loader";
+import Tabs from "./../other/Tabs";
+import TextEditor from "../other/TextEditor";
 const assets = [];
+
+const TASK_TYPE_SUB = {
+  todo: "bg-blue-500",
+  "in progress": "bg-yellow-500",
+  completed: "bg-green-500",
+};
+
+const STAGE_TYPE = {
+  todo: "text-white",
+  "in progress": "text-white",
+  completed: "text-white",
+};
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -102,14 +113,11 @@ const TaskDetails = () => {
   const { projectId } = location.state || {};
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const taskid = projectId;
 
   const { user } = useSelector((state) => state.auth);
 
-  const { data } = useGetTaskQuery();
-  console.log(data);
+  const { data, refetch: taskRefetch } = useGetTaskQuery();
 
   let tasks = [];
   if (data && data.tasks) {
@@ -118,7 +126,9 @@ const TaskDetails = () => {
       lTeam: task.lTeam,
       title: task.title,
       date: task.date,
+      desc: task.desc,
       due: task.due,
+      subTasks: task.subTasks,
       priority: task.priority,
       projectId: task.projectId,
       stage: task.stage,
@@ -131,14 +141,18 @@ const TaskDetails = () => {
   }
 
   const { taskId } = useParams();
-  console.log(tasks);
 
   const task = tasks.find((task) => task.id === taskId);
-  console.log(task);
 
-  //const task = tasks.find((task) => task._id === taskid);
+  const descStat = task?.desc?.length > 0;
+  console.log(task?.desc);
 
-  const descStat = true;
+  const { data: users, refetch } = useGetUsersQuery(taskId);
+
+  useEffect(() => {
+    refetch();
+    taskRefetch();
+  }, [refetch, taskRefetch, users]);
 
   const getDesc = () => {
     if (descStat) {
@@ -150,17 +164,18 @@ const TaskDetails = () => {
 
   const getLabel = () => {
     if (descStat) {
-      return "Update";
+      return "UPDATE";
     } else {
-      return "Submit";
+      return "SUBMIT";
     }
   };
 
   const printStat = () => {
-    console.log("Updated Description!!!")
+    console.log("Updated Description!!!");
   };
-  
-  console.log("Status=>",user.isAdmin);
+
+
+
 
   return loading ? (
     <div className="py-10">
@@ -171,16 +186,12 @@ const TaskDetails = () => {
       <div className="flex items-center justify-between">
         <Title title={task?.title} />
 
-        <Button
+        {/* <Button
           onClick={() => setOpen(true)}
           label="Add Sub Task"
           icon={<IoMdAdd className="text-lg" />}
           className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-        />
-      </div>
-
-      <div>
-        <p>Task ID:{task.id}</p>
+        /> */}
       </div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
@@ -221,14 +232,14 @@ const TaskDetails = () => {
                 <div className="flex items-center gap-0 p-2 border-y border-gray-200">
                   <div className="space-x-2">
                     <span className="font-semibold">Assets :</span>
-                    {/* <span>{task?.assets?.length}</span> */}
+                    <span>{task?.assets?.length}</span>
                   </div>
 
                   <span className="text-gray-400">&nbsp;|&nbsp;</span>
 
                   <div className="space-x-2">
                     <span className="font-semibold">Sub-Task :</span>
-                    {/* <span>{task?.subTasks?.length}</span> */}
+                    <span>{task?.subTasks?.length}</span>
                   </div>
                 </div>
 
@@ -250,30 +261,21 @@ const TaskDetails = () => {
                   <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
                     <p>DESCRIPTION</p>
                   </div>
-                  <textarea
-                    rows={10}
-                    value={getDesc()}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="Type ......"
-                    className="bg-white w-full mb-3 border border-gray-300 outline-none p-4 rounded-md focus:ring-2 ring-blue-500"
-                  ></textarea>
-                  {
-                    user.isAdmin &&
+                  <TextEditor />
+                  {user.isAdmin && (
                     <Button //Visible only if admin
-                    type="button"
-                    label={getLabel()}
-                    onClick={printStat}//set up the button to add the description to the db
-                    className="bg-blue-600 text-white rounded mb-3"
-                  />
-                  }
+                      type="button"
+                      label={getLabel()}
+                      onClick={printStat} //set up the button to add the description to the db
+                      className="bg-blue-600 text-white rounded mb-3 mt-3"
+                    />
+                  )}
                 </div>
 
-                <div className="space-y-4 py-1">
-                  <p className="text-gray-600 font-semibold test-sm">
-                    TASK TEAM
-                  </p>
-                  <div className="space-y-3">
-                    {task?.team?.map((m, index) => (
+                <p className="text-gray-600 font-semibold test-sm">TASK TEAM</p>
+                <div className="py-1 max-h-32 overflow-y-auto">
+                  <div className="space-y-1">
+                    {users?.map((m, index) => (
                       <div
                         key={index}
                         className="flex gap-4 py-2 items-center border-t border-gray-200"
@@ -290,40 +292,55 @@ const TaskDetails = () => {
 
                         <div>
                           <p className="text-sm font-semibold">{m?.name}</p>
-                          <span className="text-gray-500">{m?.title}</span>
+                          <span className="text-gray-500">{m?.role}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="space-y-4 py-1">
+                <div className="space-y-4 py-6">
                   <p className="text-gray-500 font-semibold text-sm">
                     SUB-TASKS
                   </p>
-                  <div className="space-y-8">
+
+                  <div className="space-y-1 overflow-y-auto pb-4 px-2 max-h-auto">
                     {task?.subTasks?.map((el, index) => (
-                      <div key={index} className="flex gap-3">
+                      <div
+                        key={index}
+                        className="flex gap-3 p-2 transition-shadow duration-300 hover:shadow-lg hover:border hover:border-gray-300 rounded-lg"
+                      >
                         <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
                           <MdTaskAlt className="text-violet-600" size={26} />
                         </div>
-
-                        <div className="space-y-1">
-                          <div className="flex gap-2 items-center">
-                            <span className="text-sm text-gray-500">
-                              {new Date(el?.date).toDateString()}
-                            </span>
-
-                            <span className="px-2 py-0.5 text-center text-sm rounded-full bg-violet-100 text-violet-700 font-semibold">
-                              {el?.tag}
-                            </span>
+                        <div className="flex flex-col space-y-2 pb-2 flex-grow">
+                          <div className="flex items-center justify-between">
+                            <div className="flex flex-row space-x-2">
+                              <p className="text-gray-700">{el?.title}</p>
+                              <span
+                                className={clsx(
+                                  "h-6 px-2 py-0.5 text-center text-sm rounded-full font-semibold",
+                                  TASK_TYPE_SUB[el?.stage],
+                                  STAGE_TYPE[el?.stage]
+                                )}
+                              >
+                                {el?.stage}
+                              </span>
+                            </div>
+                            <SubTaskDialog task={el} />
                           </div>
-
-                          <p className="text-gray-700">{el?.title}</p>
+                          <p>{el?.desc}</p>
                         </div>
                       </div>
                     ))}
                   </div>
+                  <Button //Visible only if admin
+                    type="button"
+                    label="ADD SUBTASK"
+                    onClick={() => setOpen(true)} //set up the button to add the description to the db
+                    className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+                    icon={<IoMdAdd className="text-lg" />}
+                  />
                 </div>
               </div>
               {/* RIGHT */}
@@ -345,7 +362,7 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} id={taskid} />
+            <Activities activity={task?.activities} id={taskId} />
           </>
         )}
       </Tabs>
