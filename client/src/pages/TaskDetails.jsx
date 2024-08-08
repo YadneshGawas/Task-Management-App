@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -22,13 +23,18 @@ import { toast } from "sonner";
 import AddSubTask from "../other/task/AddSubTask";
 import SubTaskDialog from "../other/task/SubTaskDialog";
 import Title from "../other/Title";
-import { useGetTaskQuery } from "../redux/slice/api/taskApi";
+import {
+  useGetTaskQuery,
+  useUpdateDescMutation,
+} from "../redux/slice/api/taskApi";
 import { useGetUsersQuery } from "../redux/slice/api/userApi";
 import { TASK_TYPE, getInitials } from "./../assets/index";
 import Button from "./../other/Button";
 import Loading from "./../other/Loader";
 import Tabs from "./../other/Tabs";
 import TextEditor from "../other/TextEditor";
+import { useForm } from "react-hook-form";
+
 const assets = [];
 
 const TASK_TYPE_SUB = {
@@ -110,14 +116,20 @@ const act_types = [
 
 const TaskDetails = () => {
   const location = useLocation();
-  const { projectId } = location.state || {};
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [desc, setDesc] = useState("");
 
   const { user } = useSelector((state) => state.auth);
 
   const { data, refetch: taskRefetch } = useGetTaskQuery();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   let tasks = [];
   if (data && data.tasks) {
@@ -145,13 +157,16 @@ const TaskDetails = () => {
   const task = tasks.find((task) => task.id === taskId);
 
   const descStat = task?.desc?.length > 0;
-  console.log(task?.desc);
+  console.log("Description:", task?.desc);
 
   const { data: users, refetch } = useGetUsersQuery(taskId);
 
   useEffect(() => {
     refetch();
     taskRefetch();
+    if (task?.desc) {
+      setDesc(task?.desc);
+    }
   }, [refetch, taskRefetch, users]);
 
   const getDesc = () => {
@@ -164,7 +179,7 @@ const TaskDetails = () => {
 
   const getLabel = () => {
     if (descStat) {
-      return "UPDATE";
+      return "ADD DESCRIPTION";
     } else {
       return "SUBMIT";
     }
@@ -174,8 +189,22 @@ const TaskDetails = () => {
     console.log("Updated Description!!!");
   };
 
+  const [update] = useUpdateDescMutation();
 
-
+  const submitHandler = async () => {
+    try {
+      const data = { desc, taskId };
+      console.log(data);
+      const res = await update(data).unwrap();
+      console.log(res);
+      refetch();
+      toast.success("Description Updated");
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
 
   return loading ? (
     <div className="py-10">
@@ -256,21 +285,22 @@ const TaskDetails = () => {
                     </div>
                   </div>
                 </div> */}
-
-                <div className="w-full flex flex-wrap">
-                  <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
-                    <p>DESCRIPTION</p>
+                <form onSubmit={handleSubmit(submitHandler)} className="">
+                  <div className="w-full flex flex-wrap">
+                    <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
+                      <p>DESCRIPTION</p>
+                    </div>
+                    <TextEditor content={desc} setContent={setDesc} />
+                    {user.isAdmin && (
+                      <Button //Visible only if admin
+                        type="submit"
+                        label={getLabel()}
+                        // onClick={handle} //set up the button to add the description to the db
+                        className="bg-blue-600 text-white rounded mb-3 mt-3"
+                      />
+                    )}
                   </div>
-                  <TextEditor />
-                  {user.isAdmin && (
-                    <Button //Visible only if admin
-                      type="button"
-                      label={getLabel()}
-                      onClick={printStat} //set up the button to add the description to the db
-                      className="bg-blue-600 text-white rounded mb-3 mt-3"
-                    />
-                  )}
-                </div>
+                </form>
 
                 <p className="text-gray-600 font-semibold test-sm">TASK TEAM</p>
                 <div className="py-1 max-h-32 overflow-y-auto">

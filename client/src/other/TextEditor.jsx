@@ -1,12 +1,10 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 
-const TextEditor = () => {
-
-    //state to handle the changes in text editor
-    const [content, setContent] = useState('')
-    console.log(content)
+const TextEditor = ({ content, setContent}) => {
     const modules = {
         toolbar: [
             [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
@@ -14,8 +12,6 @@ const TextEditor = () => {
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' },
             { 'indent': '-1' }, { 'indent': '+1' }],
-            // ['link', 'image', 'video'],
-            // ['clean']
         ],
         clipboard: {
             // toggle to add extra line breaks when pasting HTML:
@@ -25,11 +21,10 @@ const TextEditor = () => {
 
     return (
         <div>
-          
             <ReactQuill
                 theme='snow'
                 formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent']}
-                placeholder="Write something amazing..."
+                placeholder="Write description here...."
                 modules={modules}
                 onChange={setContent}
                 value={content}

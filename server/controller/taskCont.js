@@ -94,6 +94,28 @@ export const createTask = async (req, res) => {
   }
 };
 
+export const updateDesc = async (req, res) => {
+  try {
+    const userId = "66af9db7479f7ad5afe7161b";
+
+    const { desc, taskId } = req.body;
+
+    const task = await Task.findById(taskId);
+
+    (task.id = taskId),
+    (task.desc = desc ? desc : " "),
+    
+    await task.save();
+
+    res
+      .status(200)
+      .json({ status: true, message: "Description Updated Successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, message: "Failed to update task" });
+  }
+};
+
 export const delTasks = async (req, res) => {
   try {
     const { id } = req.params;

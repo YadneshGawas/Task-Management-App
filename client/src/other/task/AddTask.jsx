@@ -205,7 +205,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
               </label>
             </div>
 
-            <div className="bg-gray-50 pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
+            <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
               {uploading ? (
                 <span className="text-sm py-2 text-red-500">
                   Uploading assets
@@ -214,7 +214,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
                 <Button
                   label="Submit"
                   type="submit"
-                  className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
+                  className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto rounded-md"
                 />
               )}
 
