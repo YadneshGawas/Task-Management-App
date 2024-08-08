@@ -14,6 +14,7 @@ import { BGS, TASK_TYPE, formatDate, BGSTYLES, PRIORITYSTYLES } from "../assets/
 import TaskDialog from "../other/task/TaskDialog";
 import UserInfo from "../other/UserInfo";
 import { useSelector } from "react-redux";
+import { getInitials } from './../assets/index';
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -96,8 +97,8 @@ const TaskCard = ({ task }) => {
                 </div>
               </div>
 
-              {/* <div className="flex flex-row-reverse">
-                {task?.team?.map((m, index) => (
+              <div className="flex flex-row-reverse">
+                {task?.uTeam?.map((m, index) => (
                   <div
                     key={index}
                     className={clsx(
@@ -105,10 +106,11 @@ const TaskCard = ({ task }) => {
                       BGS[index % BGS?.length]
                     )}
                   >
-                  <UserInfo open={open} setOpen={open} user={m} />
+                  
+                  {/* <UserInfo open={open} setOpen={open} userData={m} /> */}
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
 
             {/* sub tasks */}

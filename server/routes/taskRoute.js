@@ -11,8 +11,9 @@ router.put("/delete/:id",delTasks);
 router.put("/createsubtask",createSubTask);
 router.put("/deletesubtask",deleteSubtask);
 router.put("/updatedescription",updateDesc);
+
 //router.put("/updatesubtask",updateSubTask);
-// router.post("/activity/:id", protectRoute, postTaskActivity);
+router.post("/activity", postTaskActivity);
 
 // router.get("/dashboard", protectRoute, dashboardStatistics);
 // router.get("/", protectRoute, getTasks);

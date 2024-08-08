@@ -25,6 +25,7 @@ import SubTaskDialog from "../other/task/SubTaskDialog";
 import Title from "../other/Title";
 import {
   useGetTaskQuery,
+  usePostActivityMutation,
   useUpdateDescMutation,
 } from "../redux/slice/api/taskApi";
 import { useGetUsersQuery } from "../redux/slice/api/userApi";
@@ -140,6 +141,7 @@ const TaskDetails = () => {
       date: task.date,
       desc: task.desc,
       due: task.due,
+      activities: task.activities,
       subTasks: task.subTasks,
       priority: task.priority,
       projectId: task.projectId,
@@ -157,7 +159,7 @@ const TaskDetails = () => {
   const task = tasks.find((task) => task.id === taskId);
 
   const descStat = task?.desc?.length > 0;
-  console.log("Description:", task?.desc);
+  console.log("Description:", task?.activities);
 
   const { data: users, refetch } = useGetUsersQuery(taskId);
 
@@ -175,18 +177,6 @@ const TaskDetails = () => {
     } else {
       return "No description";
     }
-  };
-
-  const getLabel = () => {
-    if (descStat) {
-      return "ADD DESCRIPTION";
-    } else {
-      return "SUBMIT";
-    }
-  };
-
-  const printStat = () => {
-    console.log("Updated Description!!!");
   };
 
   const [update] = useUpdateDescMutation();
@@ -272,19 +262,6 @@ const TaskDetails = () => {
                   </div>
                 </div>
 
-                {/* <div className="space-y-1 pb-5">
-                  <div className="flex justify-start items-center pt-3 pb-1">
-                    <div className="text-gray-600 font-semibold test-sm">
-                      <p>DESCRIPTION</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-0 p-2 border-y border-gray-200">
-                    <div className=" text-gray-600">
-                      <p>{getDesc()}</p>
-                    </div>
-                  </div>
-                </div> */}
                 <form onSubmit={handleSubmit(submitHandler)} className="">
                   <div className="w-full flex flex-wrap">
                     <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
@@ -294,9 +271,9 @@ const TaskDetails = () => {
                     {user.isAdmin && (
                       <Button //Visible only if admin
                         type="submit"
-                        label={getLabel()}
-                        // onClick={handle} //set up the button to add the description to the db
-                        className="bg-blue-600 text-white rounded mb-3 mt-3"
+                        label="ADD DESCRIPTION"
+                        icon={<IoMdAdd className="text-lg" />}
+                        className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 mt-2 mb-3 2xl:py-2.5"
                       />
                     )}
                   </div>
@@ -392,7 +369,7 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} id={taskId} />
+            <Activities activity={task?.activities} id={taskId} refetch={taskRefetch} />
           </>
         )}
       </Tabs>
@@ -401,12 +378,30 @@ const TaskDetails = () => {
   );
 };
 
-const Activities = ({ activity, id }) => {
+const Activities = ({ activity, id, refetch }) => {
   const [selected, setSelected] = useState(act_types[0]);
   const [text, setText] = useState("");
   const isLoading = false;
 
-  const handleSubmit = async () => {};
+  const [postTaskActivity] = usePostActivityMutation();
+
+  const handleSubmit = async () => {
+    try{
+      const result = await postTaskActivity({
+        type: selected?.toLowerCase(),
+        activity: text,
+        id: id,
+      }).unwrap();
+      console.log(result);
+      setText("");
+      toast.success(result?.message);
+      console.log(activity);
+      refetch();
+    }catch(error){
+      console.log(error);
+      toast.error(error?.data?.message || error.error)
+    }
+  };
 
   const Card = ({ item }) => {
     return (
@@ -437,15 +432,15 @@ const Activities = ({ activity, id }) => {
       <div className="w-full md:w-1/2">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
 
-        {/* <div className="w-full">
+        <div className="w-full">
           {activity?.map((el, index) => (
             <Card
               key={index}
               item={el}
-              isConnected={index < activity.length - 1}
+              isConnected={true}
             />
           ))}
-        </div> */}
+        </div>
       </div>
 
       <div className="w-full md:w-1/3">

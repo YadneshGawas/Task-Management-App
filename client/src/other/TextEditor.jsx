@@ -20,7 +20,7 @@ const TextEditor = ({ content, setContent}) => {
     };
 
     return (
-        <div>
+        <div className="max-w-lg">
             <ReactQuill
                 theme='snow'
                 formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent']}

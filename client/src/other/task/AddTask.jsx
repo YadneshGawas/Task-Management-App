@@ -11,7 +11,17 @@ import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import Wrapper from "../Wrapper";
 import UserList from "./UserList";
-import { useAddTaskMutation, useGetTaskQuery } from "../../redux/slice/api/taskApi.js";
+import {
+  useAddTaskMutation,
+  useGetTaskQuery,
+} from "../../redux/slice/api/taskApi.js";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable
+} from "firebase/storage";
+import { app } from "../../assets/firebase";
 
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
@@ -70,10 +80,14 @@ const AddTask = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: taskData ? new Date(taskData?.date).toISOString().split('T')[0] : today,
+      date: taskData
+        ? new Date(taskData?.date).toISOString().split("T")[0]
+        : today,
       title: taskData?.title,
       desc: taskData?.desc,
-      due: taskData ? new Date(taskData?.due).toISOString().split('T')[0] : today,
+      due: taskData
+        ? new Date(taskData?.due).toISOString().split("T")[0]
+        : today,
     },
   });
 
@@ -82,12 +96,26 @@ const AddTask = ({ open, setOpen, taskData }) => {
   const [priority, setPriority] = useState(null);
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+
   const [addtask] = useAddTaskMutation();
   const taskId = taskData?.id;
+  const URLS = taskData?.assets ? [...taskData.assets] : []; 
 
   const submitHandler = async (data) => {
+    for ( const file of assets){
+      setUploading(true);
+      try{
+        await uploadFile(file);
+      }catch(error){
+        console.error("Error uploading file", error.message);
+        return;
+      }finally{
+        setUploading(false)
+      }
+    }
     try {
-      const tskData = { ...data, uTeam, stage, priority, taskId, projectId };
+      const tskData = { ...data, uTeam, stage, priority, taskId, projectId, assets: [...URLS, ...uploadedFileURLs] };
       console.log(data);
       const res = await addtask(tskData).unwrap();
       console.log(res);
@@ -102,11 +130,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
   useEffect(() => {
     if (taskData) {
-      if (
-        taskData?.uTeam &&
-        taskData?.priority &&
-        taskData?.stage
-      ) {
+      if (taskData?.uTeam && taskData?.priority && taskData?.stage) {
         setUTeam(taskData?.uTeam);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
@@ -116,6 +140,37 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
+  };
+
+  const uploadFile = async(file) => {
+    const storage = getStorage(app);
+    
+    const name = new Date().getTime() + file.name;
+    const storageRef = ref(storage, name);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          console.log("Uploading");
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            uploadedFileURLs.push(downloadURL);
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
+        }
+      )
+    });
   };
 
   return (

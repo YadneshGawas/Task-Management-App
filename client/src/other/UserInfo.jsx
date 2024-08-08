@@ -11,14 +11,9 @@ import { getInitials } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 
 
-const UserInfo = ({ open, setOpen }) => {
+const UserInfo = ({ open, setOpen, userData }) => {
   const { user } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-
-  const [userObject, setUserObject] = useState(null);
-  const userId = user._id;
-
+  console.log("UserData=>", userData);
   //const [getUser] = useGetUserQuery();
 
   // const refreshData = async () => {

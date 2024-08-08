@@ -56,9 +56,9 @@ const TaskTb = ({ user, proj }) => {
   };
 
   const TbRow = ({ task }) => (
-    <tr className="border-b border-gray-300 text-gray-600">
+    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2">
       <td className="py-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 p-2">
           <div
             className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
           />
@@ -74,8 +74,6 @@ const TaskTb = ({ user, proj }) => {
           <span className="capitalize">{task.priority}</span>
         </div>
       </td>
-
-
       <td className="py-2 pl-7">
         <div className="flex items-center justify-start">
           <p>{formatDate(task.createdAt)}</p>
@@ -86,7 +84,7 @@ const TaskTb = ({ user, proj }) => {
 
   return (
     <>
-      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 shadow-blue-100 shadow-xl rounded">
+      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
         <table className="w-full">
           <TbHeader />
           <tbody>
@@ -121,8 +119,8 @@ console.log("USERTB=>", data)
 
   // Table row part
   const TbRow = ({ user }) => (
-    <tr className="border-b border-gray-200  text-gray-600">
-      <td className="py-2">
+    <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
+      <td className="py-2 p-4 m-2">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
             <span className="text-center">{getInitials(user.name)}</span>
@@ -134,14 +132,12 @@ console.log("USERTB=>", data)
           </div>
         </div>
       </td>
-
       <td className="py-2">{user.role}</td>
-  
     </tr>
   );
 
   return (
-    <div className="w-full md:w-1/3 bg-white h-fit px-2 md:px-6 py-4 shadow-xl shadow-blue-100 rounded">
+    <div className="w-full md:w-1/3 bg-white h-fit px-2 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
@@ -271,7 +267,7 @@ const Dashboard = () => {
     return (
       <div
         className={clsx(
-          "w-full h-32 bg-gradient-to-br from-blue-100 to-green-100 p-5 hover:shadow-lg rounded-md flex items-center justify-between"
+          "w-full h-32 bg-gradient-to-br from-blue-100 to-green-100 p-5 transition-shadow duration-300 hover:shadow-lg rounded-lg flex items-center justify-between"
         )}
       >
         <div className="h-full flex flex-1 flex-col justify-between">

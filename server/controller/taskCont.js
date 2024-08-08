@@ -18,6 +18,7 @@ export const createTask = async (req, res) => {
       desc,
       projectId,
       taskId,
+      assets
     } = req.body;
 
     // let text = "New task has been assigned to you";
@@ -57,6 +58,7 @@ export const createTask = async (req, res) => {
           desc,
           taskId,
           projectId,
+          assets
         });
         res
           .status(200)
@@ -76,6 +78,8 @@ export const createTask = async (req, res) => {
           (task.uTeam = uTeam),
           (task.desc = desc ? desc : " "),
           (task.projectId = projectId),
+          (task.assets = assets),
+          
           await task.save();
 
         res
@@ -134,9 +138,10 @@ export const delTasks = async (req, res) => {
 
 export const postTaskActivity = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { userId } = req.user;
-    const { type, activity } = req.body;
+    // const { id } = req.params;
+    // const { userId } = req.user;
+    const userId = "66af9db7479f7ad5afe7161b";
+    const { id, type, activity } = req.body;
 
     const task = await Task.findById(id);
 
@@ -152,7 +157,7 @@ export const postTaskActivity = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Activity posted successfully." });
+      .json({ status: true, message: "Activity posted successfully.", data: data });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
