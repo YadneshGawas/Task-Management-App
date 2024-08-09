@@ -11,6 +11,7 @@ import { useAddSubTaskMutation, useUpdateSubTaskDescMutation } from "../redux/sl
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import Title from "./Title";
+import { FaFilePdf, FaFileWord } from "react-icons/fa";
 
 const LISTS = ["todo", "in progress", "completed"];
 
@@ -31,6 +32,25 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
       // toggle to add extra line breaks when pasting HTML:
       matchVisual: false,
     },
+  };
+
+  const getFileTypeIcon = (fileUrl) => {
+    console.log("URL =>", fileUrl);
+    const lowerCaseUrl = fileUrl.toLowerCase();
+
+    if (
+      lowerCaseUrl.includes("jpg") ||
+      lowerCaseUrl.includes("jpeg") ||
+      lowerCaseUrl.includes("png") ||
+      lowerCaseUrl.includes("gif")
+    ) {
+      return "image";
+    } else if (lowerCaseUrl.includes("pdf")) {
+      return "pdf";
+    } else if (lowerCaseUrl.includes("doc") || lowerCaseUrl.includes("docx")) {
+      return "doc";
+    }
+    return "default";
   };
 
   console.log("Task data descripton =>", taskData?.desc);
@@ -101,14 +121,33 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
             ASSETS
           </p>
           <div className="w-full grid grid-cols-2 gap-2">
-            {taskData?.assets?.map((el, index) => (
-                    <img
-                      key={index}
-                      src={el}
-                      alt={taskData?.title}
-                      className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
-                    />
-                  ))}
+          {taskData?.assets?.map((el, index) => {
+                    const fileType = getFileTypeIcon(el);
+
+                    return (
+                      <a
+                        key={index}
+                        href={el}
+                        target="_blank" // Opens the link in a new tab
+                        rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
+                        className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50 flex items-center justify-center bg-gray-100"
+                      >
+                        {fileType === "image" ? (
+                          <img
+                            src={el}
+                            alt={taskData?.title}
+                            className="w-full h-full object-cover rounded"
+                          />
+                        ) : fileType === "pdf" ? (
+                          <FaFilePdf className="text-red-500 text-4xl" />
+                        ) : fileType === "doc" ? (
+                          <FaFileWord className="text-blue-500 text-4xl" />
+                        ) : (
+                          <p className="text-gray-500">Unknown File Type</p>
+                        )}
+                      </a>
+                    );
+                  })}
           </div>
         </div>
 

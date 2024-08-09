@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 
 const taskSchema = new Schema(
   {
-    projId: { type: String }, //afterwards refrence to Project both down fields
+    //projId: { type: String }, //afterwards refrence to Project both down fields
     projectId: { type: String },
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },

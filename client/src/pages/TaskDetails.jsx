@@ -5,7 +5,14 @@
 import clsx from "clsx";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { FaBug, FaTasks, FaThumbsUp, FaUser } from "react-icons/fa";
+import {
+  FaBug,
+  FaFilePdf,
+  FaFileWord,
+  FaTasks,
+  FaThumbsUp,
+  FaUser,
+} from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
 import { IoMdAdd } from "react-icons/io";
 import {
@@ -179,15 +186,22 @@ const TaskDetails = () => {
   const { data: users, refetch } = useGetUsersQuery(taskId);
 
   const getFileTypeIcon = (fileUrl) => {
-    const extension = fileUrl.split('.').pop().toLowerCase();
-    if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
-      return 'image';
-    } else if (extension === 'pdf') {
-      return 'pdf';
-    } else if (['doc', 'docx'].includes(extension)) {
-      return 'doc';
+    console.log("URL =>", fileUrl);
+    const lowerCaseUrl = fileUrl.toLowerCase();
+
+    if (
+      lowerCaseUrl.includes("jpg") ||
+      lowerCaseUrl.includes("jpeg") ||
+      lowerCaseUrl.includes("png") ||
+      lowerCaseUrl.includes("gif")
+    ) {
+      return "image";
+    } else if (lowerCaseUrl.includes("pdf")) {
+      return "pdf";
+    } else if (lowerCaseUrl.includes("doc") || lowerCaseUrl.includes("docx")) {
+      return "doc";
     }
-    return 'default';
+    return "default";
   };
 
   useEffect(() => {
@@ -351,15 +365,15 @@ const TaskDetails = () => {
                             <SubTaskDialog task={el} />
                           </div>
                           <div>
-                          <span
-                            className={clsx(
-                              "h-6 px-2 py-1 text-center text-sm rounded-full font-semibold",
-                              TASK_TYPE_SUB[el?.stage],
-                              STAGE_TYPE[el?.stage]
-                            )}
-                          >
-                            {el?.stage}
-                          </span>
+                            <span
+                              className={clsx(
+                                "h-6 px-2 py-1 text-center text-sm rounded-full font-semibold",
+                                TASK_TYPE_SUB[el?.stage],
+                                STAGE_TYPE[el?.stage]
+                              )}
+                            >
+                              {el?.stage}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -378,14 +392,33 @@ const TaskDetails = () => {
               <div className="w-full md:w-1/2 space-y-8">
                 <p className="text-lg font-semibold">ASSETS</p>
                 <div className="w-full grid grid-cols-2 gap-4">
-                  {task?.assets?.map((el, index) => (
-                    <img
-                      key={index}
-                      src={el}
-                      alt={task?.title}
-                      className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
-                    />
-                  ))}
+                  {task?.assets?.map((el, index) => {
+                    const fileType = getFileTypeIcon(el);
+
+                    return (
+                      <a
+                        key={index}
+                        href={el}
+                        target="_blank" // Opens the link in a new tab
+                        rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
+                        className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50 flex items-center justify-center bg-gray-100"
+                      >
+                        {fileType === "image" ? (
+                          <img
+                            src={el}
+                            alt={task?.title}
+                            className="w-full h-full object-cover rounded"
+                          />
+                        ) : fileType === "pdf" ? (
+                          <FaFilePdf className="text-red-500 text-4xl" />
+                        ) : fileType === "doc" ? (
+                          <FaFileWord className="text-blue-500 text-4xl" />
+                        ) : (
+                          <p className="text-gray-500">Unknown File Type</p>
+                        )}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -419,7 +452,7 @@ const Activities = ({ activity, id, refetch }) => {
         activity: text,
         id: id,
       }).unwrap();
- 
+
       setText("");
       toast.success(result?.message);
 
