@@ -116,7 +116,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
     }
     try {
       const tskData = { ...data, uTeam, stage, priority, taskId, projectId, assets: [...URLS, ...uploadedFileURLs] };
-      console.log(data);
+      console.log("Before sending=>",tskData);
       const res = await addtask(tskData).unwrap();
       console.log(res);
       refetch();

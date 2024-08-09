@@ -11,10 +11,13 @@ import { useDeleteSubtaskMutation } from "../../redux/slice/api/taskApi";
 import ConfirmatioDialog from "../Dialogs";
 import AddSubTask from "./AddSubTask";
 import { useParams } from "react-router-dom";
+import { AiTwotoneFolderOpen } from "react-icons/ai";
+import PopupViewInfo from "../PopupViewInfo";
 
 const SubTaskDialog = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
   const [openEdit, setOpenEdit] = useState(false);
+  const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [delTask] = useDeleteSubtaskMutation();
 
@@ -43,6 +46,11 @@ const SubTaskDialog = ({ task }) => {
   // console.log("TASK ID HERE=>", task._id);
 
   const items = [
+    {
+      label: "Open",
+      icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
+      onClick: () => setOpen(true),
+    },
     {
       label: "Edit",
       icon: <MdOutlineEdit className="mr-2 h-5 w-5" aria-hidden="true" />,
@@ -112,6 +120,10 @@ const SubTaskDialog = ({ task }) => {
 
       {openEdit && (
         <AddSubTask open={openEdit} setOpen={setOpenEdit} taskData={task} />
+      )}
+
+      {open && (
+        <PopupViewInfo open={open} setOpen={setOpen} taskData={task} />
       )}
 
       <ConfirmatioDialog

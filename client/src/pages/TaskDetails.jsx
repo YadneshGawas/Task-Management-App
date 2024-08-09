@@ -154,14 +154,41 @@ const TaskDetails = () => {
     }));
   }
 
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+    ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false,
+    },
+  };
+
   const { taskId } = useParams();
 
   const task = tasks.find((task) => task.id === taskId);
 
-  const descStat = task?.desc?.length > 0;
-  console.log("Description:", task?.activities);
-
   const { data: users, refetch } = useGetUsersQuery(taskId);
+
+  const getFileTypeIcon = (fileUrl) => {
+    const extension = fileUrl.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+      return 'image';
+    } else if (extension === 'pdf') {
+      return 'pdf';
+    } else if (['doc', 'docx'].includes(extension)) {
+      return 'doc';
+    }
+    return 'default';
+  };
 
   useEffect(() => {
     refetch();
@@ -169,15 +196,7 @@ const TaskDetails = () => {
     if (task?.desc) {
       setDesc(task?.desc);
     }
-  }, [refetch, taskRefetch, users]);
-
-  const getDesc = () => {
-    if (descStat) {
-      return task?.desc;
-    } else {
-      return "No description";
-    }
-  };
+  }, [refetch, taskRefetch, users, open]);
 
   const [update] = useUpdateDescMutation();
 
@@ -267,7 +286,11 @@ const TaskDetails = () => {
                     <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
                       <p>DESCRIPTION</p>
                     </div>
-                    <TextEditor content={desc} setContent={setDesc} />
+                    <TextEditor
+                      content={desc}
+                      setContent={setDesc}
+                      modules={modules}
+                    />
                     {user.isAdmin && (
                       <Button //Visible only if admin
                         type="submit"
@@ -324,19 +347,20 @@ const TaskDetails = () => {
                           <div className="flex items-center justify-between">
                             <div className="flex flex-row space-x-2">
                               <p className="text-gray-700">{el?.title}</p>
-                              <span
-                                className={clsx(
-                                  "h-6 px-2 py-0.5 text-center text-sm rounded-full font-semibold",
-                                  TASK_TYPE_SUB[el?.stage],
-                                  STAGE_TYPE[el?.stage]
-                                )}
-                              >
-                                {el?.stage}
-                              </span>
                             </div>
                             <SubTaskDialog task={el} />
                           </div>
-                          <p>{el?.desc}</p>
+                          <div>
+                          <span
+                            className={clsx(
+                              "h-6 px-2 py-1 text-center text-sm rounded-full font-semibold",
+                              TASK_TYPE_SUB[el?.stage],
+                              STAGE_TYPE[el?.stage]
+                            )}
+                          >
+                            {el?.stage}
+                          </span>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -353,7 +377,6 @@ const TaskDetails = () => {
               {/* RIGHT */}
               <div className="w-full md:w-1/2 space-y-8">
                 <p className="text-lg font-semibold">ASSETS</p>
-
                 <div className="w-full grid grid-cols-2 gap-4">
                   {task?.assets?.map((el, index) => (
                     <img
@@ -369,7 +392,11 @@ const TaskDetails = () => {
           </>
         ) : (
           <>
-            <Activities activity={task?.activities} id={taskId} refetch={taskRefetch} />
+            <Activities
+              activity={task?.activities}
+              id={taskId}
+              refetch={taskRefetch}
+            />
           </>
         )}
       </Tabs>
@@ -386,20 +413,20 @@ const Activities = ({ activity, id, refetch }) => {
   const [postTaskActivity] = usePostActivityMutation();
 
   const handleSubmit = async () => {
-    try{
+    try {
       const result = await postTaskActivity({
         type: selected?.toLowerCase(),
         activity: text,
         id: id,
       }).unwrap();
-      console.log(result);
+ 
       setText("");
       toast.success(result?.message);
-      console.log(activity);
+
       refetch();
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      toast.error(error?.data?.message || error.error)
+      toast.error(error?.data?.message || error.error);
     }
   };
 
@@ -434,11 +461,7 @@ const Activities = ({ activity, id, refetch }) => {
 
         <div className="w-full">
           {activity?.map((el, index) => (
-            <Card
-              key={index}
-              item={el}
-              isConnected={true}
-            />
+            <Card key={index} item={el} isConnected={true} />
           ))}
         </div>
       </div>

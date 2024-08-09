@@ -40,9 +40,17 @@ const TaskCard = ({ task }) => {
     }
   };
 
-  const editClick = (el) => {
-    setSelected(el);
-    console.log(selected?._id);
+  const getCompleted = () => {
+    const isTasksPage = location.pathname.includes("/task");
+    if (isTasksPage && user.isAdmin) {
+      const completedSubtasksCount = task?.subTasks?.filter(subtask => subtask.stage === 'completed').length || 0;
+      console.log(completedSubtasksCount);
+      return completedSubtasksCount;
+    } else if (user.isAdmin) {
+      return task?.tasks?.length;
+    } else {
+      return task?.subTasks?.length;
+    }
   };
 
   return (
@@ -93,7 +101,7 @@ const TaskCard = ({ task }) => {
                 </div>
                 <div className="flex gap-1 items-center text-sm text-gray-600 ">
                   <FaList />
-                  <span>0/{getTasks()}</span>
+                  <span>{getCompleted()}/{getTasks()}</span>
                 </div>
               </div>
 

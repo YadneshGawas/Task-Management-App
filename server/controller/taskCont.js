@@ -305,7 +305,7 @@ export const getTask = async (req, res) => {
 
 export const createSubTask = async (req, res) => {
   try {
-    const { title, desc, stage, taskId, subId } = req.body;
+    const { title, desc, stage, taskId, subId, assets } = req.body;
 
     const task = await Task.findById(taskId);
 
@@ -317,6 +317,7 @@ export const createSubTask = async (req, res) => {
           title,
           desc,
           stage,
+          assets,
         };
 
         task.subTasks.push(newSubTask);
@@ -335,15 +336,21 @@ export const createSubTask = async (req, res) => {
       }
     } else {
       try {
+        const test = {
+          title: title,
+          desc: desc,
+          stage: stage,
+        }
         subtask.title = title;
         subtask.desc = desc;
         subtask.stage = stage;
+        subtask.assets = assets;
 
         await task.save();
 
         return res
           .status(200)
-          .json({ message: "Subtask updated successfully", subtask: subtask });
+          .json({ message: "Subtask updated successfully", subtask: test });
       } catch (error) {
         return res.status(400).json({ message: "Failed to update task" });
       }
@@ -353,6 +360,31 @@ export const createSubTask = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
+
+export const updateSubDesc = async (req, res) => {
+  try {
+    const { desc,taskId,subId } = req.body;
+
+    const task = await Task.findById(taskId);
+
+    const subtask = task.subTasks.find((sub) => sub._id.toString() === subId);
+
+        const test = {
+          desc: desc,
+        }
+  
+        subtask.desc = desc;
+        await task.save();
+        return res
+          .status(200)
+          .json({ message: "Subtask description updated successfully", subtask: test });
+      } catch (error) {
+        return res.status(400).json({ message: "Failed to update subtask description" });
+      }
+    
+
+};
+
 
 export const deleteSubtask = async (req, res) => {
   try {

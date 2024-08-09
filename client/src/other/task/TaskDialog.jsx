@@ -36,10 +36,8 @@ const TaskDialog = ({ task }) => {
     setOpenDialog(true);
   };
 
-  console.log(task);
   const location = useLocation();
   const isTasksPage = location.pathname.includes("/tasks");
-  console.log("isTasksPage=>", isTasksPage);
 
   const deleteHandler = async () => {
   
@@ -72,7 +70,6 @@ const TaskDialog = ({ task }) => {
 
   const projectId = task.id;
   const taskId = task.id;
-  console.log("TASK ID HERE=>", taskId);
 
   const items = [
     {

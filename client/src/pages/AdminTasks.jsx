@@ -24,8 +24,6 @@ const AdminTasks = () => {
 
   const { projectId } = useParams();
   const { data, refetch } = useGetTaskQuery();
-
- console.log("Data",data);
   
   let tasks = [];
   if (data && data.tasks) {
@@ -44,11 +42,10 @@ const AdminTasks = () => {
       creator: task.creator,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
+      subTasks: task.subTasks,
     }));
   }
 
-  console.log("Tasks",tasks);
-  console.log("ProjectID",projectId);
 
   // const projname = (projects.find((obj) => obj.id === projectId).title);
   // console.log(projname)
@@ -75,7 +72,6 @@ const AdminTasks = () => {
   });
 
   useEffect(() => {
-    console.log("Open variable status", open);
     refetch();
   }, [open]);
 

@@ -8,7 +8,7 @@ const taskSchema = new Schema(
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
     due: { type: Date, default: new Date() },
-    desc: { type: String, default: 'Add description here' },
+    desc: { type: String, default: "Add description here" },
     priority: {
       type: String,
       default: "normal",
@@ -43,12 +43,13 @@ const taskSchema = new Schema(
     subTasks: [
       {
         title: { type: String, required: true },
-        desc: { type: String, required: true },
+        desc: { type: String, default: "Enter description here" },
         stage: {
           type: String,
           default: "todo",
           enum: ["todo", "in progress", "completed"],
         },
+        assets: [String],
       },
     ],
     uTeam: [{ type: Schema.Types.ObjectId, ref: "User" }],
