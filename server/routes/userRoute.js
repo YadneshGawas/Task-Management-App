@@ -25,7 +25,7 @@ router.get("/getuserinfo/:id", getUserInfo);
 /*VIEWING DATA*/
 //router.post("/getuser/:userId", getUserProfile);
 
-router.get("/get-team", protectRoute, isAdminRoute, getTeamList);
+router.get("/get-team",getTeamList);
 router.get("/notifications", protectRoute, getNotificationsList);
 router.put("/changepassword",protectRoute, changeUserPassword);
 router.put("/read-noti", protectRoute, markNotificationRead);

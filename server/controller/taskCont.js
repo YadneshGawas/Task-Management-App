@@ -106,7 +106,9 @@ export const updateDesc = async (req, res) => {
 
     const task = await Task.findById(taskId);
 
-    (task.id = taskId), (task.desc = desc ? desc : " "), await task.save();
+    (task.id = taskId), 
+    (task.desc = desc ? desc : " "), 
+    await task.save();
 
     res
       .status(200)
@@ -121,11 +123,19 @@ export const delTasks = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const task = await Task.findById(id);
+    const projectId = task.projectId;
+
+    const project = await Project.findById(projectId);
+    project?.tasks?.pull({ _id: id});
+    await project.save();
+
     await Task.findByIdAndDelete(id);
 
     res.status(200).json({
       status: true,
       message: `Task ${id} deleted successfully`,
+      project: project,
     });
   } catch (error) {
     console.log(error);
@@ -268,8 +278,8 @@ export const postTaskActivity = async (req, res) => {
 
 export const getTask = async (req, res) => {
   try {
-    const { userId } = req.user;
-    // Find projects where the userId is in the leads array
+    //const { userId } = req.user;
+    const userId = "66af9db7479f7ad5afe7161b";
     const tasks = await Task.find({ by: userId }).populate('uTeam', 'name email role');
     // .populate({
     //   path: "team",

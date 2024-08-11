@@ -6,6 +6,7 @@ import Button from "../other/Button";
 import AddProject from "../other/task/AddProject";
 import Title from "../other/Title";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
+import { tasks } from "../assets/data";
 
 const Projects = () => {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,7 @@ const Projects = () => {
       creator: project.creator,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
+      tasks: project.tasks,
     }));
   }
 

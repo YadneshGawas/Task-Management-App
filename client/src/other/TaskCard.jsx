@@ -43,7 +43,7 @@ const TaskCard = ({ task }) => {
 
   const isTasksPage = location.pathname.includes("/task");
 
-  const { data } = useGetUsersQuery(task.id);
+  console.log("Task =>",task)
 
   const getTasks = () => {
     if (isTasksPage && user.isAdmin) {

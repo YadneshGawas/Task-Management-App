@@ -30,6 +30,15 @@ const uploadedFileURLs = [];
 
 const AddTask = ({ open, setOpen, taskData }) => {
   //console.log(taskData);
+  let userTeam = [];
+
+  if (taskData && taskData.uTeam) {
+    userTeam = taskData?.uTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  const uid = userTeam.map(item => item.id);
 
   const { projectId } = useParams();
   const { refetch } = useGetTaskQuery();
@@ -131,7 +140,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
   useEffect(() => {
     if (taskData) {
       if (taskData?.uTeam && taskData?.priority && taskData?.stage) {
-        setUTeam(taskData?.uTeam);
+        setUTeam(uid);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
       }

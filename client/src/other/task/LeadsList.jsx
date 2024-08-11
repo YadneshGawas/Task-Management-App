@@ -13,7 +13,6 @@ const   UserList = ({ setLTeam, lTeam, admin }) => {
   const { data, refetch } = useGetTeamListQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-
   const handleChange = (el) => {
     setSelectedUsers(el);
     setLTeam(el?.map((u) => u._id));

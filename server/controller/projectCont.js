@@ -76,7 +76,7 @@ export const createProject = async (req, res) => {
           .json({ status: true, message: "project updated successfully." });
       } catch (error) {
         console.log(error);
-         return res.status(400).json({ status: false, message: error.message });
+        return res.status(400).json({ status: false, message: error.message });
       }
     }
   } catch (error) {
@@ -92,13 +92,11 @@ export const getProjects = async (req, res) => {
     //Change req to post to get id from frontend in body
     //Get doesn't have a body
 
-
     // Find projects where the userId is in the leads array
-    const projects = await Project.find({ lTeam: { $in: [userId] } }).populate('uTeam', 'name email role');
-    // .populate({
-    //   path: "team",
-    //   select: "name title role email",
-    // })
+    const projects = await Project.find({ lTeam: { $in: [userId] } })
+      .populate("uTeam", "name email role") // Populate uTeam
+      .populate("lTeam", "name email role")
+      .populate("tasks", "title stage"); // Populate lTeam, adjust fields as necessary
 
     res.status(200).json({
       projects, // Return the array of projects

@@ -6,7 +6,7 @@ import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 const router = express.Router();
 
 router.post("/createtask" ,protectRoute, createTask);
-router.post("/gettask",protectRoute,getTask);
+router.post("/gettask",getTask);
 router.put("/delete/:id",delTasks);
 router.put("/createsubtask",createSubTask);
 router.put("/deletesubtask",deleteSubtask);

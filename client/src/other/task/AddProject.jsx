@@ -21,7 +21,27 @@ const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
 
 const AddProject = ({ open, setOpen, taskData }) => {
-  //console.log(taskData);
+  let userTeam = [];
+  let leadTeam = [];
+  console.log("TaskData=>", taskData);
+
+  if (taskData && taskData.uTeam) {
+    userTeam = taskData?.uTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  if (taskData && taskData.lTeam) {
+    leadTeam = taskData?.lTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  console.log("LeadTeam=>",leadTeam);
+  console.log("UserTeam=>",userTeam);
+
+  const uid = userTeam.map(item => item.id);
+  const lid = leadTeam.map(item => item.id);
 
   const { refetch } = useGetProjectQuery();
 
@@ -63,9 +83,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
   const submitHandler = async (data) => {
     try {
       const projData = { ...data, lTeam, uTeam, stage, priority, projId };
-      console.log(projData);
       const res = await addproj(projData).unwrap();
-      console.log(res);
       refetch();
       toast.success(res?.message);
     } catch (error) {
@@ -82,8 +100,8 @@ const AddProject = ({ open, setOpen, taskData }) => {
         taskData?.priority &&
         taskData?.stage
       ) {
-        setLTeam(taskData?.lTeam);
-        setUTeam(taskData?.uTeam);
+        setLTeam(lid);
+        setUTeam(uid);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
       }
@@ -165,15 +183,15 @@ const AddProject = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="bg-gray-50 pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
+            <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
               <Button
                 label="Submit"
                 type="submit"
-                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
+                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto rounded-md"
               />
               <Button
                 type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto rounded-md"
                 onClick={() => setOpen(false)}
                 label="Cancel"
               />
