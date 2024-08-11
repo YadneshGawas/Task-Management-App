@@ -132,6 +132,7 @@ const TaskDetails = () => {
   const { user } = useSelector((state) => state.auth);
 
   const { data, refetch: taskRefetch } = useGetTaskQuery();
+  console.log(data?.uTeam);
 
   const {
     register,
@@ -296,7 +297,7 @@ const TaskDetails = () => {
                 </div>
 
                 <form onSubmit={handleSubmit(submitHandler)} className="">
-                  <div className="w-full flex flex-wrap">
+                  <div className="w-full max-w-xl flex flex-wrap">
                     <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
                       <p>DESCRIPTION</p>
                     </div>

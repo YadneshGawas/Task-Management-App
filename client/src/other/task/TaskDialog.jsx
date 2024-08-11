@@ -1,29 +1,28 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { Menu, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { HiDuplicate } from "react-icons/hi";
-import { MdAdd, MdOutlineEdit } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { Menu, Transition } from "@headlessui/react";
-import AddTask from "./AddTask";
-import ConfirmatioDialog from "../Dialogs";
-import AddSubTask from "./AddSubTask";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import {
   useDelProjMutation,
   useGetProjectQuery,
 } from "../../redux/slice/api/projApi";
-import { toast } from "sonner";
+import {
+  useDelTaskMutation,
+  useGetTaskQuery,
+} from "../../redux/slice/api/taskApi";
+import ConfirmatioDialog from "../Dialogs";
 import AddProject from "./AddProject";
-import { useDelTaskMutation, useGetTaskQuery } from "../../redux/slice/api/taskApi";
-
+import AddTask from "./AddTask";
 
 const TaskDialog = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
-  const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
@@ -31,7 +30,7 @@ const TaskDialog = ({ task }) => {
   const [delProj] = useDelProjMutation();
   const { refetch: refetchProjects } = useGetProjectQuery();
   const { refetch: refetchTasks } = useGetTaskQuery();
-  
+
   const deleteClicks = () => {
     setOpenDialog(true);
   };
@@ -40,7 +39,6 @@ const TaskDialog = ({ task }) => {
   const isTasksPage = location.pathname.includes("/tasks");
 
   const deleteHandler = async () => {
-  
     if (isTasksPage) {
       try {
         setOpenDialog(false);
@@ -66,7 +64,6 @@ const TaskDialog = ({ task }) => {
       }
     }
   };
-
 
   const projectId = task.id;
   const taskId = task.id;
@@ -159,13 +156,13 @@ const TaskDialog = ({ task }) => {
           <AddProject open={openEdit} setOpen={setOpenEdit} taskData={task} />
         ))}
 
-      <AddSubTask open={open} setOpen={setOpen} />
-
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={deleteHandler}
-      />
+      {openDialog && (
+        <ConfirmatioDialog
+          open={openDialog}
+          setOpen={setOpenDialog}
+          onClick={deleteHandler}
+        />
+      )}
     </>
   );
 };

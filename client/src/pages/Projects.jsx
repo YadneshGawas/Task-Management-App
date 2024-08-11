@@ -1,26 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import BoardView from "../other/BoardView";
 import Button from "../other/Button";
 import AddProject from "../other/task/AddProject";
 import Title from "../other/Title";
-import { projects } from './../assets/data';
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
-
 const Projects = () => {
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const { data } = useGetProjectQuery();
-  console.log("Data=>", data );
 
   let projects = [];
   if (data && data.projects) {
@@ -51,12 +41,6 @@ const Projects = () => {
       [filterName]: value,
     });
   };
-
-  // useEffect(() => {
-  //   if (projects) {
-  //     setLoading(false);
-  //   }
-  // }, [projects]);
 
   const filteredProjects = projects?.filter((project) => {
     const priorityMatch =
@@ -137,7 +121,9 @@ const Projects = () => {
         </div>
       </div>
 
+      {filteredProjects &&
       <BoardView tasks={filteredProjects} />
+      }
 
       {open &&
       <AddProject open={open} setOpen={setOpen} />

@@ -6,7 +6,10 @@ import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { useAddProjectMutation, useGetProjectQuery } from "../../redux/slice/api/projApi.js";
+import {
+  useAddProjectMutation,
+  useGetProjectQuery,
+} from "../../redux/slice/api/projApi.js";
 import Button from "../Button";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
@@ -17,8 +20,6 @@ import UserList from "./UserList";
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
 
-const uploadedFileURLs = [];
-
 const AddProject = ({ open, setOpen, taskData }) => {
   //console.log(taskData);
 
@@ -27,41 +28,6 @@ const AddProject = ({ open, setOpen, taskData }) => {
   //Getch details of person reatong the proj from local storage
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const userid = user._id;
-
-  const location = useLocation();
-
-  const getTitle = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "ADD TASK";
-    }
-    return "ADD PROJECT";
-  };
-
-  const getPlaceholder = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Name";
-    }
-    return "Project Name";
-  };
-
-  const getDate = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Created On";
-    }
-    return "Project Created On";
-  };
-
-  const getStage = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Stage";
-    }
-    return "Project Stage";
-  };
-
   const today = new Date().toISOString().split("T")[0];
 
   const {
@@ -70,9 +36,13 @@ const AddProject = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: taskData ? new Date(taskData?.date).toISOString().split('T')[0] : today,
+      date: taskData
+        ? new Date(taskData?.date).toISOString().split("T")[0]
+        : today,
       title: taskData?.title,
-      due: taskData ? new Date(taskData?.due).toISOString().split('T')[0] : today,
+      due: taskData
+        ? new Date(taskData?.due).toISOString().split("T")[0]
+        : today,
     },
   });
 
@@ -195,37 +165,12 @@ const AddProject = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="inline-block items-center justify-start mt-4">
-              <label
-                className="inline-flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
-                htmlFor="imgUpload"
-              >
-                <input
-                  type="file"
-                  className="hidden"
-                  id="imgUpload"
-                  onChange={(e) => handleSelect(e)}
-                  accept=".jpg, .png, .jpeg"
-                  multiple={true}
-                />
-                <BiImages />
-                <span>Add Assets</span>
-              </label>
-            </div>
-
             <div className="bg-gray-50 pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
-              {uploading ? (
-                <span className="text-sm py-2 text-red-500">
-                  Uploading assets
-                </span>
-              ) : (
-                <Button
-                  label="Submit"
-                  type="submit"
-                  className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
-                />
-              )}
-
+              <Button
+                label="Submit"
+                type="submit"
+                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
+              />
               <Button
                 type="button"
                 className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"

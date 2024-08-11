@@ -212,8 +212,6 @@ export const changeUserPassword = async (req, res) => {
 
     const user = await User.findById(userId);
 
-    const oldPassword = req.body.oldPassword;
-
     if (user) {
       if (user.password === req.body.oldPassword) {
         user.password = req.body.password;
@@ -423,10 +421,12 @@ export const getUserProfile = async (req, res) => {
 export const getUsers = async (req, res) => {
   const { taskId } = req.params;
   try {
-    const tasks = await Task.find({ _id: taskId});
-    const task = tasks[0];
-    const userIds = task.uTeam; 
-    const users = await User.find({ _id: { $in: userIds } });
+    const task = await Task.findById(taskId).populate('uTeam', 'name role email');
+    // const tasks = await Task.find({ _id: taskId});
+    // const task = tasks[0];
+    // const userIds = task.uTeam; 
+    // const users = await User.find({ _id: { $in: userIds } });
+    const users = task.uTeam;
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error });
@@ -434,3 +434,13 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUserInfo = async(req,res) => {
+  const {id} = req.params;
+  try{
+    const user = await User.findById(id);
+    res.json({name:user.name, role:user.role, email:user.email});
+  }
+  catch(error){
+    res.status(404).json({ error: error})
+  }
+}

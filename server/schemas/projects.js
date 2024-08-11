@@ -19,7 +19,8 @@ const projectSchema = new Schema(
       },
       assets: [String],
       uTeam: [{ type: Schema.Types.ObjectId, ref: "User" }],
-      creator: { type: Schema.Types.ObjectId, ref: "User", required: true }
+      tasks: [{ type: Schema.Types.ObjectId, ref:"Task"}],
+      by: { type: Schema.Types.ObjectId, ref:"User"},
     },
     {
       timestamps: true,
@@ -28,12 +29,12 @@ const projectSchema = new Schema(
 
   projectSchema.pre('save', function(next) {
     if (this.isNew) {
-      const creatorId = this.creator; // Assuming _creator is set to the ID of the user creating the project
+      const creatorId = this.by; // Assuming _creator is set to the ID of the user creating the project
       if (creatorId && !this.lTeam.includes(creatorId)) {
         this.lTeam.push(creatorId);
       }
     }
-    next();
+    next();   
   });
 
   // Method to remove a lead by user ID

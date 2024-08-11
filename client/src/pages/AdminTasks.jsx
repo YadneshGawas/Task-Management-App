@@ -43,12 +43,11 @@ const AdminTasks = () => {
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
       subTasks: task.subTasks,
+      projectTitle: task.projectTitle,
+      projectDue: task.projectDue,
+      projectPriority: task.projectPriority,
     }));
   }
-
-
-  // const projname = (projects.find((obj) => obj.id === projectId).title);
-  // console.log(projname)
 
   const [filters, setFilters] = useState({
     priority: "all",
@@ -70,6 +69,7 @@ const AdminTasks = () => {
     const projectMatch = task.projectId === projectId; // Ensure task belongs to the current project
     return priorityMatch && stageMatch && projectMatch ;
   });
+
 
   useEffect(() => {
     refetch();
@@ -138,7 +138,9 @@ const AdminTasks = () => {
         </div>
       </div>
 
+      {filteredTasks &&
       <BoardView tasks={filteredTasks} />
+      }
 
       {open && <AddTask open={open} setOpen={setOpen} />}
     </div>

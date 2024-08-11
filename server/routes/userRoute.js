@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
 
-import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserProfile, getUsers, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, testingApis, updateUserProfile } from "../controller/userCont.js";
+import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserInfo, getUserProfile, getUsers, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, testingApis, updateUserProfile } from "../controller/userCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 import { createProject, getProjects } from "../controller/projectCont.js";
 
@@ -20,6 +20,7 @@ router.post("/add", protectRoute, isAdminRoute, adduser);//New route added
 router.put("/update", protectRoute, updateUserProfile);
 router.post("/delete", deleteUserProfile);
 router.get("/getusers/:taskId", getUsers);
+router.get("/getuserinfo/:id", getUserInfo);
 
 /*VIEWING DATA*/
 //router.post("/getuser/:userId", getUserProfile);

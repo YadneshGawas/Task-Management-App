@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
 import {
@@ -10,11 +10,17 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { BGS, TASK_TYPE, formatDate, BGSTYLES, PRIORITYSTYLES } from "../assets/index";
-import TaskDialog from "../other/task/TaskDialog";
-import UserInfo from "../other/UserInfo";
 import { useSelector } from "react-redux";
-import { getInitials } from './../assets/index';
+import {
+  BGS,
+  BGSTYLES,
+  PRIORITYSTYLES,
+  TASK_TYPE,
+  formatDate,
+} from "../assets/index";
+import TaskDialog from "../other/task/TaskDialog";
+import { useGetUsersQuery } from "../redux/slice/api/userApi";
+import CardUsers from "./CardUsers";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -25,12 +31,21 @@ const ICONS = {
 const TaskCard = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
 
-  const [open,setOpen] = useState(false);
+  let uTeam = [];
+  if (task && task.uTeam) {
+    uTeam = task?.uTeam?.map((user) => ({
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    }));
+  }
+  console.log("From task card=>", uTeam);
 
-  const [selected,setSelected] = useState(null);
+  const isTasksPage = location.pathname.includes("/task");
+
+  const { data } = useGetUsersQuery(task.id);
 
   const getTasks = () => {
-    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage && user.isAdmin) {
       return task?.subTasks?.length;
     } else if (user.isAdmin) {
@@ -41,10 +56,10 @@ const TaskCard = ({ task }) => {
   };
 
   const getCompleted = () => {
-    const isTasksPage = location.pathname.includes("/task");
     if (isTasksPage && user.isAdmin) {
-      const completedSubtasksCount = task?.subTasks?.filter(subtask => subtask.stage === 'completed').length || 0;
-      console.log(completedSubtasksCount);
+      const completedSubtasksCount =
+        task?.subTasks?.filter((subtask) => subtask.stage === "completed")
+          .length || 0;
       return completedSubtasksCount;
     } else if (user.isAdmin) {
       return task?.tasks?.length;
@@ -57,7 +72,12 @@ const TaskCard = ({ task }) => {
     <>
       <div>
         <div className="w-full h-fit bg-white shadow-md rounded-xl">
-          <div className={clsx("w-full py-2 rounded-t-xl",BGSTYLES[task?.priority])}></div>
+          <div
+            className={clsx(
+              "w-full py-2 rounded-t-xl",
+              BGSTYLES[task?.priority]
+            )}
+          ></div>
           <div className="pt-1 px-4 pb-4">
             <div className="w-full flex justify-between">
               <div
@@ -83,9 +103,14 @@ const TaskCard = ({ task }) => {
                 />
                 <h4 className="line-clamp-1 text-black">{task?.title}</h4>
               </div>
-              <span className="text-sm text-gray-600">
-                {formatDate(new Date(task?.date))}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-sm text-gray-600">
+                  {task?.projectTitle}
+                </span>
+                <span className="text-sm text-gray-600">
+                  {formatDate(new Date(task?.date))}
+                </span>
+              </div>
             </>
 
             <div className="w-full border-t border-gray-200 my-2" />
@@ -101,23 +126,26 @@ const TaskCard = ({ task }) => {
                 </div>
                 <div className="flex gap-1 items-center text-sm text-gray-600 ">
                   <FaList />
-                  <span>{getCompleted()}/{getTasks()}</span>
+                  <span>
+                    {getCompleted()}/{getTasks()}
+                  </span>
                 </div>
               </div>
 
               <div className="flex flex-row-reverse">
-                {task?.uTeam?.map((m, index) => (
-                  <div
-                    key={index}
-                    className={clsx(
-                      "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                      BGS[index % BGS?.length]
-                    )}
-                  >
-                  
-                  {/* <UserInfo open={open} setOpen={open} userData={m} /> */}
-                  </div>
-                ))}
+                {task?.uTeam?.map((m, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={clsx(
+                        "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
+                        BGS[index % BGS?.length]
+                      )}
+                    >
+                      <CardUsers user={m} />
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
