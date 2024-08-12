@@ -125,7 +125,7 @@ export const delTasks = async (req, res) => {
 
     const task = await Task.findById(id);
     const projectId = task.projectId;
-
+    //temporary comment
     const project = await Project.findById(projectId);
     project?.tasks?.pull({ _id: id});
     await project.save();
