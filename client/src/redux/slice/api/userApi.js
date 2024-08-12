@@ -52,7 +52,13 @@ export const userApi = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        logout: builder.mutation({
+            query: () =>({
+                url: `${USER_URL}/logout`,
+                method: "PUT",
+            }),
+        }),
     }),
 });
 
-export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUsersQuery ,useGetTeamListQuery, useGetUserInfoQuery} =  userApi;
+export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUsersQuery ,useGetTeamListQuery, useGetUserInfoQuery, useLogoutMutation} =  userApi;

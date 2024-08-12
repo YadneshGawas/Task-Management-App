@@ -24,6 +24,11 @@ import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
+import {
+  useGetTaskQuery,
+  useGetUserTaskQuery,
+} from "../redux/slice/api/taskApi";
+import CardUsers from "../other/CardUsers";
 
 const TaskTb = ({ user, proj }) => {
   // Receive user as a prop
@@ -39,12 +44,12 @@ const TaskTb = ({ user, proj }) => {
     <thead className="border-b border-gray-300">
       <tr className="text-black text-left text-lg">
         {user.isAdmin ? (
-          <th className="py-2 px-5">Project Title</th>
+          <th className="py-2">Project Title</th>
         ) : (
-          <th className="py-2 px-5">Task Title</th>
+          <th className="py-2">Task Title</th>
         )}
-        <th className="py-2 px-5">Priority</th>
-        <th className="py-2 px-5">Created At</th>
+        <th className="py-2">Priority</th>
+        <th className="py-2 hidden md:block">Created At</th>
       </tr>
     </thead>
   );
@@ -56,29 +61,36 @@ const TaskTb = ({ user, proj }) => {
   };
 
   const TbRow = ({ task }) => (
-    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2">
+    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 pt-4">
       <td className="py-2">
         <div className="flex items-center gap-2 p-2">
           <div
-            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
+            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task?.stage])}
           />
-          <p className="text-base text-black">{task.title}</p>
+          <p className="text-base text-black">{task?.title}</p>
         </div>
       </td>
 
       <td className="py-2">
         <div className="flex items-center justify-start gap-2">
-          <span className={clsx("text-lg", PRIORITYSTYLES[task.priority])}>
-            {icons["high"]}
+          <span className={clsx("text-lg", PRIORITYSTYLES[task?.priority])}>
+            {icons[task?.priority]}
           </span>
-          <span className="capitalize">{task.priority}</span>
+          <span className="capitalize">{task?.priority}</span>
         </div>
       </td>
-      <td className="py-2 pl-7">
+
+      <td className='py-2 hidden md:block'>
+        <div className='flex items-center justify-start text-base text-gray-600 pt-2'>
+          {formatDate(task?.createdAt)}
+        </div>
+      </td>
+
+      {/* <td className="py-2 hidden md:block">
         <div className="flex items-center justify-start">
-          <p>{formatDate(task.createdAt)}</p>
+          <p>{formatDate(task?.createdAt)}</p>
         </div>
-      </td>
+      </td> */}
     </tr>
   );
 
@@ -99,17 +111,14 @@ const TaskTb = ({ user, proj }) => {
 };
 
 const UserTb = ({ user }) => {
-
-const { data } = useGetTeamListQuery();
-console.log("USERTB=>", data)
+  const { data } = useGetTeamListQuery();
 
   // Table header part
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
-    <tr className="border-b border-gray-300 ">
-
-    <th className="text-black text-left text-lg pb-2">Users</th>
-    </tr>
+      <tr className="border-b border-gray-300 ">
+        <th className="text-black text-left text-lg pb-2">Users</th>
+      </tr>
       <tr className="text-md text-black  text-left">
         <th className="py-2">{user.isAdmin ? "Full Name" : "Team Members"}</th>
         <th className="py-2">Role</th>
@@ -137,7 +146,7 @@ console.log("USERTB=>", data)
   );
 
   return (
-    <div className="w-full md:w-1/3 bg-white h-fit px-2 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+    <div className="w-full md:w-1/3 bg-white h-fit px-4 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
       <table className="w-full mb-5">
         <TableHeader />
         <tbody>
@@ -151,96 +160,104 @@ console.log("USERTB=>", data)
 };
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth); 
+  const { user } = useSelector((state) => state.auth);
+  const adminStatus = user.isAdmin;
 
   const { data: usersdata } = useGetTeamListQuery();
-  console.log(usersdata);
+  const { data: project, refetch: projRefetch } = useGetProjectQuery();
+  const { data: task, refetch: taskRefetch } = useGetUserTaskQuery();
 
-  const { data, refetch } = useGetProjectQuery();
-  console.log("TASKTB=>", data)
-  let projects = [];
-  if (data && data.projects) {
-    projects = data.projects.map((project) => ({
-      id: project._id,
-      lTeam: project.lTeam,
-      title: project.title,
-      date: project.date,
-      due: project.due,
-      priority: project.priority,
-      stage: project.stage,
-      assets: project.assets,
-      uTeam: project.uTeam,
-      creator: project.creator,
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt,
-    }));
+  let object = [];
+
+  if (adminStatus) {
+    console.log("Project Data=>", project);
+    if (project && project.projects) {
+      object = project.projects.map((project) => ({
+        id: project._id,
+        lTeam: project.lTeam,
+        title: project.title,
+        date: project.date,
+        due: project.due,
+        priority: project.priority,
+        stage: project.stage,
+        assets: project.assets,
+        uTeam: project.uTeam,
+        creator: project.creator,
+        createdAt: project.createdAt,
+        updatedAt: project.updatedAt,
+      }));
+    }
+  } else {
+    console.log("Task Data =>", task);
+    if (task && task.tasks) {
+      object = task.tasks.map((task) => ({
+        id: task._id,
+        title: task.title,
+        date: task.date,
+        due: task.due,
+        priority: task.priority,
+        stage: task.stage,
+        assets: task.assets,
+        uTeam: task.uTeam,
+        by: task.by,
+        createdAt: task.createdAt,
+        updatedAt: task.updatedAt,
+        projectTitle: task.projectTitle,
+        projectDue: task.projectDue,
+        projectPriority: task.projectPriority,
+      }));
+    }
   }
 
   useEffect(() => {
-    refetch(); // Ensure data is fetched on mount/reload
-  }, [refetch]);
+    projRefetch();
+    taskRefetch();
+  }, [projRefetch, taskRefetch]);
 
-  //Da; shboard Admin Logic
-  const getComp = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "completed");
-    //console.log("Completed",comp.length);
+  const getComp = (object) => {
+    const comp = object.filter((obj) => obj.stage === "completed");
     return comp.length;
   };
-
-  const inProg = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "in progress");
-    //console.log("In Progress",comp.length);
+  const inProg = (object) => {
+    const comp = object.filter((obj) => obj.stage === "in progress");
     return comp.length;
   };
-
-  const toDo = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "todo");
-    //console.log("To Do",comp.length);
+  const toDo = (object) => {
+    const comp = object.filter((obj) => obj.stage === "todo");
     return comp.length;
   };
-
-  //Dashboard User Logic
-  const usrid = user._id;
-
-  const usrTsk = tasks.filter((task) => {
-    const taskMatch = task.team.some((team) => team._id === usrid);
-    return taskMatch;
-  });
 
   let mems;
 
   if (user.isAdmin) {
     mems = allusers;
   } else {
-    mems = usrTsk.flatMap((task) => task.team);
+    mems = object.flatMap((task) => task.team);
   }
-
-  const uniqueArray = Object.values(
-    mems.reduce((acc, obj) => {
-      acc[obj._id] = obj;
-      return acc;
-    }, {})
-  );
-  
-  mems = uniqueArray;
-
-  const getTComp = usrTsk.filter((tsk) => tsk.stage === "completed");
-  const getTTodo = usrTsk.filter((tsk) => tsk.stage === "todo");
-  const getTinProg = usrTsk.filter((tsk) => tsk.stage === "in progress");
+  // const uniqueArray = Object.values(
+  //   mems.reduce((acc, obj) => {
+  //     acc[obj.id] = obj;
+  //     return acc;
+  //   }, {})
+  // );
+  //mems = uniqueArray;
+  // const getTComp = object.filter((tsk) => tsk.stage === "completed");
+  // const getTTodo = object.filter((tsk) => tsk.stage === "todo");
+  // const getTinProg = object.filter((tsk) => tsk.stage === "in progress");
 
   const stats = [
     {
       _id: "1",
       label: user.isAdmin ? "TOTAL PROJECTS" : "TOTAL TASK",
-      total: user.isAdmin ? projects.length : usrTsk.length,
+      total: object?.length,
       icon: <FaNewspaper />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 67,
     },
     {
       _id: "2",
-      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLTED TASK",
-      total: user.isAdmin ? getComp(projects) : getTComp.length,
+      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLETED TASK",
+      total: getComp(object),
       icon: <MdAdminPanelSettings />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 53,
@@ -248,7 +265,7 @@ const Dashboard = () => {
     {
       _id: "3",
       label: "IN PROGRESS ",
-      total: user.isAdmin ? inProg(projects) : getTinProg.length,
+      total: inProg(object),
       icon: <LuClipboardEdit />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 41,
@@ -256,7 +273,7 @@ const Dashboard = () => {
     {
       _id: "4",
       label: "TODOS",
-      total: user.isAdmin ? toDo(projects) : getTTodo.length,
+      total: toDo(object),
       icon: <FaArrowsToDot />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 47,
@@ -303,7 +320,7 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTb user={user} proj={projects} />{" "}
+        <TaskTb user={user} proj={object} />{" "}
         {/* Pass user as a prop to TaskTb */}
         <UserTb user={user} />
       </div>

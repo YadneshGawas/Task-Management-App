@@ -31,6 +31,7 @@ import AddSubTask from "../other/task/AddSubTask";
 import SubTaskDialog from "../other/task/SubTaskDialog";
 import Title from "../other/Title";
 import {
+  useGetTaskDetailsQuery,
   useGetTaskQuery,
   usePostActivityMutation,
   useUpdateDescMutation,
@@ -42,6 +43,8 @@ import Loading from "./../other/Loader";
 import Tabs from "./../other/Tabs";
 import TextEditor from "../other/TextEditor";
 import { useForm } from "react-hook-form";
+import { IoChatbox } from "react-icons/io5";
+import Chatbox from "../other/Chat";
 
 const assets = [];
 
@@ -78,6 +81,7 @@ const PRIORITYSTYLES = {
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
   { title: "Timeline", icon: <RxActivityLog /> },
+  { title: "Chat", icon: <IoChatbox /> },
 ];
 
 const TASKTYPEICON = {
@@ -86,7 +90,7 @@ const TASKTYPEICON = {
       <MdOutlineMessage />,
     </div>
   ),
-  started: (
+  created: (
     <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
       <FaThumbsUp size={20} />
     </div>
@@ -106,7 +110,7 @@ const TASKTYPEICON = {
       <MdOutlineDoneAll size={24} />
     </div>
   ),
-  working: (
+  updated: (
     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
       <GrInProgress size={16} />
     </div>
@@ -128,11 +132,20 @@ const TaskDetails = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [desc, setDesc] = useState("");
-
+  const { taskId } = useParams();
   const { user } = useSelector((state) => state.auth);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const { data, refetch: taskRefetch } = useGetTaskQuery();
-  console.log(data?.uTeam);
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+  const { data, refetch: taskRefetch } = useGetTaskDetailsQuery(taskId);
+  const task = data?.tasks;
 
   const {
     register,
@@ -140,27 +153,6 @@ const TaskDetails = () => {
     formState: { errors },
   } = useForm();
 
-  let tasks = [];
-  if (data && data.tasks) {
-    tasks = data.tasks.map((task) => ({
-      id: task._id,
-      lTeam: task.lTeam,
-      title: task.title,
-      date: task.date,
-      desc: task.desc,
-      due: task.due,
-      activities: task.activities,
-      subTasks: task.subTasks,
-      priority: task.priority,
-      projectId: task.projectId,
-      stage: task.stage,
-      assets: task.assets,
-      uTeam: task.uTeam,
-      creator: task.creator,
-      createdAt: task.createdAt,
-      updatedAt: task.updatedAt,
-    }));
-  }
 
   const modules = {
     toolbar: [
@@ -180,9 +172,7 @@ const TaskDetails = () => {
     },
   };
 
-  const { taskId } = useParams();
-
-  const task = tasks.find((task) => task.id === taskId);
+  //const task = tasks.find((task) => task.id === taskId);
 
   const { data: users, refetch } = useGetUsersQuery(taskId);
 
@@ -250,7 +240,7 @@ const TaskDetails = () => {
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
-            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 overflow-y-auto">
+            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 overflow-y-auto rounded-lg">
               {/* LEFT */}
               <div className="w-full md:w-1/2 space-y-1">
                 <div className="flex items-center gap-5">
@@ -277,10 +267,14 @@ const TaskDetails = () => {
                     </span>
                   </div>
                 </div>
-
-                <p className="text-gray-500 pb-1">
-                  Created At: {new Date(task?.date).toDateString()}
+                <div>
+                <p className="text-black">
+                  Created On: {new Date(task?.date).toDateString()}
                 </p>
+                <p className=" text-lg font-bold">
+                  Due On: {new Date(task?.due).toDateString()}
+                </p>
+                </div>
 
                 <div className="flex items-center gap-0 p-2 border-y border-gray-200">
                   <div className="space-x-2">
@@ -297,27 +291,41 @@ const TaskDetails = () => {
                 </div>
 
                 <form onSubmit={handleSubmit(submitHandler)} className="">
-                  <div className="w-full max-w-xl flex flex-wrap">
-                    <div className="text-gray-600 font-semibold test-sm mt-3 mb-2">
-                      <p>DESCRIPTION</p>
-                    </div>
-                    <TextEditor
-                      content={desc}
-                      setContent={setDesc}
-                      modules={modules}
-                    />
-                    {user.isAdmin && (
-                      <Button //Visible only if admin
-                        type="submit"
-                        label="ADD DESCRIPTION"
-                        icon={<IoMdAdd className="text-lg" />}
-                        className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 mt-2 mb-3 2xl:py-2.5"
-                      />
-                    )}
-                  </div>
+                <div className="w-full max-w-xl flex flex-wrap">
+      <div className="text-gray-600 font-semibold text-sm mt-3 mb-2">
+        <p>DESCRIPTION</p>
+      </div>
+
+      {isEditing ? (
+        <div onBlur={handleBlur} tabIndex="0"> {/* Focusable to detect blur */}
+          <TextEditor
+            content={desc}
+            setContent={setDesc}
+            modules={modules}
+            className="border border-gray-300 rounded-md p-2" // Optional: Styling for editor
+          />
+        </div>
+      ) : (
+        <p
+          className="cursor-pointer border border-gray-300 rounded-md p-2"
+          onDoubleClick={handleDoubleClick}
+        >
+          {desc || 'No description'}
+        </p>
+      )}
+
+      {user.isAdmin && isEditing && (
+        <Button
+          type="submit"
+          label="ADD DESCRIPTION"
+          icon={<IoMdAdd className="text-lg" />}
+          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 mt-2 mb-3 2xl:py-2.5"
+        />
+      )}
+    </div>
                 </form>
 
-                <p className="text-gray-600 font-semibold test-sm">TASK TEAM</p>
+                <p className="text-gray-600 pt-4 font-semibold test-sm">TASK TEAM</p>
                 <div className="py-1 max-h-32 overflow-y-auto">
                   <div className="space-y-1">
                     {users?.map((m, index) => (
@@ -424,7 +432,7 @@ const TaskDetails = () => {
               </div>
             </div>
           </>
-        ) : (
+        ) : selected === 1 ? (
           <>
             <Activities
               activity={task?.activities}
@@ -432,9 +440,15 @@ const TaskDetails = () => {
               refetch={taskRefetch}
             />
           </>
+        ) : (
+          <>
+            <Chatbox/>
+          </>
         )}
       </Tabs>
+      {open &&
       <AddSubTask open={open} setOpen={setOpen} />
+      }
     </div>
   );
 };
@@ -478,10 +492,10 @@ const Activities = ({ activity, id, refetch }) => {
 
         <div className="flex flex-col gap-y-1 mb-8">
           <p className="font-semibold">{item?.by?.name}</p>
-          <div className="text-gray-500 space-y-2">
+          <div className="text-black space-y-2">
             <span className="capitalize">{item?.type}</span>
-            <span className="text-sm">{moment(item?.date).fromNow()}</span>
           </div>
+            <span className="text-sm">{moment(item?.date).fromNow()}</span>
           <div className="text-gray-700">{item?.activity}</div>
         </div>
       </div>
@@ -489,7 +503,7 @@ const Activities = ({ activity, id, refetch }) => {
   };
 
   return (
-    <div className="w-full flex gap-10 2xl:gap-20 min-h-screen px-10 py-8 bg-white shadow rounded-md justify-between overflow-y-auto">
+    <div className="w-full flex gap-10 2xl:gap-20 min-h-screen px-8 py-6 bg-white shadow rounded-md justify-between overflow-y-auto">
       <div className="w-full md:w-1/2">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
 
@@ -500,7 +514,7 @@ const Activities = ({ activity, id, refetch }) => {
         </div>
       </div>
 
-      <div className="w-full md:w-1/3">
+      {/* <div className="w-full md:w-1/3">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">
           Add Activity
         </h4>
@@ -534,7 +548,7 @@ const Activities = ({ activity, id, refetch }) => {
             />
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

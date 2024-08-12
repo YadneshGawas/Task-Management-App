@@ -6,7 +6,7 @@ import { protectRoute } from "../middleware/authWare.js";
 const router = express.Router();
 
 router.post("/createproject",protectRoute, createProject);
-router.get("/getproject",getProjects);
+router.get("/getproject",protectRoute,getProjects);
 router.put("/delete/:id",delProjects);
 
 //router.get("/getTasks/:id",getProjects);

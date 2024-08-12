@@ -10,12 +10,6 @@ import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
 import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
-
 const AdminTasks = () => {
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
@@ -48,6 +42,8 @@ const AdminTasks = () => {
       projectPriority: task.projectPriority,
     }));
   }
+
+  const title = "Project";
 
   const [filters, setFilters] = useState({
     priority: "all",
@@ -82,7 +78,7 @@ const AdminTasks = () => {
   ) : (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <Title title={`Tasks for `} />
+        <Title title={`${title}`} />
 
         <Button
           onClick={() => setOpen(true)}

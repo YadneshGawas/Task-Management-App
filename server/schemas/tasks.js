@@ -26,13 +26,13 @@ const taskSchema = new Schema(
           type: String,
           default: "assigned",
           enum: [
-            "assigned",
-            "started",
-            "in progress",
-            "working",
-            "bug",
-            "completed",
-            "commented",
+            "created",
+            "updated",
+            // "in progress",
+            // "working",
+            // "bug",
+            // "completed",
+            // "commented",
           ],
         },
         activity: String,
@@ -66,12 +66,61 @@ const taskSchema = new Schema(
 
 taskSchema.pre('save', async function (next) {
   try {
-    if (this.isModified('projectId')) {
+    // Check if the document is new or modified
+    if (this.isModified()) {
       const project = await Project.findById(this.projectId);
       if (project) {
         this.projectTitle = project.title;
         this.projectDue = project.due;
         this.projectPriority = project.priority;
+      }
+
+      // Detect changes and log activities
+      const original = await this.constructor.findById(this._id).lean();
+      if (original) {
+        if (this.isModified('title')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Title changed from "${original.title}" to "${this.title}"`,
+            by: this.by,
+          });
+        }
+        if (this.isModified('desc')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Description changed from "${original.desc}" to "${this.desc}"`,
+            by: this.by,
+          });
+        }
+        if (this.isModified('stage')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Stage changed from "${original.stage}" to "${this.stage}"`,
+            by: this.by,
+          });
+        }
+        if (this.isModified('due')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Stage changed from "${original.due}" to "${this.due}"`,
+            by: this.by,
+          });
+        }
+        if (this.isModified('priority')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Priority changed from "${original.priority}" to "${this.priority}"`,
+            by: this.by,
+          });
+        }
+        // Add similar blocks for other fields you want to track
+      } else {
+        // If it's a new task, log the creation activity
+        this.activities.push({
+          type: "created",
+          activity: "Task created",
+          by: this.by,
+        });
       }
     }
     next();
@@ -80,18 +129,18 @@ taskSchema.pre('save', async function (next) {
   }
 });
 
-taskSchema.post('save', async function(doc, next) {
-  try {
-    const project = await Project.findById(doc.projectId);
-    if (project) {
-      project.tasks.push(doc._id);
-      await project.save();
-    }
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
+// taskSchema.post('save', async function(doc, next) {
+//   try {
+//     const project = await Project.findById(doc.projectId);
+//     if (project) {
+//       project.tasks.push(doc._id);
+//       await project.save();
+//     }
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 const Task = mongoose.model("Task", taskSchema);
 

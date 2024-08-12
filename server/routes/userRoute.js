@@ -9,9 +9,9 @@ const router = express.Router();
 /*OUTSIDE APP ROUTES*/
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/logout", logoutUser);
 router.post("/forgot",forgotUser);
 router.post("/reset/:userId/:token",resetPassword);
+router.put("/logout", logoutUser);
 
 
 /*INSIDE APP ROUTES*/

@@ -1,20 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { useLocation, useParams } from "react-router-dom";
-import { tasks } from "../assets/data";
+import { useParams } from "react-router-dom";
 import BoardView from "../other/BoardView";
 import Loading from "../other/Loader";
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
 import { useSelector } from "react-redux";
-
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
+import { useGetUserTaskQuery } from "../redux/slice/api/taskApi";
 
 const Tasks = () => {
 
@@ -22,16 +16,39 @@ const Tasks = () => {
   
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-    
-  const params = useParams();
-  const status = params?.status || "";
 
-  const location = useLocation();
-  const { projectId } = location.state || {};
-  console.log(projectId," posted from tasks ");
+  const { taskId } = useParams();
+  const { data, refetch } = useGetUserTaskQuery();
+  console.log(data);
+
+  let tasks = [];
+  if (data && data.tasks) {
+    tasks = data.tasks.map((task) => ({
+      id: task._id,
+      lTeam: task.lTeam,
+      title: task.title,
+      date: task.date,
+      due: task.due,
+      desc: task.desc,
+      priority: task.priority,
+      projectId: task.projectId,
+      stage: task.stage,
+      assets: task.assets,
+      uTeam: task.uTeam,
+      creator: task.creator,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+      subTasks: task.subTasks,
+      projectTitle: task.projectTitle,
+      projectDue: task.projectDue,
+      projectPriority: task.projectPriority,
+    }));
+  }
+
+  console.log(tasks);
 
   useEffect(()=>{
-    console.log("Open variable status",open);
+    refetch();
   }, [open]);
 
   const [filters, setFilters] = useState({
@@ -46,15 +63,10 @@ const Tasks = () => {
     });
   };
 
-  const usrid = user._id;
-  //First display only the tasks which belong to that user
-  //Pass that object for another filtration
-
   const filteredTasks = tasks.filter((task) => {
     const priorityMatch = filters.priority === "all" || task.priority === filters.priority;
     const stageMatch = filters.stage === "all" || task.stage === filters.stage;
-    const taskMatch = task.team.some(team => team._id === usrid);
-    return priorityMatch && stageMatch && taskMatch;
+    return priorityMatch && stageMatch ;
   });
 
 
@@ -66,17 +78,15 @@ const Tasks = () => {
     <div className='w-full'>
       <div className='flex items-center justify-between mb-4'>
         <Title title={status ? `${status} Tasks` : "Tasks"} />
-        <div><p>User ID:{user._id}</p></div>
-        {/* <div><p>Task ID:{tasks?.team?._id}</p></div> */}
 
-        {!status && (
+        {/* {!status && (
           <Button
             onClick={()=>setOpen(true)}
             label='Create Task'
             icon={<IoMdAdd className='text-lg' />}
             className='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5'
           />
-        )}
+        )} */}
 
       </div>
 
@@ -126,8 +136,13 @@ const Tasks = () => {
       </div>
     </div>
 
-          <BoardView tasks={filteredTasks} />
+    {filteredTasks &&
+      <BoardView tasks={filteredTasks} />
+    }
+
+    {open  && 
       <AddTask open={open} setOpen={setOpen} />
+    }
     </div>
   );
 };

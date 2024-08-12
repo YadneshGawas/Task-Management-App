@@ -78,7 +78,7 @@ const TaskDialog = ({ task }) => {
         } else if (user.isAdmin) {
           navigate(`/projects/${projectId}/tasks`);
         } else {
-          navigate("/taskdetails", { state: { projectId } });
+          navigate(`/tasks/${taskId}`);
         }
       },
     },

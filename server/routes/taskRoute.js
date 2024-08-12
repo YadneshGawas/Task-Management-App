@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
-import { createSubTask, createTask, deleteSubtask, delTasks, getTask, postTaskActivity, updateDesc, updateSubDesc } from "../controller/taskCont.js";
+import { createSubTask, createTask, deleteSubtask, delTasks, getAdminTask, getTaskDetails, getUserTasks, postTaskActivity, updateDesc, updateSubDesc } from "../controller/taskCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 
 const router = express.Router();
 
 router.post("/createtask" ,protectRoute, createTask);
-router.post("/gettask",getTask);
+router.post("/getadmintask",protectRoute,getAdminTask);
+router.post("/getusertask",protectRoute,getUserTasks);
+router.get("/getdetails/:id",getTaskDetails);
 router.put("/delete/:id",delTasks);
 router.put("/createsubtask",createSubTask);
 router.put("/deletesubtask",deleteSubtask);

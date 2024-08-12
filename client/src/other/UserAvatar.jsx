@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import UserInfo from "./UserInfo";
 import ChangePassword from "./ChangePassword";
 import AddUserNoAdmin from "./AddUserNoAdmin";
-import AddUser from "./AddUser";
+import { useLogoutMutation } from "../redux/slice/api/userApi";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -20,16 +20,11 @@ const UserAvatar = () => {
   const [viewOpen, setViewOpen] = useState(false);
   let { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [obj] = useLogoutMutation()
 
   const logoutHandler = async () => {
     try {
-      const response = await fetch("api/user/logout", {
-        method: 'POST',
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        throw new Error('Logout failed');
-      }
+      const response = await obj().unwrap();
       dispatch(logout());
       toast.success("Logged out");
     } catch (error) {

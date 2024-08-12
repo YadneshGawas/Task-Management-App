@@ -39,11 +39,17 @@ const TaskCard = ({ task }) => {
       role: user.role,
     }));
   }
-  console.log("From task card=>", uTeam);
+
+  let tasks = [];
+  if (task && task.tasks) {
+    tasks = task?.tasks?.map((obj) => ({
+      title: obj.title,
+      stage: obj.stage,
+    }));
+  }
+  console.log("From task card=>", tasks);
 
   const isTasksPage = location.pathname.includes("/task");
-
-  console.log("Task =>",task)
 
   const getTasks = () => {
     if (isTasksPage && user.isAdmin) {
@@ -51,6 +57,7 @@ const TaskCard = ({ task }) => {
     } else if (user.isAdmin) {
       return task?.tasks?.length;
     } else {
+      console.log("Tasks from TaskCard=>", task);
       return task?.subTasks?.length;
     }
   };
@@ -62,9 +69,15 @@ const TaskCard = ({ task }) => {
           .length || 0;
       return completedSubtasksCount;
     } else if (user.isAdmin) {
-      return task?.tasks?.length;
+      const completedSubtasksCount =
+        task?.tasks?.filter((subtask) => subtask.stage === "completed")
+          .length || 0;
+      return completedSubtasksCount;
     } else {
-      return task?.subTasks?.length;
+      const completedSubtasksCount =
+        task?.subTasks?.filter((subtask) => subtask.stage === "completed")
+          .length || 0;
+      return completedSubtasksCount;
     }
   };
 
@@ -108,7 +121,10 @@ const TaskCard = ({ task }) => {
                   {task?.projectTitle}
                 </span>
                 <span className="text-sm text-gray-600">
-                  {formatDate(new Date(task?.date))}
+                  Created On: {formatDate(new Date(task?.date))}
+                </span>
+                <span className="text-sm text-gray-600">
+                  Due On: {formatDate(new Date(task?.due))}
                 </span>
               </div>
             </>
@@ -116,15 +132,17 @@ const TaskCard = ({ task }) => {
             <div className="w-full border-t border-gray-200 my-2" />
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-3">
-                <div className="flex gap-1 items-center text-sm text-gray-600">
+                {/* <div className="flex gap-1 items-center text-sm text-gray-600" title="Activities">
                   <BiMessageAltDetail />
                   <span>{task?.activities?.length}</span>
-                </div>
-                <div className="flex gap-1 items-center text-sm text-gray-600 ">
+                </div> */}
+                {isTasksPage && 
+                <div className="flex gap-1 items-center text-sm text-gray-600 " title="Assets">
                   <MdAttachFile />
                   <span>{task?.assets?.length}</span>
                 </div>
-                <div className="flex gap-1 items-center text-sm text-gray-600 ">
+                }
+                <div className="flex gap-1 items-center text-sm text-gray-600 " title="Pending / Completed">
                   <FaList />
                   <span>
                     {getCompleted()}/{getTasks()}

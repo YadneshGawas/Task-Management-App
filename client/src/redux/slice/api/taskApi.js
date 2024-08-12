@@ -48,13 +48,19 @@ export const taskApi = apiSlice.injectEndpoints({
         }),
         getTask: builder.query({
             query: () =>({
-                url: `${USER_URL}/gettask`,
+                url: `${USER_URL}/getadmintask`,
+                method: "POST",
+            })
+        }),
+        getUserTask: builder.query({
+            query: () =>({
+                url: `${USER_URL}/getusertask`,
                 method: "POST",
             })
         }),
         getTaskDetails: builder.query({
             query: (id) => ({
-                url: `${USER_URL}/getDetails/${id}`,
+                url: `${USER_URL}/getdetails/${id}`,
                 method: "GET",
             })
         }),
@@ -78,4 +84,5 @@ export const {
     useUpdateDescMutation,
     usePostActivityMutation,
     useUpdateSubTaskDescMutation,
+    useGetUserTaskQuery,
 } =  taskApi;
