@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import BoardView from "../other/BoardView";
 import Button from "../other/Button";
@@ -11,7 +11,7 @@ import { tasks } from "../assets/data";
 const Projects = () => {
   const [open, setOpen] = useState(false);
 
-  const { data } = useGetProjectQuery();
+  const { data, refetch } = useGetProjectQuery();
 
   let projects = [];
   if (data && data.projects) {
@@ -63,6 +63,10 @@ const Projects = () => {
   // if (error) {
   //   return <div>Error: {error.message}</div>;
   // }
+
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   return (
     <div className="w-full">

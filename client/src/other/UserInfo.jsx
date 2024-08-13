@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const UserInfo = ({ open, setOpen, userData }) => {
   const { user } = useSelector((state) => state.auth);
-  console.log("UserData=>", userData);
   //const [getUser] = useGetUserQuery();
 
   // const refreshData = async () => {

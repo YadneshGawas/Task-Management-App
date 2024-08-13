@@ -70,19 +70,6 @@ const TaskDialog = ({ task }) => {
 
   const items = [
     {
-      label: "Open",
-      icon: <AiTwotoneFolderOpen className="mr-2 h-5 w-5" aria-hidden="true" />,
-      onClick: () => {
-        if (user.isAdmin && isTasksPage) {
-          navigate(`/tasks/${taskId}`);
-        } else if (user.isAdmin) {
-          navigate(`/projects/${projectId}/tasks`);
-        } else {
-          navigate(`/tasks/${taskId}`);
-        }
-      },
-    },
-    {
       label: "Edit",
       icon: <MdOutlineEdit className="mr-2 h-5 w-5" aria-hidden="true" />,
       onClick: () => setOpenEdit(true),
@@ -105,6 +92,7 @@ const TaskDialog = ({ task }) => {
             leave="transition ease-in duration-75"
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
+            className="z-50"
           >
             <Menu.Items className="absolute p-4 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
               <div className="px-1 py-1 space-y-2">

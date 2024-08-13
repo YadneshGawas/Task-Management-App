@@ -24,7 +24,7 @@ const taskSchema = new Schema(
       {
         type: {
           type: String,
-          default: "assigned",
+          default: "created",
           enum: [
             "created",
             "updated",
@@ -88,7 +88,7 @@ taskSchema.pre('save', async function (next) {
         if (this.isModified('desc')) {
           this.activities.push({
             type: "updated",
-            activity: `Description changed from "${original.desc}" to "${this.desc}"`,
+            activity: `Description changed to ${this.desc}`,
             by: this.by,
           });
         }
@@ -113,9 +113,7 @@ taskSchema.pre('save', async function (next) {
             by: this.by,
           });
         }
-        // Add similar blocks for other fields you want to track
       } else {
-        // If it's a new task, log the creation activity
         this.activities.push({
           type: "created",
           activity: "Task created",

@@ -122,3 +122,23 @@ export const delProjects = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
+
+export const getAProject = async (req, res) => {
+  try {
+    const { projectId } = req.params; // Assuming req.user contains the authenticated user's information
+    //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+    //Change req to post to get id from frontend in body
+    //Get doesn't have a body
+
+    // Find projects where the userId is in the leads array
+    const projects = await Project.findById(projectId)
+      .populate("uTeam", "name email role") // Populate uTeam
+
+    res.status(200).json({
+      projects, // Return the array of projects
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};

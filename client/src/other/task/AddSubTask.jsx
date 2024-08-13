@@ -152,15 +152,6 @@ const AddSubTask = ({ open, setOpen, taskData }) => {
                 setSelected={setStage}
               />
 
-              {/* <Textbox
-              placeholder="Description"
-              type="text"
-              name="desc"
-              label="Description"
-              className="w-full rounded"
-              register={register("desc")}
-              error={errors.desc ? errors.desc.message : ""}
-            /> */}
             </div>
             <div className="inline-block items-center justify-start mt-4">
               <label

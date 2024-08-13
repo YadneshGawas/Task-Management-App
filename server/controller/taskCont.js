@@ -189,7 +189,7 @@ export const getTaskDetails = async (req, res) => {
   try {
     const { id } = req.params;
     //const userId = "66b9895f6e7bf0ea463cf32e";
-    const tasks = await Task.findById(id);
+    const tasks = await Task.findById(id).populate('uTeam','name email role');
 
     res.status(200).json({
       tasks, // Return the array of projects

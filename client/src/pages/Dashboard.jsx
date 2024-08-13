@@ -8,27 +8,22 @@ import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux"; // Import useSelector for Redux
 
-import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 import clsx from "clsx";
+import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 /*icons*/
+import { FaNewspaper } from "react-icons/fa";
+import { FaArrowsToDot } from "react-icons/fa6";
+import { LuClipboardEdit } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { FaNewspaper } from "react-icons/fa";
-import { LuClipboardEdit } from "react-icons/lu";
-import { FaArrowsToDot } from "react-icons/fa6";
-import { tasks } from "../assets/data";
 import { allusers } from "../assets/data";
-import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
-import {
-  useGetTaskQuery,
-  useGetUserTaskQuery,
-} from "../redux/slice/api/taskApi";
-import CardUsers from "../other/CardUsers";
+import { useGetUserTaskQuery } from "../redux/slice/api/taskApi";
+import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 
 const TaskTb = ({ user, proj }) => {
   // Receive user as a prop
@@ -49,7 +44,8 @@ const TaskTb = ({ user, proj }) => {
           <th className="py-2">Task Title</th>
         )}
         <th className="py-2">Priority</th>
-        <th className="py-2 hidden md:block">Created At</th>
+        <th className="py-2">Created At</th>
+        {!user.isAdmin && <th className="py-2 hidden md:block">Due Date</th>}
       </tr>
     </thead>
   );
@@ -61,7 +57,7 @@ const TaskTb = ({ user, proj }) => {
   };
 
   const TbRow = ({ task }) => (
-    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 pt-4">
+    <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 pt-4">
       <td className="py-2">
         <div className="flex items-center gap-2 p-2">
           <div
@@ -80,11 +76,19 @@ const TaskTb = ({ user, proj }) => {
         </div>
       </td>
 
-      <td className='py-2 hidden md:block'>
-        <div className='flex items-center justify-start text-base text-gray-600 pt-2'>
+      <td className="py-2">
+        <div className="flex items-center justify-start text-base text-gray-600 pt-2">
           {formatDate(task?.createdAt)}
         </div>
       </td>
+
+      {!user.isAdmin && (
+        <td className="py-2 hidden md:block">
+          <div className="flex items-center justify-start text-base text-gray-600 pt-2">
+            {formatDate(task?.due)}
+          </div>
+        </td>
+      )}
 
       {/* <td className="py-2 hidden md:block">
         <div className="flex items-center justify-start">
@@ -96,7 +100,7 @@ const TaskTb = ({ user, proj }) => {
 
   return (
     <>
-      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+      <div className="w-full flex bg-white px-2 md:px-4 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
         <table className="w-full">
           <TbHeader />
           <tbody>
@@ -118,10 +122,6 @@ const UserTb = ({ user }) => {
     <thead className="border-b border-gray-300 ">
       <tr className="border-b border-gray-300 ">
         <th className="text-black text-left text-lg pb-2">Users</th>
-      </tr>
-      <tr className="text-md text-black  text-left">
-        <th className="py-2">{user.isAdmin ? "Full Name" : "Team Members"}</th>
-        <th className="py-2">Role</th>
       </tr>
     </thead>
   );
@@ -146,14 +146,16 @@ const UserTb = ({ user }) => {
   );
 
   return (
-    <div className="w-full md:w-1/3 bg-white h-fit px-4 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+    <div className="w-full bg-white h-fit px-4 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
       <table className="w-full mb-5">
         <TableHeader />
-        <tbody>
-          {data?.map((users, index) => (
-            <TbRow key={index} user={users} />
-          ))}
-        </tbody>
+        <div className="w-full max-h-svh overflow-y-auto">
+          <tbody>
+            {data?.map((users, index) => (
+              <TbRow key={index} user={users} />
+            ))}
+          </tbody>
+        </div>
       </table>
     </div>
   );
@@ -234,16 +236,6 @@ const Dashboard = () => {
   } else {
     mems = object.flatMap((task) => task.team);
   }
-  // const uniqueArray = Object.values(
-  //   mems.reduce((acc, obj) => {
-  //     acc[obj.id] = obj;
-  //     return acc;
-  //   }, {})
-  // );
-  //mems = uniqueArray;
-  // const getTComp = object.filter((tsk) => tsk.stage === "completed");
-  // const getTTodo = object.filter((tsk) => tsk.stage === "todo");
-  // const getTinProg = object.filter((tsk) => tsk.stage === "in progress");
 
   const stats = [
     {
@@ -320,9 +312,14 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTb user={user} proj={object} />{" "}
-        {/* Pass user as a prop to TaskTb */}
-        <UserTb user={user} />
+        <div className={`flex-1 ${!user.isAdmin ? "w-full" : "w-2/3"}`}>
+          <TaskTb user={user} proj={object} />
+        </div>
+        {user.isAdmin && (
+          <div className="w-full md:w-1/3">
+            <UserTb user={user} />
+          </div>
+        )}
       </div>
     </div>
   );

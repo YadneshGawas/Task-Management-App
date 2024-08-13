@@ -3,8 +3,6 @@
 import { Dialog } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiImages } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import {
   useAddProjectMutation,
@@ -73,8 +71,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
   const [stage, setStage] = useState(null);
   const [priority, setPriority] = useState(null);
 
-  const [assets, setAssets] = useState([]);
-  const [uploading, setUploading] = useState(false);
+
 
   const [addproj] = useAddProjectMutation();
 
@@ -107,10 +104,6 @@ const AddProject = ({ open, setOpen, taskData }) => {
       }
     }
   }, [taskData]);
-
-  const handleSelect = (e) => {
-    setAssets(e.target.files);
-  };
 
   return (
     <>

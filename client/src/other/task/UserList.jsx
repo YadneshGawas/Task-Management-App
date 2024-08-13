@@ -4,18 +4,24 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdCheck } from "react-icons/md";
-
 import clsx from "clsx";
-import { summary } from "./../../assets/data";
 import { getInitials } from "./../../assets/index";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useGetTeamListQuery } from "../../redux/slice/api/userApi";
 
-const   UserList = ({ setUTeam, uTeam }) => {
+const UserList = ({ setUTeam, uTeam, users }) => {
+
   const { user } = useSelector((state) => state.auth);
+
   const { data, refetch } = useGetTeamListQuery();
+
   const [selectedUsers, setSelectedUsers] = useState([]);
+
+  const team = users ? users : data;
+
+  console.log("Users from sent =>", users);
+  console.log("Users from fetched =>", data);
 
   const handleChange = (el) => {
     setSelectedUsers(el);
@@ -44,15 +50,6 @@ const   UserList = ({ setUTeam, uTeam }) => {
       setSelectedUsers(initialUsers);
     }
   }, [data, uTeam]);
-
-
-  // useEffect(() => {
-  //   if (team?.length < 1) {
-  //     data && setSelectedUsers([data[0]]);
-  //   } else {
-  //     setSelectedUsers(team);
-  //   }
-  // }, []);
 
   return (
     <div>
@@ -85,7 +82,7 @@ const   UserList = ({ setUTeam, uTeam }) => {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {data?.map((user, index) => (
+              {team?.map((user, index) => (
                 <Listbox.Option
                   key={index}
                   className={({ active }) =>

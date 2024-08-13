@@ -22,6 +22,7 @@ import {
   uploadBytesResumable
 } from "firebase/storage";
 import { app } from "../../assets/firebase";
+import { useGetAProjectQuery } from "../../redux/slice/api/projApi.js";
 
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
@@ -29,7 +30,6 @@ const PRIORITY = ["high", "medium", "low"];
 const uploadedFileURLs = [];
 
 const AddTask = ({ open, setOpen, taskData }) => {
-  //console.log(taskData);
   let userTeam = [];
 
   if (taskData && taskData.uTeam) {
@@ -40,7 +40,17 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
   const uid = userTeam.map(item => item.id);
 
-  const { projectId } = useParams();
+  const { projectId: paramsProjectId } = useParams();
+  const projId = taskData?.projectId || paramsProjectId;
+
+  const { data: projectData, refetch: projDataRefetch } = useGetAProjectQuery(projId);
+  const team = projectData?.projects?.uTeam;
+
+  const [projectId, setProjectId] = useState(projId);
+
+  //const projectId = taskData ? taskData?.projectId : useParams;
+  const taskId = taskData?._id;
+
   const { refetch } = useGetTaskQuery();
 
   //Getch details of person reatong the proj from local storage
@@ -108,7 +118,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
 
   const [addtask] = useAddTaskMutation();
-  const taskId = taskData?.id;
+
   const URLS = taskData?.assets ? [...taskData.assets] : []; 
 
   const submitHandler = async (data) => {
@@ -138,14 +148,16 @@ const AddTask = ({ open, setOpen, taskData }) => {
   };
 
   useEffect(() => {
+    projDataRefetch()
     if (taskData) {
+      setProjectId(taskData.projectId);
       if (taskData?.uTeam && taskData?.priority && taskData?.stage) {
         setUTeam(uid);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
       }
     }
-  }, [taskData]);
+  }, [taskData, projectData]);
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
@@ -204,7 +216,9 @@ const AddTask = ({ open, setOpen, taskData }) => {
               error={errors.title ? errors.title.message : ""}
             />
 
-            <UserList setUTeam={setUTeam} uTeam={uTeam} />
+            {user.isAdmin &&
+            <UserList setUTeam={setUTeam} uTeam={uTeam} users={team} />
+            }
 
             <div className="flex gap-2">
               <SelectList

@@ -25,14 +25,14 @@ import {
 } from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import AddSubTask from "../other/task/AddSubTask";
 import SubTaskDialog from "../other/task/SubTaskDialog";
 import Title from "../other/Title";
 import {
+  useDelTaskMutation,
   useGetTaskDetailsQuery,
-  useGetTaskQuery,
   usePostActivityMutation,
   useUpdateDescMutation,
 } from "../redux/slice/api/taskApi";
@@ -45,8 +45,9 @@ import TextEditor from "../other/TextEditor";
 import { useForm } from "react-hook-form";
 import { IoChatbox } from "react-icons/io5";
 import Chatbox from "../other/Chat";
-
-const assets = [];
+import { Quill } from "react-quill";
+import AddTask from './../other/task/AddTask';
+import ConfirmatioDialog from "../other/Dialogs";
 
 const TASK_TYPE_SUB = {
   todo: "bg-blue-500",
@@ -81,7 +82,7 @@ const PRIORITYSTYLES = {
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
   { title: "Timeline", icon: <RxActivityLog /> },
-  { title: "Chat", icon: <IoChatbox /> },
+  // { title: "Chat", icon: <IoChatbox /> },
 ];
 
 const TASKTYPEICON = {
@@ -130,11 +131,15 @@ const TaskDetails = () => {
   const location = useLocation();
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [desc, setDesc] = useState("");
+  const [delTask] = useDelTaskMutation();
+  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
   const { taskId } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleDoubleClick = () => {
     setIsEditing(true);
@@ -146,13 +151,13 @@ const TaskDetails = () => {
 
   const { data, refetch: taskRefetch } = useGetTaskDetailsQuery(taskId);
   const task = data?.tasks;
+  const projectId = task?.projectId;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
 
   const modules = {
     toolbar: [
@@ -167,17 +172,21 @@ const TaskDetails = () => {
       ],
     ],
     clipboard: {
-      // toggle to add extra line breaks when pasting HTML:
       matchVisual: false,
     },
   };
 
-  //const task = tasks.find((task) => task.id === taskId);
+  const hiddenModules = {
+    toolbar: false,
+    clipboard: {
+      matchVisual: false,
+    },
+  };
 
   const { data: users, refetch } = useGetUsersQuery(taskId);
+  const isTasksPage = location.pathname.includes("/tasks");
 
   const getFileTypeIcon = (fileUrl) => {
-    console.log("URL =>", fileUrl);
     const lowerCaseUrl = fileUrl.toLowerCase();
 
     if (
@@ -201,22 +210,51 @@ const TaskDetails = () => {
     if (task?.desc) {
       setDesc(task?.desc);
     }
-  }, [refetch, taskRefetch, users, open]);
+  }, [open, openEdit, data]);
 
   const [update] = useUpdateDescMutation();
 
   const submitHandler = async () => {
     try {
       const data = { desc, taskId };
-      console.log(data);
       const res = await update(data).unwrap();
-      console.log(res);
       refetch();
       toast.success("Description Updated");
       setOpen(false);
+
+      if (res) {
+        setIsEditing(false);
+      }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    }
+  };
+
+  const deleteHandler = async () => {
+    if (isTasksPage) {
+      try {
+        setOpenDialog(false);
+        const res = await delTask({
+          id: task._id,
+        }).unwrap();
+        toast.success("Deleted Successfully");
+        navigate(`/projects/${projectId}/tasks`)
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    } else {
+      try {
+        const res = await delProj({
+          id: task.id,
+        }).unwrap();
+        toast.success(res?.message);
+        refetchProjects();
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
     }
   };
 
@@ -228,16 +266,9 @@ const TaskDetails = () => {
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
       <div className="flex items-center justify-between">
         <Title title={task?.title} />
-
-        {/* <Button
-          onClick={() => setOpen(true)}
-          label="Add Sub Task"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-        /> */}
       </div>
 
-      <Tabs tabs={TABS} setSelected={setSelected}>
+      <Tabs tabs={TABS} setSelected={setSelected} open={openEdit} setOpen={setOpenEdit} setOpenDialog={setOpenDialog}>
         {selected === 0 ? (
           <>
             <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 overflow-y-auto rounded-lg">
@@ -268,64 +299,59 @@ const TaskDetails = () => {
                   </div>
                 </div>
                 <div>
-                <p className="text-black">
-                  Created On: {new Date(task?.date).toDateString()}
-                </p>
-                <p className=" text-lg font-bold">
-                  Due On: {new Date(task?.due).toDateString()}
-                </p>
-                </div>
-
-                <div className="flex items-center gap-0 p-2 border-y border-gray-200">
-                  <div className="space-x-2">
-                    <span className="font-semibold">Assets :</span>
-                    <span>{task?.assets?.length}</span>
-                  </div>
-
-                  <span className="text-gray-400">&nbsp;|&nbsp;</span>
-
-                  <div className="space-x-2">
-                    <span className="font-semibold">Sub-Task :</span>
-                    <span>{task?.subTasks?.length}</span>
-                  </div>
+                  <p className="text-black">
+                    Created On: {new Date(task?.date).toDateString()}
+                  </p>
+                  <p className=" text-lg font-bold">
+                    Due On: {new Date(task?.due).toDateString()}
+                  </p>
+                  <div className="border-t border-gray-200"></div>
                 </div>
 
                 <form onSubmit={handleSubmit(submitHandler)} className="">
-                <div className="w-full max-w-xl flex flex-wrap">
-      <div className="text-gray-600 font-semibold text-sm mt-3 mb-2">
-        <p>DESCRIPTION</p>
-      </div>
+                  <div>
+                    <div className="text-gray-600 font-semibold text-sm mt-3 mb-2">
+                      <p>DESCRIPTION</p>
+                    </div>
 
-      {isEditing ? (
-        <div onBlur={handleBlur} tabIndex="0"> {/* Focusable to detect blur */}
-          <TextEditor
-            content={desc}
-            setContent={setDesc}
-            modules={modules}
-            className="border border-gray-300 rounded-md p-2" // Optional: Styling for editor
-          />
-        </div>
-      ) : (
-        <p
-          className="cursor-pointer border border-gray-300 rounded-md p-2"
-          onDoubleClick={handleDoubleClick}
-        >
-          {desc || 'No description'}
-        </p>
-      )}
-
-      {user.isAdmin && isEditing && (
-        <Button
-          type="submit"
-          label="ADD DESCRIPTION"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 mt-2 mb-3 2xl:py-2.5"
-        />
-      )}
-    </div>
+                    {isEditing ? (
+                      <div tabIndex="0">
+                        {" "}
+                        {/* Focusable to detect blur */}
+                        <TextEditor
+                          content={desc}
+                          setContent={setDesc}
+                          modules={modules} 
+                          className="border border-gray-300 rounded-md p-2" // Optional: Styling for editor
+                        />
+                        {user.isAdmin && isEditing && (
+                          <Button
+                            type="submit"
+                            label="SAVE"
+                            className="flex flex-row gap-1 items-center bg-blue-600 text-white rounded-md py-2 mt-2 mb-3 2xl:py-2.5"
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <div
+                        className="cursor-pointer rounded-md"
+                        onDoubleClick={handleDoubleClick}
+                      >
+                        <TextEditor
+                          content={desc}
+                          setContent={setDesc}
+                          modules={hiddenModules}
+                          status={true}
+                          className="border border-gray-300 rounded-md p-2" // Optional: Styling for editor
+                        />
+                      </div>
+                    )}
+                  </div>
                 </form>
 
-                <p className="text-gray-600 pt-4 font-semibold test-sm">TASK TEAM</p>
+                <p className="text-gray-600 pt-4 font-semibold test-sm">
+                  TASK TEAM
+                </p>
                 <div className="py-1 max-h-32 overflow-y-auto">
                   <div className="space-y-1">
                     {users?.map((m, index) => (
@@ -352,7 +378,7 @@ const TaskDetails = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4 py-6">
+                <div className="py-1">
                   <p className="text-gray-500 font-semibold text-sm">
                     SUB-TASKS
                   </p>
@@ -366,7 +392,7 @@ const TaskDetails = () => {
                         <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
                           <MdTaskAlt className="text-violet-600" size={26} />
                         </div>
-                        <div className="flex flex-col space-y-2 pb-2 flex-grow">
+                        <div className="flex flex-col pb-1 flex-grow">
                           <div className="flex items-center justify-between">
                             <div className="flex flex-row space-x-2">
                               <p className="text-gray-700">{el?.title}</p>
@@ -432,7 +458,9 @@ const TaskDetails = () => {
               </div>
             </div>
           </>
-        ) : selected === 1 ? (
+        ) : 
+        //selected === 1 ? 
+        (
           <>
             <Activities
               activity={task?.activities}
@@ -440,45 +468,35 @@ const TaskDetails = () => {
               refetch={taskRefetch}
             />
           </>
-        ) : (
+        )
+        /*
+         : (
           <>
-            <Chatbox/>
+            <Chatbox />
           </>
-        )}
+        )
+        */
+        }
       </Tabs>
-      {open &&
-      <AddSubTask open={open} setOpen={setOpen} />
-      }
+     
+      {openEdit && <AddTask open={openEdit} setOpen={setOpenEdit} taskData={task}/>}
+      {open && <AddSubTask open={open} setOpen={setOpen} />}
+      {openDialog && (
+        <ConfirmatioDialog
+          open={openDialog}
+          setOpen={setOpenDialog}
+          onClick={deleteHandler}
+        />
+      )}
     </div>
   );
 };
 
 const Activities = ({ activity, id, refetch }) => {
-  const [selected, setSelected] = useState(act_types[0]);
-  const [text, setText] = useState("");
-  const isLoading = false;
-
-  const [postTaskActivity] = usePostActivityMutation();
-
-  const handleSubmit = async () => {
-    try {
-      const result = await postTaskActivity({
-        type: selected?.toLowerCase(),
-        activity: text,
-        id: id,
-      }).unwrap();
-
-      setText("");
-      toast.success(result?.message);
-
-      refetch();
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.data?.message || error.error);
-    }
-  };
 
   const Card = ({ item }) => {
+    refetch();
+
     return (
       <div className="flex space-x-4">
         <div className="flex flex-col items-center flex-shrink-0">
@@ -489,14 +507,17 @@ const Activities = ({ activity, id, refetch }) => {
             <div className="w-0.5 bg-gray-300 h-full"></div>
           </div>
         </div>
-
+  
         <div className="flex flex-col gap-y-1 mb-8">
           <p className="font-semibold">{item?.by?.name}</p>
           <div className="text-black space-y-2">
             <span className="capitalize">{item?.type}</span>
           </div>
-            <span className="text-sm">{moment(item?.date).fromNow()}</span>
-          <div className="text-gray-700">{item?.activity}</div>
+          <span className="text-sm">{moment(item?.date).fromNow()}</span>
+          <div
+            className="text-gray-700"
+            dangerouslySetInnerHTML={{ __html: item?.activity }}
+          />
         </div>
       </div>
     );
@@ -514,41 +535,6 @@ const Activities = ({ activity, id, refetch }) => {
         </div>
       </div>
 
-      {/* <div className="w-full md:w-1/3">
-        <h4 className="text-gray-600 font-semibold text-lg mb-5">
-          Add Activity
-        </h4>
-        <div className="w-full flex flex-wrap gap-5">
-          {act_types.map((item, index) => (
-            <div key={item} className="flex gap-2 items-center">
-              <input
-                type="checkbox"
-                className="w-4 h-4"
-                checked={selected === item ? true : false}
-                onChange={(e) => setSelected(item)}
-              />
-              <p>{item}</p>
-            </div>
-          ))}
-          <textarea
-            rows={10}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type ......"
-            className="bg-white w-full mt-10 border border-gray-300 outline-none p-4 rounded-md focus:ring-2 ring-blue-500"
-          ></textarea>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Button
-              type="button"
-              label="Submit"
-              onClick={handleSubmit}
-              className="bg-blue-600 text-white rounded"
-            />
-          )}
-        </div>
-      </div> */}
     </div>
   );
 };

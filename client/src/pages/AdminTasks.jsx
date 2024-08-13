@@ -4,10 +4,10 @@ import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
 //import { tasks } from "../assets/data";
 import BoardView from "../other/BoardView";
-import Loading from "../other/Loader";
-import Title from "../other/Title";
 import Button from "../other/Button";
+import Loading from "../other/Loader";
 import AddTask from "../other/task/AddTask";
+import Title from "../other/Title";
 import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
 const AdminTasks = () => {
