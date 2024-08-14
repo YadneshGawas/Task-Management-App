@@ -371,7 +371,7 @@ const TaskDetails = () => {
 
                         <div>
                           <p className="text-sm font-semibold">{m?.name}</p>
-                          <span className="text-gray-500">{m?.role}</span>
+                          {/* <span className="text-gray-500">{m?.role}</span> */}
                         </div>
                       </div>
                     ))}
@@ -495,7 +495,6 @@ const TaskDetails = () => {
 const Activities = ({ activity, id, refetch }) => {
 
   const Card = ({ item }) => {
-    refetch();
 
     return (
       <div className="flex space-x-4">

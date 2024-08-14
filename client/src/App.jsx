@@ -10,8 +10,6 @@ import Sidebar from "./other/Sidebar";
 import Navbar from "./other/Navbar";
 import Projects from "./pages/Projects";
 import AdminTasks from "./pages/AdminTasks";
-//import Projects from './pages/pro';
-//import Testing from './pages/idpasscheck';
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateAcc from "./pages/CreateAcc";
 import ResetPassword from "./pages/ResetPassword";
@@ -30,14 +28,14 @@ function Layout() {
 
   return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row">
-      <div className="w-1/5 h-full bg-white sticky top-0 hidden md:block">
+      <div className="w-1/6 h-full bg-white sticky top-0 hidden md:block">
         <Sidebar />
       </div>
       <PopupSidebar/>
 
       <div className="flex-1 overflow-y-auto bg-gray-100">
         <Navbar />
-        <div className="p-4 2xl:px-10">
+        <div className="p-2 2xl:px-10 overflow-hidden">
           <Outlet />
         </div>
       </div>

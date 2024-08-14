@@ -36,6 +36,7 @@ const taskSchema = new Schema(
           ],
         },
         activity: String,
+        desc: { type: String, default: ""},
         date: { type: Date, default: new Date() },
         by: { type: Schema.Types.ObjectId, ref: "User" },
       },
@@ -110,6 +111,14 @@ taskSchema.pre('save', async function (next) {
           this.activities.push({
             type: "updated",
             activity: `Priority changed from "${original.priority}" to "${this.priority}"`,
+            by: this.by,
+          });
+        }
+        if (this.isModified('assets')) {
+          this.activities.push({
+            type: "updated",
+            activity: `Assets were added <a href="{this.assets[0]}" target="_blank" rel="noopener noreferrer">"${this.assets[0]}"</a>`,
+            //activity: `Assets were added "${this.assets[0]}"`,
             by: this.by,
           });
         }

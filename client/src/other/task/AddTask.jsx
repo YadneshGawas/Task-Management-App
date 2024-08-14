@@ -48,12 +48,10 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
   const [projectId, setProjectId] = useState(projId);
 
-  //const projectId = taskData ? taskData?.projectId : useParams;
   const taskId = taskData?._id;
 
   const { refetch } = useGetTaskQuery();
 
-  //Getch details of person reatong the proj from local storage
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const userid = user._id;
 

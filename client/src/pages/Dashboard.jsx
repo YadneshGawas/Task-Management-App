@@ -26,17 +26,16 @@ import { useGetUserTaskQuery } from "../redux/slice/api/taskApi";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 
 const TaskTb = ({ user, proj }) => {
-  // Receive user as a prop
-  //Icons references
+  // Icons references
   const icons = {
     high: <MdKeyboardDoubleArrowUp />,
     medium: <MdKeyboardArrowUp />,
     low: <MdKeyboardArrowDown />,
   };
 
-  //Tbale header part
+  // Table header part
   const TbHeader = () => (
-    <thead className="border-b border-gray-300">
+    <thead className="bg-white sticky top-0">
       <tr className="text-black text-left text-lg">
         {user.isAdmin ? (
           <th className="py-2">Project Title</th>
@@ -50,7 +49,7 @@ const TaskTb = ({ user, proj }) => {
     </thead>
   );
 
-  //Format date function
+  // Format date function
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
@@ -89,18 +88,12 @@ const TaskTb = ({ user, proj }) => {
           </div>
         </td>
       )}
-
-      {/* <td className="py-2 hidden md:block">
-        <div className="flex items-center justify-start">
-          <p>{formatDate(task?.createdAt)}</p>
-        </div>
-      </td> */}
     </tr>
   );
 
   return (
-    <>
-      <div className="w-full flex bg-white px-2 md:px-4 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+    <div className="bg-white px-2 md:px-4 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+      <div className="w-full max-h-96 overflow-y-auto">
         <table className="w-full">
           <TbHeader />
           <tbody>
@@ -110,7 +103,7 @@ const TaskTb = ({ user, proj }) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -119,8 +112,8 @@ const UserTb = ({ user }) => {
 
   // Table header part
   const TableHeader = () => (
-    <thead className="border-b border-gray-300 ">
-      <tr className="border-b border-gray-300 ">
+    <thead className="">
+      <tr className="">
         <th className="text-black text-left text-lg pb-2">Users</th>
       </tr>
     </thead>
@@ -128,28 +121,25 @@ const UserTb = ({ user }) => {
 
   // Table row part
   const TbRow = ({ user }) => (
-    <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
-      <td className="py-2 p-4 m-2">
+    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
+      <td className="w-full py-2 p-2">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
             <span className="text-center">{getInitials(user.name)}</span>
           </div>
-
-          <div>
-            <p>{user.name}</p>
-            <span className="text-xs text-black">{user.title}</span>
-          </div>
+          <p>{user.name}</p>
+          <span className="text-xs text-black">{user.title}</span>
         </div>
       </td>
-      <td className="py-2">{user.role}</td>
+      <td className="py-2 p-2">{user.role}</td>
     </tr>
   );
 
   return (
-    <div className="w-full bg-white h-fit px-4 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+    <div className="bg-white h-fit px-4 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
       <table className="w-full mb-5">
         <TableHeader />
-        <div className="w-full max-h-svh overflow-y-auto">
+        <div className="w-full max-h-80 overflow-y-auto">
           <tbody>
             {data?.map((users, index) => (
               <TbRow key={index} user={users} />
@@ -312,7 +302,7 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <div className={`flex-1 ${!user.isAdmin ? "w-full" : "w-2/3"}`}>
+        <div className={`flex-1 h-full ${!user.isAdmin ? "w-full" : "w-2/3"}`}>
           <TaskTb user={user} proj={object} />
         </div>
         {user.isAdmin && (

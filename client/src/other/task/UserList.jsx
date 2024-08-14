@@ -43,13 +43,12 @@ const UserList = ({ setUTeam, uTeam, users }) => {
       let initialUsers = [];
       if (uTeam) {
         initialUsers = uTeam
-          .map((teamId) => data.find((user) => user._id === teamId))
+          .map((teamId) => team.find((user) => user._id === teamId))
           .filter(Boolean); // Remove any undefined values
       }
-
       setSelectedUsers(initialUsers);
     }
-  }, [data, uTeam]);
+  }, [users, data, uTeam, team]);
 
   return (
     <div>

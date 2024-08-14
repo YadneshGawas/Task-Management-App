@@ -34,7 +34,7 @@ const Sidebar = () => {
         to={el.link}
         onClick={closeSidebar}
         className={clsx(
-          "w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
+          "w-full lg:w-4/5 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
           path === el.link.split("/")[0] ? "bg-blue-400 text-white" : ""
         )}
       >
@@ -86,11 +86,6 @@ const Sidebar = () => {
         ))}
       </div>
 
-      {/* <div>
-        {linkData.map((link) => (
-          <PostLink x={link} key={link.label} />
-        ))}
-      </div> */}
     </div>
   );
 };
