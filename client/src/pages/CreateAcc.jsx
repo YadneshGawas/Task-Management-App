@@ -22,7 +22,7 @@ const CreateAcc = () => {
     formState: { errors },
   } = useForm();
 
-  const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
+  const [registerUser] = useRegisterMutation();
 
   const submitHandler = async(data) => {
     try {

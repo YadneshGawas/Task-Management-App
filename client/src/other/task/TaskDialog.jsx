@@ -41,13 +41,14 @@ const TaskDialog = ({ task }) => {
   const deleteHandler = async () => {
     if (isTasksPage) {
       try {
-        setOpenDialog(false);
         const res = await delTask({
           id: task.id,
         }).unwrap();
+        setOpenDialog(false);
         toast.success(res?.message);
         refetchTasks();
       } catch (error) {
+        setOpenDialog(false);
         console.log(error);
         toast.error(error.message);
       }
@@ -56,9 +57,11 @@ const TaskDialog = ({ task }) => {
         const res = await delProj({
           id: task.id,
         }).unwrap();
+        setOpenDialog(false);
         toast.success(res?.message);
         refetchProjects();
       } catch (error) {
+        setOpenDialog(false);
         console.log(error);
         toast.error(error.message);
       }

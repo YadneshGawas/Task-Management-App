@@ -2,24 +2,27 @@
 /* eslint-disable react/prop-types */
 import { Dialog } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Wrapper from "./Wrapper";
-import Button from "./Button";
-import TextEditor from "./TextEditor";
-import { IoMdAdd } from "react-icons/io";
-import {
-  useAddSubTaskMutation,
-  useUpdateSubTaskDescMutation,
-} from "../redux/slice/api/taskApi";
-import { toast } from "sonner";
 import { useForm } from "react-hook-form";
-import Title from "./Title";
 import { FaFilePdf, FaFileWord } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import ConfirmatioDialog from "../other/Dialogs";
+import {
+  useDelSubMediaMutation,
+  useGetTaskDetailsQuery,
+  useUpdateSubTaskDescMutation
+} from "../redux/slice/api/taskApi";
+import Button from "./Button";
+import ButtonIconOnly from "./ButtonIconOnly";
+import TextEditor from "./TextEditor";
+import Wrapper from "./Wrapper";
 
-const LISTS = ["todo", "in progress", "completed"];
 
 const PopupViewInfo = ({ open, setOpen, taskData }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [delMedia, setDelMedia] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
 
   const modules = {
     toolbar: [
@@ -50,12 +53,8 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
     setIsEditing(true);
   };
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
 
   const getFileTypeIcon = (fileUrl) => {
-    console.log("URL =>", fileUrl);
     const lowerCaseUrl = fileUrl.toLowerCase();
 
     if (
@@ -73,8 +72,6 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
     return "default";
   };
 
-  console.log("Task data descripton =>", taskData?.desc);
-
   const [desc, setDesc] = useState("");
 
   useEffect(() => {
@@ -86,11 +83,8 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
   const { taskId } = useParams();
   const subId = taskData._id;
 
-  console.log("TASKID=>", taskId);
-  console.log("TASKDATA=>", subId);
-  console.log("Assets=>", taskData?.assets);
-
   const [addsub] = useUpdateSubTaskDescMutation();
+  const { refetch } = useGetTaskDetailsQuery(taskId);
 
   const {
     register,
@@ -98,16 +92,41 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm();
 
+  const delHandler = (el) => {
+    setDelMedia(el);
+    console.log("Del handler is working =>",el);
+    setOpenDialog(true);
+  };
+
   const handleOnSubmit = async () => {
     try {
       const d = { desc, taskId, subId };
       const res = await addsub(d).unwrap();
       console.log(res);
       toast.success(res?.message);
+      refetch();
       window.location.reload();
     } catch (error) {
       console.log(error);
       toast.error(error?.data?.message || error.error);
+    }
+  };
+
+  const [deletemedia] = useDelSubMediaMutation();
+
+  const delSubMediaFunction = async() => {
+    try {
+      const data = { taskId, subId, delMedia };
+      console.log("Before sending=>", data);
+      const res = await deletemedia(data).unwrap();
+      console.log(res);
+      toast.success("Deleted media successfully");
+      window.location.reload();
+      setOpenDialog(false);
+    } catch (error) {
+      toast.error("Failed to delete media");
+      setOpenDialog(false);
+      console.log(error);
     }
   };
 
@@ -167,27 +186,36 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
             {taskData?.assets?.map((el, index) => {
               const fileType = getFileTypeIcon(el);
               return (
-                <a
-                  key={index}
-                  href={el}
-                  target="_blank" // Opens the link in a new tab
-                  rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
-                  className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50 flex items-center justify-center bg-gray-100"
-                >
-                  {fileType === "image" ? (
-                    <img
-                      src={el}
-                      alt={taskData?.title}
-                      className="w-full h-full object-cover rounded"
+                <div key={index} className="relative">
+                  <a
+                    href={el}
+                    target="_blank" // Opens the link in a new tab
+                    rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
+                    className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50 flex items-center justify-center bg-gray-100"
+                  >
+                    {fileType === "image" ? (
+                      <img
+                        src={el}
+                        alt={taskData?.title}
+                        className="w-full h-full object-cover rounded"
+                      />
+                    ) : fileType === "pdf" ? (
+                      <FaFilePdf className="text-red-500 text-4xl" />
+                    ) : fileType === "doc" ? (
+                      <FaFileWord className="text-blue-500 text-4xl" />
+                    ) : (
+                      <p className="text-gray-500">Unknown File Type</p>
+                    )}
+                  </a>
+                  <div className="absolute top-2 right-2 z-10">
+                    <ButtonIconOnly
+                      type="button"
+                      className="flex items-center justify-center bg-red-600 rounded-xl w-6 h-6"
+                      icon={<MdDelete className=" text-white rounded-lg" />}
+                      onClick={() => delHandler(el)} // Add your delete handler function here
                     />
-                  ) : fileType === "pdf" ? (
-                    <FaFilePdf className="text-red-500 text-4xl" />
-                  ) : fileType === "doc" ? (
-                    <FaFileWord className="text-blue-500 text-4xl" />
-                  ) : (
-                    <p className="text-gray-500">Unknown File Type</p>
-                  )}
-                </a>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -201,7 +229,16 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
             label="Cancel"
           />
         </div>
+      {openDialog && (
+        <ConfirmatioDialog
+          open={openDialog}
+          setOpen={setOpenDialog}
+          //onClick={console.log("hello world")}
+          onClick={() => delSubMediaFunction()}
+        />
+      )}
       </Wrapper>
+
     </>
   );
 };

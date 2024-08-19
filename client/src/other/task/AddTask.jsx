@@ -3,26 +3,18 @@
 import { Dialog } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiImages } from "react-icons/bi";
 import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { useGetAProjectQuery } from "../../redux/slice/api/projApi.js";
+import {
+  useAddTaskMutation,
+  useGetTaskQuery,
+} from "../../redux/slice/api/taskApi.js";
 import Button from "../Button";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import Wrapper from "../Wrapper";
 import UserList from "./UserList";
-import {
-  useAddTaskMutation,
-  useGetTaskQuery,
-} from "../../redux/slice/api/taskApi.js";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable
-} from "firebase/storage";
-import { app } from "../../assets/firebase";
-import { useGetAProjectQuery } from "../../redux/slice/api/projApi.js";
 
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
@@ -120,19 +112,8 @@ const AddTask = ({ open, setOpen, taskData }) => {
   const URLS = taskData?.assets ? [...taskData.assets] : []; 
 
   const submitHandler = async (data) => {
-    for ( const file of assets){
-      setUploading(true);
-      try{
-        await uploadFile(file);
-      }catch(error){
-        console.error("Error uploading file", error.message);
-        return;
-      }finally{
-        setUploading(false)
-      }
-    }
     try {
-      const tskData = { ...data, uTeam, stage, priority, taskId, projectId, assets: [...URLS, ...uploadedFileURLs] };
+      const tskData = { ...data, uTeam, stage, priority, taskId, projectId};
       console.log("Before sending=>",tskData);
       const res = await addtask(tskData).unwrap();
       console.log(res);
@@ -161,36 +142,6 @@ const AddTask = ({ open, setOpen, taskData }) => {
     setAssets(e.target.files);
   };
 
-  const uploadFile = async(file) => {
-    const storage = getStorage(app);
-    
-    const name = new Date().getTime() + file.name;
-    const storageRef = ref(storage, name);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          console.log("Uploading");
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            uploadedFileURLs.push(downloadURL);
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-        }
-      )
-    });
-  };
 
   return (
     <>
@@ -263,7 +214,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="inline-block items-center justify-start mt-4">
+            {/* <div className="inline-block items-center justify-start mt-4">
               <label
                 className="inline-flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
                 htmlFor="imgUpload"
@@ -279,7 +230,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
                 <BiImages />
                 <span>Add Assets</span>
               </label>
-            </div>
+            </div> */}
 
             <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
               {uploading ? (

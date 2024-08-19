@@ -83,6 +83,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
       const res = await addproj(projData).unwrap();
       refetch();
       toast.success(res?.message);
+      setOpen(false);
     } catch (error) {
       console.log(error);
       toast.error(error.message);

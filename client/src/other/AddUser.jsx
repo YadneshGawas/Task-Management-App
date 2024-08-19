@@ -1,54 +1,26 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { Fragment, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { Dialog, Listbox, Transition } from "@headlessui/react";
-import Wrapper from "./Wrapper";
-import Textbox from "./Textbox";
-import Loading from "./Loader";
-import Button from "./Button";
-import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../redux/slice/authS";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import {
   useAddUserMutation,
-  useChpassUserMutation,
   useGetTeamListQuery,
-  useUpdateUserMutation,
+  useUpdateUserMutation
 } from "../redux/slice/api/userApi";
-import { useDispatch } from "react-redux";
-import { MdCheckCircleOutline } from "react-icons/md";
-import { isAction } from "redux";
-import { useAddProjectMutation } from "../redux/slice/api/projApi";
+import { setCredentials } from "../redux/slice/authS";
+import Button from "./Button";
+import Textbox from "./Textbox";
+import Wrapper from "./Wrapper";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
 
   const { user } = useSelector((state) => state.auth);
 
-  const isLoading = false;
-  const isUpdating = false;
-
   const dispatch = useDispatch();
-
-  // const userTest = () =>{
-  //   if(user.isAdmin)
-  //   {
-  //     const data = localStorage.getItem("userInfo");
-  //     const data2 = JSON.parse(data);
-  //     const id = data2._id;
-  //     const userid = user._id;
-  //     if(id === userid)
-  //     {
-  //       return false;
-  //     }
-  //     else
-  //     {
-  //       return true;
-  //     }
-  //   }
-  // }
 
   const {
     register,
@@ -63,17 +35,15 @@ const AddUser = ({ open, setOpen, userData }) => {
 
   const handleOnSubmit = async (data) => {
     data.isAdmin = data.isAdmin === "true";
-    console.log("Original=>", data);
-    console.log("Updating=>", userData);
     try {
       if (userData) {
         console.log(data);
         const res = await updateuser(data).unwrap();
         toast.success("Successfully updated");
         if (userData?._id === user._id) {
-          //localStorage.setItem("userInfo", JSON.stringify(userData));
           dispatch(setCredentials(data));
         }
+        setOpen(false);
         refetch();
         console.log(userData);
       } else {
@@ -81,6 +51,7 @@ const AddUser = ({ open, setOpen, userData }) => {
         const res = await adduser(data).unwrap();
         console.log("res", res);
         toast.success("Successfully added");
+        setOpen(false);
         refetch();
       }
     } catch (error) {
@@ -153,11 +124,6 @@ const AddUser = ({ open, setOpen, userData }) => {
             )}
           </div>
 
-          {isLoading || isUpdating ? (
-            <div className="py-5">
-              <Loading />
-            </div>
-          ) : (
             <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
               <Button
                 type="submit"
@@ -172,7 +138,7 @@ const AddUser = ({ open, setOpen, userData }) => {
                 label="Close"
               />
             </div>
-          )}
+        
         </form>
       </Wrapper>
     </>

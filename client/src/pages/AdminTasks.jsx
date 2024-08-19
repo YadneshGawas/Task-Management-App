@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
-//import { tasks } from "../assets/data";
 import BoardView from "../other/BoardView";
 import Button from "../other/Button";
-import Loading from "../other/Loader";
+
 import AddTask from "../other/task/AddTask";
 import Title from "../other/Title";
 import { useGetTaskQuery } from "../redux/slice/api/taskApi";
@@ -14,11 +13,12 @@ const AdminTasks = () => {
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   const { projectId } = useParams();
   const { data, refetch } = useGetTaskQuery();
   
+  let title  ="";
   let tasks = [];
   if (data && data.tasks) {
     tasks = data.tasks.map((task) => ({
@@ -43,8 +43,6 @@ const AdminTasks = () => {
     }));
   }
 
-  const title = "Project";
-
   const [filters, setFilters] = useState({
     priority: "all",
     stage: "all",
@@ -66,19 +64,25 @@ const AdminTasks = () => {
     return priorityMatch && stageMatch && projectMatch ;
   });
 
+  if(filteredTasks){
+    console.log(filteredTasks);
+    if(filteredTasks?.length > 0){
+      const projName = filteredTasks[0].projectTitle;
+      title = projName;
+    }
+  else{
+    title = "No tasks found"
+  }
+}
 
   useEffect(() => {
     refetch();
   }, [open]);
 
-  return loading ? (
-    <div className="py-10">
-      <Loading />
-    </div>
-  ) : (
+  return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <Title title={`${title}`} />
+        <Title title={`${title} `} />
 
         <Button
           onClick={() => setOpen(true)}

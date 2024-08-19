@@ -7,7 +7,7 @@ const ButtonIconOnly = ({ icon, className, label, type, onClick = () => {}, stat
   return (
     <button 
       type={type || "button"} 
-      className={clsx("px-2 py-1 outline outline-1 outline-gray-200 p-2 rounded-lg", className)}
+      className={clsx("px-2 py-1 p-2 rounded-lg", className)}
       disabled={status}
       onClick={() => {
         onClick();  // Call the onClick function passed as a prop

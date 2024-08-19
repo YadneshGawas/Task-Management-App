@@ -47,10 +47,9 @@ const TaskCard = ({ task }) => {
     tasks = task?.tasks?.map((obj) => ({
       title: obj.title,
       stage: obj.stage,
+      due: obj.due,
     }));
   }
-
-  console.log("From task card=>", task);
 
   const isTasksPage = location.pathname.includes("/task");
 
@@ -69,7 +68,6 @@ const TaskCard = ({ task }) => {
     } else if (user.isAdmin) {
       return task?.tasks?.length;
     } else {
-      console.log("Tasks from TaskCard=>", task);
       return task?.subTasks?.length;
     }
   };

@@ -20,9 +20,6 @@ const UserList = ({ setUTeam, uTeam, users }) => {
 
   const team = users ? users : data;
 
-  console.log("Users from sent =>", users);
-  console.log("Users from fetched =>", data);
-
   const handleChange = (el) => {
     setSelectedUsers(el);
     setUTeam(el?.map((u) => u._id));

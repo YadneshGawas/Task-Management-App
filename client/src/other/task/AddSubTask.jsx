@@ -37,12 +37,17 @@ const AddSubTask = ({ open, setOpen, taskData }) => {
 
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [fileName, setfileName] = useState([]);
   const URLS = taskData?.assets ? [...taskData.assets] : []; 
 
   const { taskId } = useParams();
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
+    const selectedFiles = e.target.files;
+    const filesNameArray = Array.from(selectedFiles).map((file) => file.name);
+    setfileName(filesNameArray);
+    console.log("FileName =>", filesNameArray);
   };
   
   console.log(taskData);
@@ -106,6 +111,7 @@ const AddSubTask = ({ open, setOpen, taskData }) => {
       const res = await addsub(d).unwrap();
       console.log(res);
       toast.success(res?.message);
+      setOpen(false);
       //window.location.reload();
     } catch (error) {
       console.log(error);
@@ -169,6 +175,13 @@ const AddSubTask = ({ open, setOpen, taskData }) => {
                 <BiImages />
                 <span>Add Assets</span>
               </label>
+            </div>
+            <div className="overflow-x-hidden">
+              <ul>
+                {fileName.map((name, index) => (
+                  <li key={index}>{name}</li>
+                ))}
+              </ul>
             </div>
             <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
               {uploading ? (

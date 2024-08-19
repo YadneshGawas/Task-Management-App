@@ -31,7 +31,7 @@ function Layout() {
       <div className="w-1/6 h-full bg-white sticky top-0 hidden md:block">
         <Sidebar />
       </div>
-      <PopupSidebar/>
+      <PopupSidebar />
 
       <div className="flex-1 overflow-y-auto bg-gray-100">
         <Navbar />
@@ -43,6 +43,17 @@ function Layout() {
   ) : (
     <Navigate to="/log-in" state={{ from: location }} replace />
   );
+}
+
+function AdminRoute() {
+  const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
+
+  if (user.role !== "admin") {
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
 }
 
 const PopupSidebar = () => {
@@ -85,7 +96,7 @@ const PopupSidebar = () => {
                 </button>
               </div>
               <div>
-                <Sidebar/>
+                <Sidebar />
               </div>
             </div>
           </div>
@@ -100,14 +111,14 @@ function App() {
     <main className="w-full min-h-screen bg-white">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/team" element={<Users />} />
-          <Route path="/tasks/:taskId" element={<TaskDetails />} />
-          <Route path="/projects/:projectId/tasks" element={<AdminTasks />} />
-        </Route>
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/team" element={<Users />} />
+            <Route path="/tasks/:taskId" element={<TaskDetails />} />
+            <Route path="/projects/:projectId/tasks" element={<AdminTasks />} />
+          </Route>
         <Route path="/" element={<Login />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/log-in" element={<Login />} />

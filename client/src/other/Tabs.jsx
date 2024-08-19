@@ -38,6 +38,7 @@ export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDial
             <ButtonIconOnly
               type="button"
               label="Edit Task"
+              className="outline outline-1 outline-gray-400"
               onClick={() => setOpen(true)}
               //className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
               icon={<IoMdCreate className="text-lg" />}
@@ -45,6 +46,7 @@ export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDial
             <ButtonIconOnly
               type="button"
               label="Delete Task"
+              className="outline outline-1 outline-gray-400"
               onClick={() => setOpenDialog(true)}
               //className="flex flex-row-reverse gap-1 items-center bg-red-500 text-white rounded-md py-2 2xl:py-2.5"
               icon={<IoIosTrash className="text-lg" />}

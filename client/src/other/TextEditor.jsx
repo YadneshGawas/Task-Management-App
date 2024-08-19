@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 
 const TextEditor = ({ content, setContent, modules, status}) => {
     return (
-        <div className="max-w-lg">
+        <div className="max-w-xl">
             <ReactQuill
                 theme='snow'
                 formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent']}

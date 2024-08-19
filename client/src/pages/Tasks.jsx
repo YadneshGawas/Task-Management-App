@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import BoardView from "../other/BoardView";
-import Loading from "../other/Loader";
+
 import Title from "../other/Title";
 import Button from "../other/Button";
 import AddTask from "../other/task/AddTask";
@@ -15,7 +15,7 @@ const Tasks = () => {
   const {user} =useSelector((state)=>state.auth);
   
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   const { taskId } = useParams();
   const { data, refetch } = useGetUserTaskQuery();
@@ -70,11 +70,7 @@ const Tasks = () => {
   });
 
 
-  return loading ? (
-    <div className='py-10'>
-      <Loading />
-    </div>
-  ) : (
+  return (
     <div className='w-full'>
       <div className='flex items-center justify-between mb-4'>
         <Title title={status ? `${status} Tasks` : "Tasks"} />

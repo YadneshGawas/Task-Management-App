@@ -1,23 +1,28 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Dialog } from "@headlessui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./Button";
-import Loading from "./Loader";
 import Wrapper from "./Wrapper";
 import Textbox from "./Textbox";
 import { toast } from "sonner";
 import { useChpassUserMutation } from "../redux/slice/api/userApi";
-
 
 const ChangePassword = ({ open, setOpen }) => {
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      oldPassword: "",
+      password: "",
+      confirmPassword: "",
+    }
+  });
 
   const password = watch("password");
   const [cgPass] = useChpassUserMutation();
@@ -25,14 +30,25 @@ const ChangePassword = ({ open, setOpen }) => {
   const handleOnSubmit = async (data) => {
     try {
       const res = await cgPass(data).unwrap();
-      console.log(res.message );
+      console.log(res.message);
       toast.success(res.message);
+      setOpen(false);
       //res.error.data.message
     } catch (error) {
       toast.error(error?.data?.message || error.message);
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (open) {
+      reset({
+        oldPassword: "",
+        password: "",
+        confirmPassword: "",
+      });
+    }
+  }, [open, reset]);
 
   return (
     <Wrapper open={open} setOpen={setOpen}>
@@ -45,7 +61,7 @@ const ChangePassword = ({ open, setOpen }) => {
         </Dialog.Title>
 
         <div className="mt-2 flex flex-col gap-6">
-        <Textbox
+          <Textbox
             placeholder="Old Password"
             type="password"
             name="oldPassword"

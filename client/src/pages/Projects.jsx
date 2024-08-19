@@ -45,24 +45,10 @@ const Projects = () => {
   };
 
   const filteredProjects = projects?.filter((project) => {
-    const priorityMatch =
-      filters.priority === "all" || project.priority === filters.priority;
-    const stageMatch =
-      filters.stage === "all" || project.stage === filters.stage;
-    return priorityMatch && stageMatch;
-  });
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="py-10">
-  //       <Loading />
-  //     </div>
-  //   );
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+      const priorityMatch = filters.priority === "all" || project.priority === filters.priority;
+      const stageMatch = filters.stage === "all" || project.stage === filters.stage;
+      return priorityMatch && stageMatch;
+    }).reverse(); // Invert the array to show recently added elements on top
 
   useEffect(() => {
     refetch();
@@ -127,14 +113,9 @@ const Projects = () => {
         </div>
       </div>
 
-      {filteredProjects &&
-      <BoardView tasks={filteredProjects} />
-      }
+      {filteredProjects && <BoardView tasks={filteredProjects} />}
 
-      {open &&
-      <AddProject open={open} setOpen={setOpen} />
-      }
-      
+      {open && <AddProject open={open} setOpen={setOpen} />}
     </div>
   );
 };

@@ -41,16 +41,18 @@ export const createTask = async (req, res) => {
         if (project) {
           project.tasks.push(task._id);
           await project.save();
-        } 
+        }
         res
           .status(200)
           .json({ status: true, task, message: "Task created successfully." });
       } catch (error) {
         console.log(error);
-        return res.status(400).json({ status: false, message: error.message });
+        return res
+          .status(400)
+          .json({ status: false, message: error.message, error });
       }
-    }
-     else {
+    } else {
+      let temp;
       try {
         (task.id = taskId),
           (task.date = date),
@@ -61,8 +63,9 @@ export const createTask = async (req, res) => {
           (task.uTeam = uTeam),
           (task.desc = desc ? desc : " "),
           (task.projectId = projectId ? projectId : task.projectId),
-          (task.assets = assets),
-          await task.save();
+          (task.assets = assets ? assets : []),
+          (temp = task);
+        await task.save();
 
         res
           .status(200)
@@ -71,12 +74,60 @@ export const createTask = async (req, res) => {
         console.log(error);
         res
           .status(400)
-          .json({ status: false, message: "Failed to update task" });
+          .json({
+            status: false,
+            message: "Failed to update task",
+            error,
+            temp,
+          });
       }
     }
   } catch (error) {
     console.log(error);
     res.status(200).json({ status: false, message: "Failed Creation" });
+  }
+};
+
+export const addMedia = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { desc, linkTo, taskId } = req.body;
+
+    const link = linkTo.join(",");
+
+    if (!userId || !desc || !link || !taskId) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Missing required fields" });
+    }
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({ status: false, message: "Task not found" });
+    }
+
+    const newMedia = {
+      desc,
+      link,
+      by: userId,
+    };
+
+    task.assets.push(newMedia);
+    await task.save();
+
+    res
+      .status(200)
+      .json({ status: true, message: "Media added successfully", newMedia });
+  } catch (error) {
+    console.error("Error adding media:", error); // Log error details
+    res
+      .status(500)
+      .json({
+        status: false,
+        error: error,
+        message: "Failed to create media object",
+      });
   }
 };
 
@@ -86,9 +137,7 @@ export const updateDesc = async (req, res) => {
 
     const task = await Task.findById(taskId);
 
-    (task.id = taskId), 
-    (task.desc = desc ? desc : " "), 
-    await task.save();
+    (task.id = taskId), (task.desc = desc ? desc : " "), await task.save();
 
     res
       .status(200)
@@ -107,7 +156,7 @@ export const delTasks = async (req, res) => {
     const projectId = task.projectId;
     //temporary comment
     const project = await Project.findById(projectId);
-    project?.tasks?.pull({ _id: id});
+    project?.tasks?.pull({ _id: id });
     await project.save();
 
     await Task.findByIdAndDelete(id);
@@ -159,7 +208,7 @@ export const getAdminTask = async (req, res) => {
     //const userId = "66af9db7479f7ad5afe7161b";
     //If i want to pass task to another admin the setup lTeam attribute in tasks schema
     //and change by: userId to ({ lTeam: { $in: [userId] } })
-    const tasks = await Task.find().populate('uTeam', 'name email role');
+    const tasks = await Task.find().populate("uTeam", "name email role");
 
     res.status(200).json({
       tasks, // Return the array of projects
@@ -174,7 +223,10 @@ export const getUserTasks = async (req, res) => {
   try {
     const { userId } = req.user;
     //const userId = "66b9895f6e7bf0ea463cf32e";
-    const tasks = await Task.find({ uTeam:{ $in: [userId]} }).populate('uTeam', 'name email role');
+    const tasks = await Task.find({ uTeam: { $in: [userId] } }).populate(
+      "uTeam",
+      "name email role"
+    );
 
     res.status(200).json({
       tasks, // Return the array of projects
@@ -189,7 +241,7 @@ export const getTaskDetails = async (req, res) => {
   try {
     const { id } = req.params;
     //const userId = "66b9895f6e7bf0ea463cf32e";
-    const tasks = await Task.findById(id).populate('uTeam','name email role');
+    const tasks = await Task.findById(id).populate("uTeam", "name email role");
 
     res.status(200).json({
       tasks, // Return the array of projects
@@ -199,7 +251,6 @@ export const getTaskDetails = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
-
 
 export const createSubTask = async (req, res) => {
   try {
@@ -294,5 +345,41 @@ export const deleteSubtask = async (req, res) => {
     res.json(task);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deleteMedia = async (req, res) => {
+  const { mediaId, taskId } = req.body;
+  try {
+    const task = await Task.findById(taskId);
+    task?.assets.pull({ _id: mediaId });
+    await task.save();
+    res.json({ message: `Media ${mediaId} deleted successfully`})
+  } catch (error) {
+    console.log(error);
+    res.json({ message: `Failed to delete media`})
+  }
+};
+
+export const deleteSubMedia = async (req, res) => {
+  const { medialink, taskId, subId } = req.body;
+
+  try {
+    const task =await Task.findById(taskId);
+    const subtask = task?.subTasks?.find((sub) => sub.id === subId);
+
+    if(subtask)
+    {
+      subtask.assets = subtask?.assets?.filter( asset => asset !== medialink);
+      await task.save();
+    }
+
+    const assets = subtask?.assets;
+  
+
+    res.json({ message: `Media deleted successfully`, medialink,assets})
+  } catch (error) {
+    console.log(error);
+    res.json({ message: `Failed to delete sub media`, error:error})
   }
 };

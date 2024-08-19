@@ -94,7 +94,6 @@ const SubTaskDialog = ({ task }) => {
                   </Menu.Item>
                 ))}
               </div>
-              {user.isAdmin && (
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
@@ -113,7 +112,6 @@ const SubTaskDialog = ({ task }) => {
                     )}
                   </Menu.Item>
                 </div>
-              )}
             </Menu.Items>
           </Transition>
         </Menu>

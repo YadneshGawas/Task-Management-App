@@ -1,52 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Dialog } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getInitials } from "../assets";
 import Button from "./Button";
 import Wrapper from "./Wrapper";
-import Textbox from "./Textbox";
-import { toast } from "sonner";
-import { getInitials } from "../assets";
-import { useDispatch, useSelector } from "react-redux";
 
 
 const UserInfo = ({ open, setOpen, userData }) => {
   const { user } = useSelector((state) => state.auth);
-  //const [getUser] = useGetUserQuery();
-
-  // const refreshData = async () => {
-  //   try {
-  //     const res = await fetch(`api/user/getuser/${userId}`, {
-  //       method: "POST",
-  //       body: JSON.stringify({ userId }),
-  //     });
-  //     if (!res.ok) {
-  //       throw new Error("Response not ok", ...res.data);
-  //     }
-  //     // Parse the JSON response
-  //     const userData = await res.json();
-  //     console.log("User data:", userData);
-  //     dispatch(setCredentials(userData));
-  //     // Create an object from the response data
-  //     const userObject = {
-  //       id: userData._id,
-  //       name: userData.name,
-  //       email: userData.email,
-  //       role: userData.role,
-  //       // Add other properties as needed
-  //     };
-  //     setUserObject(userObject);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (open) {
-  //     refreshData();
-  //   }
-  // }, [open]);
 
   return (
     <Wrapper open={open} setOpen={setOpen}>

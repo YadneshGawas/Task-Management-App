@@ -52,6 +52,13 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: "POST",
             })
         }),
+        addMedia: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/addmedia`,
+                method: "PUT",
+                body: data,
+            })
+        }),
         getUserTask: builder.query({
             query: () =>({
                 url: `${USER_URL}/getusertask`,
@@ -70,6 +77,20 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: "PUT",
             })
         }),
+        delMedia: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/deletemedia`,
+                method: "PUT",
+                body: data,
+            })
+        }),
+        delSubMedia: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/deletesubmedia`,
+                method: "PUT",
+                body: data,
+            })
+        }),
 
     }),
 });
@@ -85,4 +106,7 @@ export const {
     usePostActivityMutation,
     useUpdateSubTaskDescMutation,
     useGetUserTaskQuery,
+    useAddMediaMutation,
+    useDelMediaMutation,
+    useDelSubMediaMutation
 } =  taskApi;
