@@ -167,7 +167,7 @@ const TaskCard = ({ task }) => {
             </div>
 
             <div className="flex flex-row-reverse">
-              {task?.uTeam?.slice(0, 10).map((m, index) => {
+              {task?.uTeam?.slice(0, 5).map((m, index) => {
                 return (
                   <div
                     key={index}

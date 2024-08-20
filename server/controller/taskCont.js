@@ -254,6 +254,7 @@ export const getTaskDetails = async (req, res) => {
 
 export const createSubTask = async (req, res) => {
   try {
+    const { userId } = req.user;
     const { title, desc, stage, taskId, subId, assets } = req.body;
 
     const task = await Task.findById(taskId);
@@ -267,6 +268,7 @@ export const createSubTask = async (req, res) => {
           desc,
           stage,
           assets,
+          by: userId
         };
 
         task.subTasks.push(newSubTask);
@@ -362,7 +364,7 @@ export const deleteMedia = async (req, res) => {
 };
 
 export const deleteSubMedia = async (req, res) => {
-  const { medialink, taskId, subId } = req.body;
+  const { delMedia, taskId, subId } = req.body;
 
   try {
     const task =await Task.findById(taskId);
@@ -370,14 +372,13 @@ export const deleteSubMedia = async (req, res) => {
 
     if(subtask)
     {
-      subtask.assets = subtask?.assets?.filter( asset => asset !== medialink);
+      subtask.assets = subtask?.assets?.filter( asset => asset !== delMedia);
       await task.save();
     }
 
-    const assets = subtask?.assets;
-  
+    const assets = task?.subTasks?.assets;
 
-    res.json({ message: `Media deleted successfully`, medialink,assets})
+    res.json({ message: `Media deleted successfully`, delMedia,assets})
   } catch (error) {
     console.log(error);
     res.json({ message: `Failed to delete sub media`, error:error})

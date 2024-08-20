@@ -10,7 +10,7 @@ router.post("/getadmintask",protectRoute,getAdminTask);
 router.post("/getusertask",protectRoute,getUserTasks);
 router.get("/getdetails/:id",getTaskDetails);
 router.put("/delete/:id",delTasks);
-router.put("/createsubtask",createSubTask);
+router.put("/createsubtask",protectRoute,createSubTask);
 router.put("/deletesubtask",deleteSubtask);
 router.put("/updatedescription",updateDesc);
 router.post("/activity",protectRoute, postTaskActivity);

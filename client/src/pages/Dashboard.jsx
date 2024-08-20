@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"; // Import useSelector for Redux
 import clsx from "clsx";
 import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 /*icons*/
-import { FaNewspaper } from "react-icons/fa";
+import { FaNewspaper, FaTasks } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
 import { LuClipboardEdit } from "react-icons/lu";
 import {
@@ -19,8 +19,11 @@ import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
+  MdTaskAlt,
 } from "react-icons/md";
 import { allusers } from "../assets/data";
+import { TbProgress } from "react-icons/tb";
+import { LiaTasksSolid } from "react-icons/lia";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 import { useGetUserTaskQuery } from "../redux/slice/api/taskApi";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
@@ -76,7 +79,7 @@ const TaskTb = ({ user, proj }) => {
       </td>
 
       <td className="py-2">
-        <div className="flex items-center justify-start text-base text-gray-600 pt-2">
+        <div className="flex items-center justify-start text-base text-gray-600">
           {formatDate(task?.createdAt)}
         </div>
       </td>
@@ -232,33 +235,33 @@ const Dashboard = () => {
       _id: "1",
       label: user.isAdmin ? "TOTAL PROJECTS" : "TOTAL TASK",
       total: object?.length,
-      icon: <FaNewspaper />,
+      icon: <FaTasks />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 67,
-    },
-    {
-      _id: "2",
-      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLETED TASK",
-      total: getComp(object),
-      icon: <MdAdminPanelSettings />,
-      bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 53,
-    },
-    {
-      _id: "3",
-      label: "IN PROGRESS ",
-      total: inProg(object),
-      icon: <LuClipboardEdit />,
-      bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 41,
     },
     {
       _id: "4",
       label: "TODOS",
       total: toDo(object),
-      icon: <FaArrowsToDot />,
+      icon: <LiaTasksSolid />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
       lstm: 47,
+    },
+    {
+      _id: "3",
+      label: "IN PROGRESS ",
+      total: inProg(object),
+      icon: <TbProgress  />,
+      bg: "bg-gradient-to-br from-blue-500 to-green-300",
+      lstm: 41,
+    },
+    {
+      _id: "2",
+      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLETED TASK",
+      total: getComp(object),
+      icon: <MdTaskAlt  />,
+      bg: "bg-gradient-to-br from-blue-500 to-green-300",
+      lstm: 53,
     },
   ];
 

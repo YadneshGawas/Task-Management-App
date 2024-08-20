@@ -33,7 +33,8 @@ const taskSchema = new Schema(
             "due",
             "priority",
             "asset",
-            "updated"
+            "updated",
+            "assetdel"
           ],
         },
         activity: String,
@@ -52,6 +53,7 @@ const taskSchema = new Schema(
           enum: ["todo", "in progress", "completed"],
         },
         assets: [String],
+        by: {type: Schema.Types.ObjectId, ref:"User"}
       },
     ],
     uTeam: [{ type: Schema.Types.ObjectId, ref: "User" }],
@@ -120,21 +122,120 @@ taskSchema.pre("save", async function (next) {
             by: this.by,
           });
         }
-        if (this.isModified("assets") && this.assets.length > 0) {
-          const assets = this.assets;
+        if (this.isModified("assets")) {
+          const newAssets = this.assets;
+          const oldAssets = original.assets || [];
+
+          // Check if an asset was added
+          if (newAssets.length > oldAssets.length) {
+            const recentAsset = newAssets[newAssets.length - 1];
+            await this.populate({
+              path: `assets.${newAssets.length - 1}.by`,
+              select: 'name'
+            });
+
+            const userName = recentAsset.by.name;
+            const info = recentAsset.desc;
+
+            this.activities.push({
+              type: "asset",
+              activity: `Recently added asset by ${userName}:${info} <a href="${recentAsset.link}" target="_blank" rel="noopener noreferrer">${recentAsset.link}</a>`,
+              by: this.by,
+            });
+          }
+
+          // Check if an asset was removed
+          if (newAssets.length < oldAssets.length) {
+            const removedAsset = oldAssets.find(asset => !newAssets.some(newAsset => newAsset.link === asset.link));
+
+            if (removedAsset) {
+              await this.populate({
+                path: `assets.by`,
+                select: 'name'
+              });
+
+              const info = removedAsset.desc;
+
+              this.activities.push({
+                type: "assetdel",
+                activity: `Asset deleted:${info}`,
+              });
+            }
+          }
+        }
+        if (this.isModified("subTasks")) {
+          const newSubTasks = this.subTasks;
+          const oldSubTasks = original.subTasks || [];
+          
           await this.populate({
-            path: `assets.${assets.length - 1}.by`,
+            path: `subTasks.${newSubTasks.length - 1}.by`,
             select: 'name'
-          });
-        
-          const recentAsset = assets[assets.length - 1];
-          const userName = recentAsset.by.name;
-          const info = recentAsset.desc;
-        
-          this.activities.push({
-            type: "asset",
-            activity: `Recently added asset by ${userName}:${info} <a href="${recentAsset.link}" target="_blank" rel="noopener noreferrer">${recentAsset.link}</a>`,
-            by: this.by,
+          })
+          
+          const recentSubTask = newSubTasks[newSubTasks.length - 1];
+          const userName = recentSubTask.by.name;
+
+          // Subtask added
+          if (newSubTasks.length > oldSubTasks.length) {
+            const recentSubTask = newSubTasks[newSubTasks.length - 1];
+            
+            this.activities.push({
+              type: "created",
+              activity: `${recentSubTask.title} added by ${userName}`,
+              by: this.by,
+            });
+          }
+
+          // Subtask removed
+          if (newSubTasks.length < oldSubTasks.length) {
+            const removedSubTask = oldSubTasks.find(subTask => !newSubTasks.some(newSubTask => newSubTask.title === subTask.title));
+            if (removedSubTask) {
+              this.activities.push({
+                type: "assetdel",
+                activity: `${removedSubTask.title} removed by ${userName}`,
+              });
+            }
+          }
+
+          // Subtask modifications
+          newSubTasks.forEach((newSubTask, index) => {
+            const originalSubTask = oldSubTasks[index];
+            if (originalSubTask) {
+              if (newSubTask.title !== originalSubTask.title) {
+                this.activities.push({
+                  type: "title",
+                  activity: `Subtask title changed from ${originalSubTask.title} to ${newSubTask.title}`,
+                  by: this.by,
+                });
+              }
+              if (newSubTask.stage !== originalSubTask.stage) {
+                this.activities.push({
+                  type: "stage",
+                  activity: `Subtask stage changed from ${originalSubTask.stage} to ${newSubTask.stage}`,
+                  by: this.by,
+                });
+              }
+
+              // Monitor changes in subtask assets
+              if (newSubTask.assets.length > originalSubTask.assets.length) {
+                const recentSubTaskAsset = newSubTask.assets[newSubTask.assets.length - 1];
+                this.activities.push({
+                  type: "asset",
+                  activity: `Asset added to subtask ${newSubTask.title}: <a href="${recentSubTaskAsset}" target="_blank" rel="noopener noreferrer">${recentSubTaskAsset}</a>`,
+                  by: this.by,
+                });
+              }
+
+              if (newSubTask.assets.length < originalSubTask.assets.length) {
+                const removedSubTaskAsset = originalSubTask.assets.find(asset => !newSubTask.assets.includes(asset));
+                if (removedSubTaskAsset) {
+                  this.activities.push({
+                    type: "assetdel",
+                    activity: `Asset removed from subtask ${newSubTask.title} by ${userName}`,
+                  });
+                }
+              }
+            }
           });
         }
         

@@ -34,9 +34,10 @@ const SubTaskDialog = ({ task }) => {
         id: task._id,
         taskId: taskId,
       }).unwrap();
-      toast.success(res?.message);
-      window.location.reload();
-      // console.log(task._id)
+      toast.success("Deleted subtask successfully");
+      setTimeout(() => {
+        window.location.reload();
+      },1000);
     } catch (error) {
       console.log(error);
       toast.error(error.message);

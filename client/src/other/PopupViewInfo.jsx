@@ -24,6 +24,8 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
   const [delMedia, setDelMedia] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
 
+  console.log(taskData);
+
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -137,11 +139,11 @@ const PopupViewInfo = ({ open, setOpen, taskData }) => {
           as="h2"
           className="text-xl font-bold leading-6 text-gray-900 mb-4"
         >
-          <span>Details</span>
+          <span>{taskData?.title}</span>
         </Dialog.Title>
         <form onSubmit={handleSubmit(handleOnSubmit)}>
           <div className="w-full flex flex-col mb-3">
-            <div className="text-gray-600 font-semibold text-md mt-3 mb-2">
+            <div className="text-gray-600 font-semibold text-md mb-2">
               <p>DESCRIPTION</p>
             </div>
             {isEditing ? (

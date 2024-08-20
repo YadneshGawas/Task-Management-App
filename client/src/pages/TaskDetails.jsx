@@ -84,38 +84,43 @@ const TABS = [
 
 const TASKTYPEICON = {
   title: (
-    <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white">
-      <MdTitle />,
+    <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center text-white">
+      <MdTitle />
     </div>
   ),
   created: (
-    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
-      <FaThumbsUp size={20} />
+    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+      <FaThumbsUp size={15} />
     </div>
   ),
   description: (
-    <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-500 text-white">
+    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-500 text-white">
       <MdDescription size={14} />
     </div>
   ),
   stage: (
-    <div className="text-red-600">
-      <SiStagetimer size={24} />
+    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-red-600">
+      <SiStagetimer size={20} />
     </div>
   ),
   due: (
-    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white">
-      <CiCalendarDate size={24} />
+    <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
+      <CiCalendarDate size={20} />
     </div>
   ),
   priority: (
-    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
+    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-amber-600 text-white">
       <MdOutlinePriorityHigh size={16} />
     </div>
   ),
   asset: (
     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
       <MdWebAsset size={16} />
+    </div>
+  ),
+  assetdel: (
+    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-red-600 text-white">
+      <MdDelete size={16} />
     </div>
   ),
   updated: (
@@ -213,7 +218,7 @@ const TaskDetails = () => {
     if (task?.desc) {
       setDesc(task?.desc);
     }
-  }, [open, openEdit, data]);
+  }, [open, openEdit, openDialog, refetch, taskRefetch, data]);
 
   const [update] = useUpdateDescMutation();
 
@@ -298,6 +303,7 @@ const TaskDetails = () => {
         open={openEdit}
         setOpen={setOpenEdit}
         setOpenDialog={setOpenDialog}
+        status={selected}
       >
         {
           selected === 0 ? (

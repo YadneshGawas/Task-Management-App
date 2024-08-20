@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDialog }) {
+export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDialog, status }) {
   return (
     <div className="w-full px-1 sm:px-0">
       <Tab.Group>
@@ -34,7 +34,9 @@ export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDial
             ))}
           </Tab.List>
 
-          <div className="flex flex-row space-x-2 mx-2">
+
+          {status === 0 &&
+            <div className="flex flex-row space-x-2 mx-2">
             <ButtonIconOnly
               type="button"
               label="Edit Task"
@@ -51,7 +53,7 @@ export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDial
               //className="flex flex-row-reverse gap-1 items-center bg-red-500 text-white rounded-md py-2 2xl:py-2.5"
               icon={<IoIosTrash className="text-lg" />}
             />
-          </div>
+          </div>}
         </div>
         <Tab.Panels className="w-full mt-2">{children}</Tab.Panels>
       </Tab.Group>
