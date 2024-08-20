@@ -81,6 +81,8 @@ const AddTask = ({ open, setOpen, taskData }) => {
     return "Project Stage";
   };
 
+  
+
   const today = new Date().toISOString().split("T")[0];
 
   const {
@@ -101,8 +103,8 @@ const AddTask = ({ open, setOpen, taskData }) => {
   });
 
   const [uTeam, setUTeam] = useState([]);
-  const [stage, setStage] = useState(null);
-  const [priority, setPriority] = useState(null);
+  const [stage, setStage] = useState('Select Stage');
+  const [priority, setPriority] = useState('Select Priority');
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -113,7 +115,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
 
   const submitHandler = async (data) => {
     try {
-      const tskData = { ...data, uTeam, stage, priority, taskId, projectId};
+      const tskData = { ...data, uTeam, priority, taskId, projectId};
       console.log("Before sending=>",tskData);
       const res = await addtask(tskData).unwrap();
       console.log(res);
@@ -170,12 +172,12 @@ const AddTask = ({ open, setOpen, taskData }) => {
             }
 
             <div className="flex gap-2">
-              <SelectList
+              {/* <SelectList
                 label={getStage()}
                 lists={LISTS}
                 selected={stage}
                 setSelected={setStage}
-              />
+              /> */}
 
               <Textbox
                 placeholder="Date"
@@ -204,6 +206,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
                   required: "Date is required!",
                 })}
                 error={errors.date ? errors.date.message : ""}
+                min={new Date().toISOString().split("T")[0]}
               />
 
               <SelectList

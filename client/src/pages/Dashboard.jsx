@@ -4,26 +4,21 @@
 
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect } from "react";
-
-import { useSelector } from "react-redux"; // Import useSelector for Redux
-
 import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux"; // Import useSelector for Redux
 import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 /*icons*/
-import { FaNewspaper, FaTasks } from "react-icons/fa";
-import { FaArrowsToDot } from "react-icons/fa6";
-import { LuClipboardEdit } from "react-icons/lu";
+import { FaTasks } from "react-icons/fa";
+import { LiaTasksSolid } from "react-icons/lia";
 import {
-  MdAdminPanelSettings,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
-  MdTaskAlt,
+  MdTaskAlt
 } from "react-icons/md";
-import { allusers } from "../assets/data";
 import { TbProgress } from "react-icons/tb";
-import { LiaTasksSolid } from "react-icons/lia";
+import { allusers } from "../assets/data";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 import { useGetUserTaskQuery } from "../redux/slice/api/taskApi";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
@@ -36,34 +31,91 @@ const TaskTb = ({ user, proj }) => {
     low: <MdKeyboardArrowDown />,
   };
 
-  // Table header part
+  // Sorting state
+  const [sortConfig, setSortConfig] = useState({
+    key: 'due',
+    direction: 'desc',
+  });
+
+  // Sorting function
+  const sortTasks = (tasks, sortConfig) => {
+    let sortedTasks = [...tasks];
+    const { key, direction } = sortConfig;
+
+    sortedTasks.sort((a, b) => {
+      if (key === 'priority') {
+        const priorityOrder = { low: 1, medium: 2, high: 3 };
+        return (priorityOrder[a[key]] - priorityOrder[b[key]]) * (direction === 'asc' ? 1 : -1);
+      }
+
+      if (key === 'due' || key === 'createdAt') {
+        const dateA = new Date(a[key]);
+        const dateB = new Date(b[key]);
+        return (dateA - dateB) * (direction === 'asc' ? 1 : -1);
+      }
+
+      if (key === 'stage') {
+        const stageOrder = { todo: 1, 'in progress': 2, completed: 3 };
+        return (stageOrder[a[key]] - stageOrder[b[key]]) * (direction === 'asc' ? 1 : -1);
+      }
+
+      return 0;
+    });
+
+    return sortedTasks;
+  };
+
+  // Handle sort
+  const handleSort = (key) => {
+    setSortConfig((prevSortConfig) => {
+      const direction = prevSortConfig.key === key && prevSortConfig.direction === 'asc'
+        ? 'desc'
+        : 'asc';
+      return { key, direction };
+    });
+  };
+
+  const sortedTasks = sortTasks(proj, sortConfig);
+
+  // Table header
   const TbHeader = () => (
     <thead className="bg-white sticky top-0">
       <tr className="text-black text-left text-lg">
-        {user.isAdmin ? (
-          <th className="py-2">Project Title</th>
-        ) : (
-          <th className="py-2">Task Title</th>
+        <th className="py-2" onClick={() => handleSort(user.isAdmin ? 'title' : 'title')}>
+          {user.isAdmin ? 'Project Title' : 'Task Title'}
+        </th>
+        <th className="py-2" onClick={() => handleSort('priority')}>
+          Priority
+        </th>
+        <th className="py-2" onClick={() => handleSort('createdAt')}>
+          Due On
+        </th>
+        {!user.isAdmin && (
+          <th className="py-2 hidden md:block" onClick={() => handleSort('due')}>
+            Due Date
+          </th>
         )}
-        <th className="py-2">Priority</th>
-        <th className="py-2">Created At</th>
-        {!user.isAdmin && <th className="py-2 hidden md:block">Due Date</th>}
       </tr>
     </thead>
   );
 
   // Format date function
   const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "short", year: "numeric" };
-    return new Date(dateString).toLocaleDateString("en-GB", options);
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-GB', options);
   };
 
+  // Table row
   const TbRow = ({ task }) => (
     <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 pt-4">
       <td className="py-2">
         <div className="flex items-center gap-2 p-2">
           <div
-            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task?.stage])}
+            className={clsx('w-4 h-4 rounded-full', {
+              'bg-red-600': task?.stage === 'todo',
+              'bg-yellow-600': task?.stage === 'in progress',
+              'bg-green-600': task?.stage === 'completed',
+            })}
           />
           <p className="text-base text-black">{task?.title}</p>
         </div>
@@ -71,7 +123,11 @@ const TaskTb = ({ user, proj }) => {
 
       <td className="py-2">
         <div className="flex items-center justify-start gap-2">
-          <span className={clsx("text-lg", PRIORITYSTYLES[task?.priority])}>
+          <span className={clsx('text-lg', {
+            'text-red-600': task?.priority === 'high',
+            'text-yellow-600': task?.priority === 'medium',
+            'text-green-600': task?.priority === 'low',
+          })}>
             {icons[task?.priority]}
           </span>
           <span className="capitalize">{task?.priority}</span>
@@ -80,7 +136,7 @@ const TaskTb = ({ user, proj }) => {
 
       <td className="py-2">
         <div className="flex items-center justify-start text-base text-gray-600">
-          {formatDate(task?.createdAt)}
+          {formatDate(task?.due)}
         </div>
       </td>
 
@@ -100,7 +156,7 @@ const TaskTb = ({ user, proj }) => {
         <table className="w-full">
           <TbHeader />
           <tbody>
-            {proj?.map((task, index) => (
+            {sortedTasks.map((task, index) => (
               <TbRow key={index} task={task} />
             ))}
           </tbody>

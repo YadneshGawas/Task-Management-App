@@ -148,6 +148,24 @@ export const updateDesc = async (req, res) => {
   }
 };
 
+export const putStatus = async (req, res) => {
+  try {
+    const { stage , taskId } = req.body;
+
+    const task = await Task.findById(taskId);
+
+    task.stage = stage ? stage : "to do"
+    await task.save();
+
+    res
+      .status(200)
+      .json({ status: true, message: task, stage: stage });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, message: "Failed to update task" });
+  }
+};
+
 export const delTasks = async (req, res) => {
   try {
     const { id } = req.params;
@@ -254,8 +272,7 @@ export const getTaskDetails = async (req, res) => {
 
 export const createSubTask = async (req, res) => {
   try {
-    const { userId } = req.user;
-    const { title, desc, stage, taskId, subId, assets } = req.body;
+    const { title, desc, stage, taskId, subId, assets, assignee } = req.body;
 
     const task = await Task.findById(taskId);
 
@@ -268,7 +285,7 @@ export const createSubTask = async (req, res) => {
           desc,
           stage,
           assets,
-          by: userId
+          by: assignee
         };
 
         task.subTasks.push(newSubTask);
@@ -287,21 +304,17 @@ export const createSubTask = async (req, res) => {
       }
     } else {
       try {
-        const test = {
-          title: title,
-          desc: desc,
-          stage: stage,
-        };
         subtask.title = title;
         subtask.desc = desc;
         subtask.stage = stage;
         subtask.assets = assets;
+        subtask.by = assignee;
 
         await task.save();
 
         return res
           .status(200)
-          .json({ message: "Subtask updated successfully", subtask: test });
+          .json({ message: "Subtask updated successfully", subtask: subtask });
       } catch (error) {
         return res.status(400).json({ message: "Failed to update task" });
       }
@@ -382,5 +395,24 @@ export const deleteSubMedia = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({ message: `Failed to delete sub media`, error:error})
+  }
+};
+
+export const subDetails = async (req, res) => {
+  try {
+    const { taskId, subId } = req.params;
+
+    const task = await Task.findById(taskId).populate({
+      path: 'subTasks.by', // Path to the 'by' field inside 'subTasks'
+      select: 'name', // Optional: Specify which fields to return from the User document
+    });
+
+    const subtask = task.subTasks.find((sub) => sub._id.toString() === subId);
+
+    return res.status(200).json(subtask);
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Failed to get subtask details" });
   }
 };

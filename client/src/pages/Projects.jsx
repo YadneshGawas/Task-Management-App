@@ -114,7 +114,6 @@ const Projects = () => {
       </div>
 
       {filteredProjects && <BoardView tasks={filteredProjects} />}
-
       {open && <AddProject open={open} setOpen={setOpen} />}
     </div>
   );

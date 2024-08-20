@@ -1,21 +1,43 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Popover, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { getInitials } from "../assets";
+import { usePopper } from 'react-popper';
 
 const CardUsers = ({ user }) => {
 
-  if (!user) {
-    return null; // Do not render anything if data is not available
-  }
+  // Popper.js setup for dynamic positioning
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: 'bottom', // Default placement
+    modifiers: [
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: ['top', 'right', 'left'], // Fallback placements if space is not available
+        },
+      },
+      {
+        name: 'preventOverflow',
+        options: {
+          boundary: 'viewport', // Prevent overflow of the viewport
+        },
+      },
+    ],
+  });
 
   return (
     <div className='px-4'>
       <Popover className='relative'>
         {({ open }) => (
           <>
-            <Popover.Button className='group inline-flex items-center outline-none'>
+            <Popover.Button
+              ref={setReferenceElement}
+              className='group inline-flex items-center outline-none'
+            >
               <span>{getInitials(user?.name)}</span>
             </Popover.Button>
 
@@ -27,8 +49,14 @@ const CardUsers = ({ user }) => {
               leave='transition ease-in duration-150'
               leaveFrom='opacity-100 translate-y-0'
               leaveTo='opacity-0 translate-y-1'
+              className='z-50'
             >
-              <Popover.Panel className='absolute left-1/2 z-10 mt-3 w-80 max-w-sm -translate-x-1/2 transform px-4 sm:px-0 '>
+              <Popover.Panel
+                ref={setPopperElement}
+                style={styles.popper}
+                {...attributes.popper}
+                className='absolute z-10 mt-3 w-80 max-w-sm px-4 sm:px-0'
+              >
                 <div className='flex items-center gap-4 rounded-lg shadow-lg bg-white p-8'>
                   <div className='w-16 h-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl '>
                     <span className='text-center font-bold'>

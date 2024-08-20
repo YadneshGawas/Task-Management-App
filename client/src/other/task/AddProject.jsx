@@ -68,8 +68,8 @@ const AddProject = ({ open, setOpen, taskData }) => {
 
   const [uTeam, setUTeam] = useState([]);
 
-  const [stage, setStage] = useState(null);
-  const [priority, setPriority] = useState(null);
+  const [stage, setStage] = useState('Select Stage');
+  const [priority, setPriority] = useState('Select Priority');
 
 
 

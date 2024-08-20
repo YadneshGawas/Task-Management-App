@@ -139,7 +139,7 @@ taskSchema.pre("save", async function (next) {
 
             this.activities.push({
               type: "asset",
-              activity: `Recently added asset by ${userName}:${info} <a href="${recentAsset.link}" target="_blank" rel="noopener noreferrer">${recentAsset.link}</a>`,
+              activity: `Recently added asset by ${userName}:${info} <a href="${recentAsset.link}" target="_blank" rel="noopener noreferrer"><img src="${recentAsset.link} style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}"/></a>`,
               by: this.by,
             });
           }
@@ -166,14 +166,17 @@ taskSchema.pre("save", async function (next) {
         if (this.isModified("subTasks")) {
           const newSubTasks = this.subTasks;
           const oldSubTasks = original.subTasks || [];
+          let userName = ""
           
-          await this.populate({
-            path: `subTasks.${newSubTasks.length - 1}.by`,
-            select: 'name'
-          })
+          if(newSubTasks.length > 0){
+            await this.populate({
+              path: `subTasks.${newSubTasks.length - 1}.by`,
+              select: 'name'
+            })
+            const recentSubTask = newSubTasks[newSubTasks.length - 1];
+            userName = recentSubTask.by.name;
+          }
           
-          const recentSubTask = newSubTasks[newSubTasks.length - 1];
-          const userName = recentSubTask.by.name;
 
           // Subtask added
           if (newSubTasks.length > oldSubTasks.length) {
@@ -221,7 +224,7 @@ taskSchema.pre("save", async function (next) {
                 const recentSubTaskAsset = newSubTask.assets[newSubTask.assets.length - 1];
                 this.activities.push({
                   type: "asset",
-                  activity: `Asset added to subtask ${newSubTask.title}: <a href="${recentSubTaskAsset}" target="_blank" rel="noopener noreferrer">${recentSubTaskAsset}</a>`,
+                  activity: `Asset added to subtask ${newSubTask.title}: <a href="${recentSubTaskAsset}" target="_blank" rel="noopener noreferrer"><img src="${recentSubTaskAsset} style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}"/></a>`,
                   by: this.by,
                 });
               }

@@ -35,10 +35,13 @@ import SubTaskDialog from "../other/task/SubTaskDialog";
 import TextEditor from "../other/TextEditor";
 import Title from "../other/Title";
 import {
+  useDeleteSubtaskMutation,
   useDelMediaMutation,
   useDelTaskMutation,
+  useGetSubtaskQuery,
   useGetTaskDetailsQuery,
-  useUpdateDescMutation,
+  usePutStatusMutation,
+  useUpdateDescMutation
 } from "../redux/slice/api/taskApi";
 import { useGetUsersQuery } from "../redux/slice/api/userApi";
 import { TASK_TYPE, getInitials } from "./../assets/index";
@@ -133,33 +136,58 @@ const TASKTYPEICON = {
 const TaskDetails = () => {
   const location = useLocation();
   const [selected, setSelected] = useState(0);
+  const [status, setStatus] = useState("");
+  const [disableEdit, setDisableEdit] = useState(false);
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [media, setMedia] = useState(false);
-  const [delMedia, setDelMedia] = useState('');
+  const [delMedia, setDelMedia] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialog2, setOpenDialog2] = useState(false);
+  const [openDialog3, setOpenDialog3] = useState(false);
+  const [subId, setSubId] = useState('');
   const [desc, setDesc] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const { taskId } = useParams();
-
   const { user } = useSelector((state) => state.auth);
+  const [update] = useUpdateDescMutation();
+  const [deletemedia] = useDelMediaMutation();
   const [delTask] = useDelTaskMutation();
+  const { data: users, refetch } = useGetUsersQuery(taskId);
+  const { data, refetch: taskRefetch } = useGetTaskDetailsQuery(taskId);
+  const { data: subtask, refetch: subtaskrefetch, isLoading } = useGetSubtaskQuery({taskId,subId});
+  const isTasksPage = location.pathname.includes("/tasks");
+  const assets = data?.tasks?.assets;
+  const task = data?.tasks;
+  const projectId = task?.projectId;
+  
+  let temp = [];
 
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
 
-  const handleBlur = () => {
-    setIsEditing(false);
+  const handleOnClick = async (el) => {
+    try {
+      setSubId(el._id);
+      setOpen1(true);
+      console.log(temp);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const { data, refetch: taskRefetch } = useGetTaskDetailsQuery(taskId);
-
-  const assets = data?.tasks?.assets;
-  const task = data?.tasks;
-  const projectId = task?.projectId;
+  const handleSubDelClick = async(el) => {
+    try {
+      setSubId(el._id);
+      console.log("SubId=>",subId);
+      setOpenDialog3(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const {
     register,
@@ -191,9 +219,6 @@ const TaskDetails = () => {
     },
   };
 
-  const { data: users, refetch } = useGetUsersQuery(taskId);
-  const isTasksPage = location.pathname.includes("/tasks");
-
   const getFileTypeIcon = (fileUrl) => {
     const lowerCaseUrl = fileUrl.toLowerCase();
 
@@ -212,39 +237,27 @@ const TaskDetails = () => {
     return "default";
   };
 
-  useEffect(() => {
-    refetch();
-    taskRefetch();
-    if (task?.desc) {
-      setDesc(task?.desc);
-    }
-  }, [open, openEdit, openDialog, refetch, taskRefetch, data]);
-
-  const [update] = useUpdateDescMutation();
-
-  const [deletemedia] = useDelMediaMutation();
-
-  const delHandler = (id) =>{
+  const delHandler = (id) => {
     setDelMedia(id);
     setOpenDialog2(true);
-  }
-
-  const delMediaFunction = async(mediaId) =>{
+  };
+  
+  const delMediaFunction = async (mediaId) => {
     try {
-      const data = { taskId , mediaId};
+      const data = { taskId, mediaId };
       console.log("Before sending=>", data);
       const res = await deletemedia(data).unwrap();
       console.log(res);
       toast.success("Deleted media successfully");
+      subtaskrefetch();
       setOpenDialog2(false);
-      taskRefetch(); 
     } catch (error) {
       toast.error("Failed to delete media");
       setOpenDialog(false);
       console.log(error);
     }
-  }
-
+  };
+  
   const submitHandler = async () => {
     try {
       const data = { desc, taskId };
@@ -252,7 +265,7 @@ const TaskDetails = () => {
       refetch();
       toast.success("Description Updated");
       setOpen(false);
-
+      
       if (res) {
         setIsEditing(false);
       }
@@ -261,9 +274,8 @@ const TaskDetails = () => {
       toast.error(error.message);
     }
   };
-
+  
   const deleteHandler = async () => {
-    if (isTasksPage) {
       try {
         setOpenDialog(false);
         const res = await delTask({
@@ -275,22 +287,88 @@ const TaskDetails = () => {
         console.log(error);
         toast.error(error.message);
       }
-    } else {
-      try {
-        const res = await delProj({
-          id: task.id,
-        }).unwrap();
-        toast.success(res?.message);
-        refetchProjects();
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
-      }
-    }
   };
 
+  const [delSubTask] = useDeleteSubtaskMutation();
 
+  const deleteSubHandler = async (subId) => {
+    try {
+      setOpenDialog3(false);
+      //
+      const temp = {
+        taskId,
+        id: subId
+      }
+      console.log(temp);
+      //
+      const res = await delSubTask({
+        id: subId,
+        taskId,
+      }).unwrap();
+      toast.success("Deleted subtask successfully");
+      setTimeout(() => {
+        window.location.reload();
+      },1000);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  
+  const teamMembers = data?.tasks?.uTeam;
+  
+  const getTasks = () => {
+    return data?.tasks?.subTasks?.length;
+  };
+  
+  const getCompleted = () => {
+    const completedSubtasksCount = data?.tasks?.subTasks?.filter((subtask) => subtask.stage === "completed").length || 0;
+    return completedSubtasksCount;
+  };
+  
+  const [putstatus] = usePutStatusMutation();
+  
+  const statusUpdate = async() => {
+    try{
+      const percentage = Math.round((getCompleted() / getTasks()) * 100);
+      //const percentage = 99;
+      const getStage = () =>{
+        if(percentage === 0){
+          setDisableEdit(false);
+          return "todo"
+        }
+        if(percentage < 100){
+          setDisableEdit(false);
+          return "in progress";
+        }
+        if(percentage === 100){
+          setDisableEdit(true);
+          return "completed";
+        }
+      }
+      const stage = getStage();
+      const data = {
+        taskId,
+        stage,
+      }
+      const res = await putstatus(data).unwrap();
+      console.log("Status update =>",res,percentage);
+      taskRefetch();
+    }catch(error){
+      console.log(error);
+    }
+  }
 
+  useEffect(() => {
+    statusUpdate();
+    refetch();
+    subtaskrefetch();
+    taskRefetch();
+    if (task?.desc) {
+      setDesc(task?.desc);
+    }
+  }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data]);
+  
   return (
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
       <div className="flex items-center justify-between">
@@ -304,11 +382,12 @@ const TaskDetails = () => {
         setOpen={setOpenEdit}
         setOpenDialog={setOpenDialog}
         status={selected}
+        stage={disableEdit}
       >
         {
           selected === 0 ? (
             <>
-              <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 overflow-y-auto rounded-lg">
+              <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white shadow-md p-5 max-h-[calc(100vh-220px)] overflow-y-auto rounded-lg">
                 <div className="w-full  md:w-1/2 space-y-1">
                   <div className="flex items-center gap-5">
                     <div
@@ -395,11 +474,11 @@ const TaskDetails = () => {
                       {users?.map((m, index) => (
                         <div
                           key={index}
-                          className="flex gap-4 py-2 items-center"
+                          className="flex flex-row gap-4 py-2 items-center"
                         >
                           <div
                             className={
-                              "w-10 h-10 rounded-full text-white flex items-center justify-center text-sm -mr-1 bg-blue-600"
+                              "w-10 h-10 rounded-full text-white min-w-10 flex items-center justify-center text-sm -mr-1 bg-blue-600"
                             }
                           >
                             <span className="text-center">
@@ -439,17 +518,31 @@ const TaskDetails = () => {
                       {task?.subTasks?.map((el, index) => (
                         <div
                           key={index}
-                          className="flex gap-3 p-1 transition-shadow duration-300 hover:shadow-lg rounded-lg"
+                          className="flex gap-3 p-2 border border-grey-200 transition-shadow duration-300 hover:shadow-lg rounded-lg"
+                          onClick={() => handleOnClick(el)} //passing object to function
                         >
                           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
                             <MdTaskAlt className="text-violet-600" size={26} />
                           </div>
-                          <div className="flex flex-col pb-1 flex-grow">
+                          <div className="flex flex-col pb-1 flex-grow ">
                             <div className="flex items-center justify-between">
                               <div className="flex flex-row space-x-2">
                                 <p className="text-gray-700">{el?.title}</p>
                               </div>
-                              <SubTaskDialog task={el} />
+                              <div
+                                onClick={(event) => {
+                                  event.stopPropagation(); // Prevent click event from bubbling up
+                                }}
+                              >
+                                {/* <SubTaskDialog task={el} /> */}
+                                <ButtonIconOnly
+                                className="text-red-500"
+                                icon={<MdDelete/>}
+                                onClick={() => handleSubDelClick(el)} 
+                                />
+                                {/* pass object from here */}
+                              </div>
+                              {/* pass object from here */}
                             </div>
                             <div>
                               <span
@@ -554,7 +647,9 @@ const TaskDetails = () => {
       {openEdit && (
         <AddTask open={openEdit} setOpen={setOpenEdit} taskData={task} />
       )}
-      {open && <AddSubTask open={open} setOpen={setOpen} />}
+      {open && <AddSubTask open={open} setOpen={setOpen} users={teamMembers} />}
+      {open1 && !(isLoading) && <AddSubTask open={open1} setOpen={setOpen1} taskData={subtask} users={teamMembers} />}
+
       {openDialog && (
         <ConfirmatioDialog
           open={openDialog}
@@ -567,6 +662,13 @@ const TaskDetails = () => {
           open={openDialog2}
           setOpen={setOpenDialog2}
           onClick={() => delMediaFunction(delMedia)}
+        />
+      )}
+      {openDialog3 && (
+        <ConfirmatioDialog
+          open={openDialog3}
+          setOpen={setOpenDialog3}
+          onClick={() => deleteSubHandler(subId)}
         />
       )}
       {media && <MediaUpload open={media} setOpen={setMedia} />}
@@ -590,7 +692,7 @@ const Activities = ({ activity, id, refetch }) => {
         <div className="flex flex-col gap-y-1 mb-8">
           <div className="text-black space-y-2">
             <span className="capitalize">New Update</span>
-          </div>
+          </div>  
           <span className="text-sm">{moment(item?.date).fromNow()}</span>
           <div
             className="text-gray-700"
@@ -602,7 +704,7 @@ const Activities = ({ activity, id, refetch }) => {
   };
 
   return (
-    <div className="w-full flex gap-10 2xl:gap-20 min-h-screen px-8 py-6 bg-white shadow rounded-md justify-between overflow-y-auto">
+    <div className="w-full flex gap-10 2xl:gap-20 max-h-[calc(100vh-220px)] px-8 py-6 bg-white shadow rounded-md justify-between overflow-y-auto">
       <div className="w-full md:w-1/2">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
 

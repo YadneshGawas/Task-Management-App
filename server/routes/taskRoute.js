@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
-import { addMedia, createSubTask, createTask, deleteMedia, deleteSubMedia, deleteSubtask, delTasks, getAdminTask, getTaskDetails, getUserTasks, postTaskActivity, updateDesc, updateSubDesc } from "../controller/taskCont.js";
+import { addMedia, createSubTask, createTask, deleteMedia, deleteSubMedia, deleteSubtask, delTasks, getAdminTask, getTaskDetails, getUserTasks, postTaskActivity, putStatus, subDetails, updateDesc, updateSubDesc } from "../controller/taskCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 
 const router = express.Router();
 
 router.post("/createtask" ,protectRoute, createTask);
+router.put("/putstatus", putStatus);
 router.post("/getadmintask",protectRoute,getAdminTask);
 router.post("/getusertask",protectRoute,getUserTasks);
 router.get("/getdetails/:id",getTaskDetails);
@@ -18,6 +19,7 @@ router.put("/updatesubdescription",updateSubDesc);
 router.put("/addmedia",protectRoute,addMedia);
 router.put("/deletemedia",deleteMedia);
 router.put("/deletesubmedia",deleteSubMedia);
+router.get("/getsubdetails/:taskId/:subId",subDetails);
 
 //router.put("/updatesubtask",updateSubTask);
 

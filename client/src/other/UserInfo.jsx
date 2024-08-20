@@ -22,13 +22,13 @@ const UserInfo = ({ open, setOpen, userData }) => {
       {user ? (
       <div className="mt-2 flex flex-col gap-6">
         <div className="flex items-center gap-4 bg-white p-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl ">
+          <div className="w-16 h-16 min-w-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl ">
             <span className="text-center font-bold">
               {getInitials(user.name)}
             </span>
           </div>
           <div className="flex flex-col gap-y-1">
-            <p className="text-black text-xl font-bold">{user.name}</p>
+            <p className="text-black text-xl font-bold flex-wrap">{user.name}</p>
             <span className="text-base text-gray-500">{user.role}</span>
             <span className="text-blue-500">
               {user.email ?? "email@example.com"}

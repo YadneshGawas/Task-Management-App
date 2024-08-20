@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDialog, status }) {
+export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDialog, status, stage }) {
   return (
     <div className="w-full px-1 sm:px-0">
       <Tab.Group>
@@ -35,7 +35,7 @@ export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDial
           </Tab.List>
 
 
-          {status === 0 &&
+          {status === 0 && !(stage) &&
             <div className="flex flex-row space-x-2 mx-2">
             <ButtonIconOnly
               type="button"
