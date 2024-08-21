@@ -41,7 +41,7 @@ import {
   useGetSubtaskQuery,
   useGetTaskDetailsQuery,
   usePutStatusMutation,
-  useUpdateDescMutation
+  useUpdateDescMutation,
 } from "../redux/slice/api/taskApi";
 import { useGetUsersQuery } from "../redux/slice/api/userApi";
 import { TASK_TYPE, getInitials } from "./../assets/index";
@@ -146,7 +146,7 @@ const TaskDetails = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialog2, setOpenDialog2] = useState(false);
   const [openDialog3, setOpenDialog3] = useState(false);
-  const [subId, setSubId] = useState('');
+  const [subId, setSubId] = useState("");
   const [desc, setDesc] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -157,12 +157,16 @@ const TaskDetails = () => {
   const [delTask] = useDelTaskMutation();
   const { data: users, refetch } = useGetUsersQuery(taskId);
   const { data, refetch: taskRefetch } = useGetTaskDetailsQuery(taskId);
-  const { data: subtask, refetch: subtaskrefetch, isLoading } = useGetSubtaskQuery({taskId,subId});
+  const {
+    data: subtask,
+    refetch: subtaskrefetch,
+    isLoading,
+  } = useGetSubtaskQuery({ taskId, subId });
   const isTasksPage = location.pathname.includes("/tasks");
   const assets = data?.tasks?.assets;
   const task = data?.tasks;
   const projectId = task?.projectId;
-  
+
   let temp = [];
 
   const handleDoubleClick = () => {
@@ -179,10 +183,10 @@ const TaskDetails = () => {
     }
   };
 
-  const handleSubDelClick = async(el) => {
+  const handleSubDelClick = async (el) => {
     try {
       setSubId(el._id);
-      console.log("SubId=>",subId);
+      console.log("SubId=>", subId);
       setOpenDialog3(true);
     } catch (error) {
       console.log(error);
@@ -241,7 +245,7 @@ const TaskDetails = () => {
     setDelMedia(id);
     setOpenDialog2(true);
   };
-  
+
   const delMediaFunction = async (mediaId) => {
     try {
       const data = { taskId, mediaId };
@@ -257,7 +261,7 @@ const TaskDetails = () => {
       console.log(error);
     }
   };
-  
+
   const submitHandler = async () => {
     try {
       const data = { desc, taskId };
@@ -265,7 +269,7 @@ const TaskDetails = () => {
       refetch();
       toast.success("Description Updated");
       setOpen(false);
-      
+
       if (res) {
         setIsEditing(false);
       }
@@ -274,19 +278,19 @@ const TaskDetails = () => {
       toast.error(error.message);
     }
   };
-  
+
   const deleteHandler = async () => {
-      try {
-        setOpenDialog(false);
-        const res = await delTask({
-          id: task._id,
-        }).unwrap();
-        toast.success("Deleted Successfully");
-        navigate(`/projects/${projectId}/tasks`);
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
-      }
+    try {
+      setOpenDialog(false);
+      const res = await delTask({
+        id: task._id,
+      }).unwrap();
+      toast.success("Deleted Successfully");
+      navigate(`/projects/${projectId}/tasks`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   const [delSubTask] = useDeleteSubtaskMutation();
@@ -297,8 +301,8 @@ const TaskDetails = () => {
       //
       const temp = {
         taskId,
-        id: subId
-      }
+        id: subId,
+      };
       console.log(temp);
       //
       const res = await delSubTask({
@@ -308,56 +312,58 @@ const TaskDetails = () => {
       toast.success("Deleted subtask successfully");
       setTimeout(() => {
         window.location.reload();
-      },1000);
+      }, 1000);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   };
-  
+
   const teamMembers = data?.tasks?.uTeam;
-  
+
   const getTasks = () => {
     return data?.tasks?.subTasks?.length;
   };
-  
+
   const getCompleted = () => {
-    const completedSubtasksCount = data?.tasks?.subTasks?.filter((subtask) => subtask.stage === "completed").length || 0;
+    const completedSubtasksCount =
+      data?.tasks?.subTasks?.filter((subtask) => subtask.stage === "completed")
+        .length || 0;
     return completedSubtasksCount;
   };
-  
+
   const [putstatus] = usePutStatusMutation();
-  
-  const statusUpdate = async() => {
-    try{
+
+  const statusUpdate = async () => {
+    try {
       const percentage = Math.round((getCompleted() / getTasks()) * 100);
       //const percentage = 99;
-      const getStage = () =>{
-        if(percentage === 0){
+      const getStage = () => {
+        if (percentage === 0) {
           setDisableEdit(false);
-          return "todo"
+          return "todo";
         }
-        if(percentage < 100){
+        if (percentage < 100) {
           setDisableEdit(false);
           return "in progress";
         }
-        if(percentage === 100){
+        if (percentage === 100) {
           setDisableEdit(true);
           return "completed";
         }
-      }
+      };
       const stage = getStage();
       const data = {
         taskId,
         stage,
-      }
+      };
       const res = await putstatus(data).unwrap();
-      console.log("Status update =>",res,percentage);
+      console.log("Status update =>", res, percentage);
       taskRefetch();
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     statusUpdate();
@@ -368,7 +374,7 @@ const TaskDetails = () => {
       setDesc(task?.desc);
     }
   }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data]);
-  
+
   return (
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
       <div className="flex items-center justify-between">
@@ -536,9 +542,9 @@ const TaskDetails = () => {
                               >
                                 {/* <SubTaskDialog task={el} /> */}
                                 <ButtonIconOnly
-                                className="text-red-500"
-                                icon={<MdDelete/>}
-                                onClick={() => handleSubDelClick(el)} 
+                                  className="text-red-500"
+                                  icon={<MdDelete />}
+                                  onClick={() => handleSubDelClick(el)}
                                 />
                                 {/* pass object from here */}
                               </div>
@@ -648,7 +654,14 @@ const TaskDetails = () => {
         <AddTask open={openEdit} setOpen={setOpenEdit} taskData={task} />
       )}
       {open && <AddSubTask open={open} setOpen={setOpen} users={teamMembers} />}
-      {open1 && !(isLoading) && <AddSubTask open={open1} setOpen={setOpen1} taskData={subtask} users={teamMembers} />}
+      {open1 && !isLoading && (
+        <AddSubTask
+          open={open1}
+          setOpen={setOpen1}
+          taskData={subtask}
+          users={teamMembers}
+        />
+      )}
 
       {openDialog && (
         <ConfirmatioDialog
@@ -677,27 +690,41 @@ const TaskDetails = () => {
 };
 
 const Activities = ({ activity, id, refetch }) => {
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+
+    const date = new Date(dateStr);
+
+    // Options for date and time formatting
+    const optionsDate = { day: "2-digit", month: "short", year: "2-digit" };
+    const optionsTime = { hour: "2-digit", minute: "2-digit", hour12: true };
+
+    // Format the date and time
+    const formattedDate = date.toLocaleDateString("en-GB", optionsDate);
+    const formattedTime = date.toLocaleTimeString("en-GB", optionsTime);
+
+    return `${formattedDate} ${formattedTime}`;
+  };
+
   const Card = ({ item }) => {
     return (
-      <div className="flex space-x-4">
+      <div className="flex w-full space-x-4">
         <div className="flex flex-col items-center flex-shrink-0">
           <div className="w-10 h-10 flex items-center justify-center">
             {TASKTYPEICON[item?.type]}
           </div>
-          <div className="w-full flex items-center">
-            <div className="w-0.5 bg-gray-300 h-full"></div>
-          </div>
         </div>
 
-        <div className="flex flex-col gap-y-1 mb-8">
-          <div className="text-black space-y-2">
-            <span className="capitalize">New Update</span>
-          </div>  
-          <span className="text-sm">{moment(item?.date).fromNow()}</span>
+        <div className="flex flex-row justify-between w-full mb-8">
           <div
-            className="text-gray-700"
+            className="text-black w-1/3"
             dangerouslySetInnerHTML={{ __html: item?.activity }}
           />
+          <div>
+            <span className="text-sm text-gray-500">
+              {formatDate(item?.date)}
+            </span>
+          </div>
         </div>
       </div>
     );
@@ -705,14 +732,11 @@ const Activities = ({ activity, id, refetch }) => {
 
   return (
     <div className="w-full flex gap-10 2xl:gap-20 max-h-[calc(100vh-220px)] px-8 py-6 bg-white shadow rounded-md justify-between overflow-y-auto">
-      <div className="w-full md:w-1/2">
+      <div className="w-full">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
-
-        <div className="w-full">
           {activity?.map((el, index) => (
             <Card key={index} item={el} isConnected={true} />
           ))}
-        </div>
       </div>
     </div>
   );

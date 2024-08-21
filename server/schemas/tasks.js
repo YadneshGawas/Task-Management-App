@@ -195,7 +195,8 @@ taskSchema.pre("save", async function (next) {
             if (removedSubTask) {
               this.activities.push({
                 type: "assetdel",
-                activity: `${removedSubTask.title} removed by ${userName}`,
+                activity: `${removedSubTask.title} removed `,
+                by: this.by,
               });
             }
           }
@@ -203,7 +204,9 @@ taskSchema.pre("save", async function (next) {
           // Subtask modifications
           newSubTasks.forEach((newSubTask, index) => {
             const originalSubTask = oldSubTasks[index];
+            
             if (originalSubTask) {
+              
               if (newSubTask.title !== originalSubTask.title) {
                 this.activities.push({
                   type: "title",
@@ -212,6 +215,7 @@ taskSchema.pre("save", async function (next) {
                 });
               }
               if (newSubTask.stage !== originalSubTask.stage) {
+                
                 this.activities.push({
                   type: "stage",
                   activity: `Subtask stage changed from ${originalSubTask.stage} to ${newSubTask.stage}`,
@@ -222,9 +226,10 @@ taskSchema.pre("save", async function (next) {
               // Monitor changes in subtask assets
               if (newSubTask.assets.length > originalSubTask.assets.length) {
                 const recentSubTaskAsset = newSubTask.assets[newSubTask.assets.length - 1];
+                
                 this.activities.push({
                   type: "asset",
-                  activity: `Asset added to subtask ${newSubTask.title}: <a href="${recentSubTaskAsset}" target="_blank" rel="noopener noreferrer"><img src="${recentSubTaskAsset} style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}"/></a>`,
+                  activity: `Asset added to ${newSubTask.title} by ${userName}: <a href="${recentSubTaskAsset}" target="_blank" rel="noopener noreferrer"><img src="${recentSubTaskAsset} style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}"/></a>`,
                   by: this.by,
                 });
               }
@@ -234,7 +239,7 @@ taskSchema.pre("save", async function (next) {
                 if (removedSubTaskAsset) {
                   this.activities.push({
                     type: "assetdel",
-                    activity: `Asset removed from subtask ${newSubTask.title} by ${userName}`,
+                    activity: `Asset removed from ${newSubTask.title} by ${userName}`,
                   });
                 }
               }

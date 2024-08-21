@@ -59,17 +59,17 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: "POST",
             })
         }),
+        getUserTask: builder.query({
+            query: () =>({
+                url: `${USER_URL}/getusertask`,
+                method: "POST",
+            })
+        }),
         addMedia: builder.mutation({
             query: (data) =>({
                 url: `${USER_URL}/addmedia`,
                 method: "PUT",
                 body: data,
-            })
-        }),
-        getUserTask: builder.query({
-            query: () =>({
-                url: `${USER_URL}/getusertask`,
-                method: "POST",
             })
         }),
         getTaskDetails: builder.query({

@@ -222,11 +222,16 @@ export const postTaskActivity = async (req, res) => {
 
 export const getAdminTask = async (req, res) => {
   try {
-    const { userId } = req.user;
+    //const { userId } = req.user;
     //const userId = "66af9db7479f7ad5afe7161b";
     //If i want to pass task to another admin the setup lTeam attribute in tasks schema
     //and change by: userId to ({ lTeam: { $in: [userId] } })
-    const tasks = await Task.find().populate("uTeam", "name email role");
+    // const tasks = await Task.find();
+    const tasks = await Task.find().populate({
+      path: "uTeam", 
+      select: "name email role",
+    },
+    );
 
     res.status(200).json({
       tasks, // Return the array of projects

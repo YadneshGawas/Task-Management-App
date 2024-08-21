@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/createtask" ,protectRoute, createTask);
 router.put("/putstatus", putStatus);
-router.post("/getadmintask",protectRoute,getAdminTask);
+router.post("/getadmintask",getAdminTask);
 router.post("/getusertask",protectRoute,getUserTasks);
 router.get("/getdetails/:id",getTaskDetails);
 router.put("/delete/:id",delTasks);

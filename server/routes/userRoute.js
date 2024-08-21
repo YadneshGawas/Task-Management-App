@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
 
-import { activateUserProfile, adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserInfo, getUserProfile, getUsers, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, testingApis, updateUserProfile } from "../controller/userCont.js";
+import { adduser, changeUserPassword, deleteUserProfile, forgotUser, getNotificationsList, getTeamList, getUserInfo, getUsers, loginUser, logoutUser, markNotificationRead, registerUser, resetPassword, updateUserProfile } from "../controller/userCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
-import { createProject, getProjects } from "../controller/projectCont.js";
 
 const router = express.Router();
 /*OUTSIDE APP ROUTES*/
@@ -30,10 +29,5 @@ router.get("/notifications", protectRoute, getNotificationsList);
 router.put("/changepassword",protectRoute, changeUserPassword);
 router.put("/read-noti", protectRoute, markNotificationRead);
 
-//FOR ADMIN ONLY - ADMIN ROUTES
-router
-  .route("/:id")
-  .put(protectRoute, isAdminRoute, activateUserProfile)
-  .delete(protectRoute, isAdminRoute, deleteUserProfile);
 
 export default router;
