@@ -90,7 +90,7 @@ const Sidebar = () => {
       <div>
         <div className=" flex items-center text-gray-500">
         <FaRegCopyright/>
-        <span className="text-gray-500 font-thin px-2">
+        <span className="text-gray-500 font-thin px-1">
           Made by Yadnesh Gawas
         </span>
         </div>
