@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.BASE_APP_URL],
+    origin: [process.env.BASE_APP_URL,"https://taskamanagerbyyadnesh.netlify.app/"],
     method: ["GET","PUT","POST","DELETE"],
     credentials: true,
   })
