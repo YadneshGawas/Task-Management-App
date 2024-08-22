@@ -4,271 +4,514 @@
 
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect } from "react";
-
-import { useSelector } from "react-redux"; // Import useSelector for Redux
-
-import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
 import clsx from "clsx";
+import React, { useState } from "react";
+import { useSelector } from "react-redux"; // Import useSelector for Redux
+import { getInitials } from "../assets/index";
 /*icons*/
+import { motion } from "framer-motion";
+import "react-circular-progressbar/dist/styles.css";
+import { FaTasks } from "react-icons/fa";
+import { LiaTasksSolid } from "react-icons/lia";
 import {
-  MdAdminPanelSettings,
   MdKeyboardArrowDown,
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
+  MdTaskAlt,
 } from "react-icons/md";
-import { FaNewspaper } from "react-icons/fa";
-import { LuClipboardEdit } from "react-icons/lu";
-import { FaArrowsToDot } from "react-icons/fa6";
-import { tasks } from "../assets/data";
+import { TbProgress } from "react-icons/tb";
 import { allusers } from "../assets/data";
-import { useGetTeamListQuery } from "../redux/slice/api/userApi";
+import BasicBars from "../other/BasicBars";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
+import {
+  useGetTaskQuery,
+  useGetUserTaskQuery,
+} from "../redux/slice/api/taskApi";
+import { useGetTeamListQuery } from "../redux/slice/api/userApi";
+import ButtonIconOnly from "./../other/ButtonIconOnly";
+import Piechart from "./../other/Piechart";
 
-const TaskTb = ({ user, proj }) => {
-  // Receive user as a prop
-  //Icons references
+const TaskTb = ({ user, proj, handleSort, sortConfig }) => {
+  // Icons references
   const icons = {
     high: <MdKeyboardDoubleArrowUp />,
     medium: <MdKeyboardArrowUp />,
     low: <MdKeyboardArrowDown />,
   };
 
-  //Tbale header part
+  // Sorting function
+  const sortTasks = (tasks, sortConfig) => {
+    let sortedTasks = [...tasks];
+    const { key, direction, stage } = sortConfig;
+
+    sortedTasks.sort((a, b) => {
+      if (key === "priority") {
+        const priorityOrder = { low: 1, medium: 2, high: 3 };
+        return (
+          (priorityOrder[a[key]] - priorityOrder[b[key]]) *
+          (direction === "asc" ? 1 : -1)
+        );
+      }
+
+      if (key === "due") {
+        const dateA = new Date(a[key]);
+        const dateB = new Date(b[key]);
+        return (dateA - dateB) * (direction === "asc" ? 1 : -1);
+      }
+
+      // if (key === "stage") {
+      //   const stageOrder = { todo: 1, "in progress": 2, completed: 3 };
+      //   return (
+      //     (stageOrder[a[key]] - stageOrder[b[key]]) *
+      //     (direction === "asc" ? 1 : -1)
+      //   );
+      // }
+
+      if (stage === "todo") {
+        const stageOrder = { todo: 1, "in progress": 3, completed: 5 };
+        return (
+          (stageOrder[a.stage] - stageOrder[b.stage]) * 1
+          //(direction === "asc" ? 1 : -1)
+        );
+      }
+
+      if (stage === "in progress") {
+        const stageOrder = { todo: 2, "in progress": 1, completed: 3 };
+        return (
+          (stageOrder[a.stage] - stageOrder[b.stage]) * 1
+          //(direction === "asc" ? 1 : -1)
+        );
+      }
+
+      if (stage === "completed") {
+        const stageOrder = { todo: 3, "in progress": 2, completed: 1 };
+        return (
+          (stageOrder[a.stage] - stageOrder[b.stage]) * 1
+          //(direction === "asc" ? 1 : -1)
+        );
+      }
+
+      return 0;
+    });
+
+    return sortedTasks;
+  };
+
+  const sortedTasks = sortTasks(proj, sortConfig);
+
+  // Table header
   const TbHeader = () => (
-    <thead className="border-b border-gray-300">
+    <thead className="bg-white sticky top-0">
       <tr className="text-black text-left text-lg">
-        {user.isAdmin ? (
-          <th className="py-2 px-5">Project Title</th>
-        ) : (
-          <th className="py-2 px-5">Task Title</th>
-        )}
-        <th className="py-2 px-5">Priority</th>
-        <th className="py-2 px-5">Created At</th>
+        <th
+          className="py-2 pl-2 flex items-center"
+          onClick={() => handleSort("title")}
+        >
+          {user.isAdmin ? "Project Title" : "Task Title"}
+          <MdKeyboardArrowDown />
+        </th>
+        <th className="py-2 pl-3" onClick={() => handleSort("priority")}>
+          <div className="flex items-center">
+            Priority
+            <MdKeyboardArrowDown />
+          </div>
+        </th>
+        <th
+          className="py-2 flex items-center pl-2"
+          onClick={() => handleSort("due")}
+        >
+          Due On {<MdKeyboardArrowDown />}
+        </th>
+        {/* {!user.isAdmin && (
+          <th
+            className="py-2 hidden md:block"
+            onClick={() => handleSort("due")}
+          >
+            Created On
+          </th>
+        )} */}
       </tr>
     </thead>
   );
 
-  //Format date function
+  // Format date function
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
 
+  // Table row
   const TbRow = ({ task }) => (
-    <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2">
+    <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 pt-4">
       <td className="py-2">
         <div className="flex items-center gap-2 p-2">
           <div
-            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
+            className={clsx("w-4 h-4 rounded-full", {
+              "bg-blue-300": task?.stage === "todo",
+              "bg-yellow-400": task?.stage === "in progress",
+              "bg-green-600": task?.stage === "completed",
+            })}
           />
-          <p className="text-base text-black">{task.title}</p>
+          <p className="text-base text-black">{task?.title}</p>
         </div>
       </td>
 
       <td className="py-2">
         <div className="flex items-center justify-start gap-2">
-          <span className={clsx("text-lg", PRIORITYSTYLES[task.priority])}>
-            {icons["high"]}
+          <span
+            className={clsx("text-lg", {
+              "text-red-600": task?.priority === "high",
+              "text-yellow-600": task?.priority === "medium",
+              "text-green-600": task?.priority === "low",
+            })}
+          >
+            {icons[task?.priority]}
           </span>
-          <span className="capitalize">{task.priority}</span>
+          <span className="capitalize">{task?.priority}</span>
         </div>
       </td>
-      <td className="py-2 pl-7">
-        <div className="flex items-center justify-start">
-          <p>{formatDate(task.createdAt)}</p>
+
+      <td className="py-2">
+        <div className="flex items-center justify-start text-base text-gray-600">
+          {formatDate(task?.due)}
         </div>
       </td>
+
+      {/* {!user.isAdmin && (
+        <td className="py-2 hidden md:block">
+          <div className="flex items-center justify-start text-base text-gray-600 pt-2">
+            {formatDate(task?.createdAt)}
+          </div>
+        </td>
+      )} */}
     </tr>
   );
 
   return (
-    <>
-      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
-        <table className="w-full">
-          <TbHeader />
-          <tbody>
-            {proj?.map((task, index) => (
-              <TbRow key={index} task={task} />
-            ))}
-          </tbody>
-        </table>
+    <motion.div
+      initial={{ opacity: 0 }} // Initial opacity when the page loads
+      animate={{ opacity: 1 }} // Fade in to full opacity
+      transition={{
+        ease: "linear",
+        duration: 0.5, // Duration of the fade-in
+        staggerChildren: 0.1, // Delay between each child's animation
+      }}
+    >
+      <div className="bg-white px-2 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+        <div className="w-full max-h-96 overflow-y-auto">
+          <table className="w-full">
+            <TbHeader />
+            <tbody>
+              {sortedTasks.map((task, index) => (
+                <TbRow key={index} task={task} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 
 const UserTb = ({ user }) => {
+  const { data: users } = useGetTeamListQuery();
+  const { data } = useGetTaskQuery();
 
-const { data } = useGetTeamListQuery();
-console.log("USERTB=>", data)
+  const tasks = data?.tasks;
+
+  const colors = [
+    {
+      percent: 25,
+      strokeColor: "#0058e9",
+    },
+    {
+      percent: 50,
+      strokeColor: "#37b400",
+    },
+    {
+      percent: 75,
+      strokeColor: "#ffc000",
+    },
+    {
+      percent: 100,
+      strokeColor: "#f31700",
+    },
+  ];
 
   // Table header part
   const TableHeader = () => (
-    <thead className="border-b border-gray-300 ">
-    <tr className="border-b border-gray-300 ">
-
-    <th className="text-black text-left text-lg pb-2">Users</th>
-    </tr>
-      <tr className="text-md text-black  text-left">
-        <th className="py-2">{user.isAdmin ? "Full Name" : "Team Members"}</th>
-        <th className="py-2">Role</th>
+    <thead className="">
+      <tr className="">
+        <th className="text-black text-left text-lg pb-2">Users</th>
       </tr>
     </thead>
   );
 
   // Table row part
-  const TbRow = ({ user }) => (
-    <tr className="w-full transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
-      <td className="py-2 p-4 m-2">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
-            <span className="text-center">{getInitials(user.name)}</span>
+  const TbRow = ({ user }) => {
+    const usr = user?.users;
+    return (
+      <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
+        <td className="w-full py-2 p-2">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 min-w-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700">
+              <span className="text-center">{getInitials(usr.name)}</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <p>{usr.name}</p>
+              <p className="text-sm">Total Tasks:{user.total}</p>
+            </div>
+            <span className="text-xs text-black">{usr.title}</span>
           </div>
-
-          <div>
-            <p>{user.name}</p>
-            <span className="text-xs text-black">{user.title}</span>
+        </td>
+        <td className="py-2 p-2 text-sm">
+          <div className="flex items-start flex-col">
+            <p className="text-red-500">High:{user.highlen}</p>
+            <p className="text-yellow-600">Medium:{user.medlen}</p>
+            <p className="text-green-600">Low:{user.lowlen}</p>
           </div>
-        </div>
-      </td>
-      <td className="py-2">{user.role}</td>
-    </tr>
-  );
+        </td>
+      </tr>
+    );
+  };
 
   return (
-    <div className="w-full md:w-1/3 bg-white h-fit px-2 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
-      <table className="w-full mb-5">
-        <TableHeader />
-        <tbody>
-          {data?.map((users, index) => (
-            <TbRow key={index} user={users} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }} // Initial opacity when the page loads
+      animate={{ opacity: 1 }} // Fade in to full opacity
+      transition={{
+        ease: "linear",
+        duration: 0.5, // Duration of the fade-in
+        staggerChildren: 0.1, // Delay between each child's animation
+      }}
+    >
+      <div className="bg-white h-full px-4 p-10 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+        <table className="w-full mb-5">
+          <TableHeader />
+          <div className="w-full max-h-80 overflow-y-auto">
+            {tasks && (
+              <tbody>
+                {users?.map((users, index) => {
+                  const user = users._id;
+                  const filteredTasks = tasks?.filter((task) =>
+                    task.uTeam.some((member) => member._id === user)
+                  );
+                  const total = filteredTasks?.length;
+                  const low = filteredTasks.filter(
+                    (task) => task.priority === "low"
+                  );
+                  const med = filteredTasks.filter(
+                    (task) => task.priority === "medium"
+                  );
+                  const high = filteredTasks.filter(
+                    (task) => task.priority === "high"
+                  );
+
+                  const lowlen = low.length;
+                  const medlen = med.length;
+                  const highlen = high.length;
+
+                  const userObject = {
+                    users,
+                    lowlen,
+                    medlen,
+                    highlen,
+                    total,
+                  };
+                  return <TbRow key={index} user={userObject} />;
+                })}
+              </tbody>
+            )}
+          </div>
+        </table>
+        {/* <div className="w-full h-full p-10">
+      <Circle percent={10} strokeWidth={5} trailWidth={5}/>
+      </div> */}
+      </div>
+    </motion.div>
   );
 };
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.auth); 
-
+  const { user } = useSelector((state) => state.auth);
+  const adminStatus = user.isAdmin;
   const { data: usersdata } = useGetTeamListQuery();
-  console.log(usersdata);
+  const { data: project, refetch: projRefetch } = useGetProjectQuery();
+  const { data: task, refetch: taskRefetch } = useGetUserTaskQuery();
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(10);
+  const [sortConfig, setSortConfig] = useState({
+    key: "due",
+    direction: "asc",
+    stage: "todo",
+  });
 
-  const { data, refetch } = useGetProjectQuery();
-  console.log("TASKTB=>", data)
-  let projects = [];
-  if (data && data.projects) {
-    projects = data.projects.map((project) => ({
-      id: project._id,
-      lTeam: project.lTeam,
-      title: project.title,
-      date: project.date,
-      due: project.due,
-      priority: project.priority,
-      stage: project.stage,
-      assets: project.assets,
-      uTeam: project.uTeam,
-      creator: project.creator,
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt,
-    }));
+  const handleNext = () => {
+    if (end < project?.projects?.length) {
+      setStart(start + 1);
+      setEnd(end + 1);
+      console.log("Start=>", start);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (start > 0) {
+      setStart(start - 1);
+      setEnd(end - 1);
+      console.log("End=>", end);
+    }
+  };
+
+  let object = [];
+
+  if (adminStatus) {
+    if (project && project.projects) {
+      object = project.projects.map((project) => ({
+        id: project._id,
+        lTeam: project.lTeam,
+        title: project.title,
+        date: project.date,
+        due: project.due,
+        priority: project.priority,
+        stage: project.stage,
+        assets: project.assets,
+        uTeam: project.uTeam,
+        creator: project.creator,
+        createdAt: project.createdAt,
+        updatedAt: project.updatedAt,
+      }));
+    }
+  } else {
+    if (task && task.tasks) {
+      object = task.tasks.map((task) => ({
+        id: task._id,
+        title: task.title,
+        date: task.date,
+        due: task.due,
+        priority: task.priority,
+        stage: task.stage,
+        assets: task.assets,
+        uTeam: task.uTeam,
+        by: task.by,
+        createdAt: task.createdAt,
+        updatedAt: task.updatedAt,
+        projectTitle: task.projectTitle,
+        projectDue: task.projectDue,
+        projectPriority: task.projectPriority,
+      }));
+    }
   }
 
-  useEffect(() => {
-    refetch(); // Ensure data is fetched on mount/reload
-  }, [refetch]);
+  const graphData = () => {
+    if (project) {
+      const proj = project?.projects;
+      const reversedProj = proj?.slice().reverse();
+      console.log(reversedProj);
 
-  //Da; shboard Admin Logic
-  const getComp = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "completed");
-    //console.log("Completed",comp.length);
-    return comp.length;
+      const temp = reversedProj.slice(start, end).map((item) => {
+        // Count the number of completed tasks within the current project's tasks array
+        const totalTaskCount = item.tasks.length;
+        const completedTaskCount = item.tasks.filter(
+          (subtask) => subtask.stage === "completed"
+        ).length;
+
+        // Return a new object representing the project with the completed task count
+        return {
+          id: item._id,
+          title: item.title,
+          completed: completedTaskCount,
+          total: totalTaskCount,
+          max: 50,
+        };
+      });
+      return temp;
+    }
   };
 
-  const inProg = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "in progress");
-    //console.log("In Progress",comp.length);
+  const barChartData = graphData();
+
+  // useEffect(() => {
+  //   projRefetch();
+  //   taskRefetch();
+  // }, [projRefetch, taskRefetch]);
+
+  const getComp = (object) => {
+    const comp = object.filter((obj) => obj.stage === "completed");
     return comp.length;
   };
-
-  const toDo = (projects) => {
-    const comp = projects.filter((pro) => pro.stage === "todo");
-    //console.log("To Do",comp.length);
+  const inProg = (object) => {
+    const comp = object.filter((obj) => obj.stage === "in progress");
     return comp.length;
   };
-
-  //Dashboard User Logic
-  const usrid = user._id;
-
-  const usrTsk = tasks.filter((task) => {
-    const taskMatch = task.team.some((team) => team._id === usrid);
-    return taskMatch;
-  });
+  const toDo = (object) => {
+    const comp = object.filter((obj) => obj.stage === "todo");
+    return comp.length;
+  };
 
   let mems;
 
   if (user.isAdmin) {
     mems = allusers;
   } else {
-    mems = usrTsk.flatMap((task) => task.team);
+    mems = object.flatMap((task) => task.team);
   }
 
-  const uniqueArray = Object.values(
-    mems.reduce((acc, obj) => {
-      acc[obj._id] = obj;
-      return acc;
-    }, {})
-  );
-  
-  mems = uniqueArray;
-
-  const getTComp = usrTsk.filter((tsk) => tsk.stage === "completed");
-  const getTTodo = usrTsk.filter((tsk) => tsk.stage === "todo");
-  const getTinProg = usrTsk.filter((tsk) => tsk.stage === "in progress");
+  // Handle sort
+  const handleSort = (key, st) => {
+    setSortConfig((prevSortConfig) => {
+      const direction =
+        prevSortConfig.key === key && prevSortConfig.direction === "asc"
+          ? "desc"
+          : "asc";
+      const stage = st;
+      return { key, direction, stage };
+    });
+  };
 
   const stats = [
     {
       _id: "1",
       label: user.isAdmin ? "TOTAL PROJECTS" : "TOTAL TASK",
-      total: user.isAdmin ? projects.length : usrTsk.length,
-      icon: <FaNewspaper />,
+      total: object?.length,
+      icon: <FaTasks />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 67,
+      sort: "title",
     },
     {
       _id: "2",
-      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLTED TASK",
-      total: user.isAdmin ? getComp(projects) : getTComp.length,
-      icon: <MdAdminPanelSettings />,
+      label: "TODOS",
+      total: toDo(object),
+      icon: <LiaTasksSolid />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 53,
+      sort: "todo",
     },
     {
       _id: "3",
       label: "IN PROGRESS ",
-      total: user.isAdmin ? inProg(projects) : getTinProg.length,
-      icon: <LuClipboardEdit />,
+      total: inProg(object),
+      icon: <TbProgress />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 41,
+      sort: "in progress",
     },
     {
       _id: "4",
-      label: "TODOS",
-      total: user.isAdmin ? toDo(projects) : getTTodo.length,
-      icon: <FaArrowsToDot />,
+      label: user.isAdmin ? "COMPLETED PROJECTS" : "COMPLETED TASK",
+      total: getComp(object),
+      icon: <MdTaskAlt />,
       bg: "bg-gradient-to-br from-blue-500 to-green-300",
-      lstm: 47,
+      sort: "completed",
     },
   ];
 
-  const Card = ({ label, count, bg, icon, lst }) => {
+  const Card = ({ label, count, bg, icon, handleSort, sort }) => {
     return (
       <div
         className={clsx(
           "w-full h-32 bg-gradient-to-br from-blue-100 to-green-100 p-5 transition-shadow duration-300 hover:shadow-lg rounded-lg flex items-center justify-between"
         )}
+        onClick={() => handleSort("stage", sort)}
       >
         <div className="h-full flex flex-1 flex-col justify-between">
           <p className="text-base text-gray-600">{label}</p>
@@ -289,24 +532,97 @@ const Dashboard = () => {
 
   return (
     <div className="h-full py-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {stats.map(({ icon, bg, label, total, lstm }, index) => (
-          <Card
-            key={index}
-            icon={icon}
-            bg={bg}
-            label={label}
-            count={total}
-            lst={lstm}
-          />
-        ))}
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }} // Initial opacity when the page loads
+        animate={{ opacity: 1 }} // Fade in to full opacity
+        transition={{
+          ease: "linear",
+          duration: 0.5, // Duration of the fade-in
+          staggerChildren: 0.1, // Delay between each child's animation
+        }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          {stats.map(({ icon, bg, label, total, sort }, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }} // Cards start off invisible and slightly lower
+              animate={{ opacity: 1 }} // Fade in and move to original position
+              transition={{
+                duration: 1, // Duration of the individual card animation
+                delay: index * 0.2, // Stagger animation based on index
+              }}
+            >
+              <Card
+                icon={icon}
+                bg={bg}
+                label={label}
+                count={total}
+                sort={sort}
+                handleSort={handleSort}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
 
-      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTb user={user} proj={projects} />{" "}
-        {/* Pass user as a prop to TaskTb */}
-        <UserTb user={user} />
+      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-4 pt-4">
+        <div className={`flex-1 h-full w-full`}>
+          {/* ${!user.isAdmin ? "w-full" : "w-2/3"} md:w-full lg:w-1/2 xl:w-1/3 */}
+          <TaskTb
+            user={user}
+            proj={object}
+            handleSort={handleSort}
+            sortConfig={sortConfig}
+          />
+        </div>
+        {user.isAdmin && (
+          <div className="w-full md:w-1/3">
+            <UserTb user={user} />
+          </div>
+        )}
       </div>
+      {project && user.isAdmin && (
+        <motion.div
+          initial={{ opacity: 0 }} // Initial opacity when the page loads
+          animate={{ opacity: 1 }} // Fade in to full opacity
+          transition={{
+            ease: "linear",
+            duration: 0.5, // Duration of the fade-in
+            staggerChildren: 0.1, // Delay between each child's animation
+          }}
+        >
+          <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-2 py-4">
+            <div className="flex flex-col bg-white w-max h-full py-2 items-start transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+              <div>
+                <span className="text-black text-lg font-bold pl-4">
+                  Projects Overall Progress
+                </span>
+              </div>
+              <Piechart total={object?.length} comp={getComp(object)} />
+            </div>
+            <div className="flex flex-col items-start bg-white h-full w-max px-2 py-2 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+              <div className="w-full text-black text-lg font-bold pl-2 pt-2 flex justify-between">
+                <div>Tasks Progress</div>
+                <div className="flex space-x-2 pr-10">
+                  <ButtonIconOnly
+                    icon={<MdKeyboardArrowLeft className="cursor-pointer" />}
+                    onClick={handlePrevious}
+                  />
+                  {`${start} - ${end}`}
+                  <ButtonIconOnly
+                    icon={<MdKeyboardArrowRight className="cursor-pointer" />}
+                    onClick={handleNext}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <BasicBars data={barChartData} start={start} end={end} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };

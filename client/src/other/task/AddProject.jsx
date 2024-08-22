@@ -3,10 +3,11 @@
 import { Dialog } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiImages } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { useAddProjectMutation, useGetProjectQuery } from "../../redux/slice/api/projApi.js";
+import {
+  useAddProjectMutation,
+  useGetProjectQuery,
+} from "../../redux/slice/api/projApi.js";
 import Button from "../Button";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
@@ -17,51 +18,34 @@ import UserList from "./UserList";
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
 
-const uploadedFileURLs = [];
-
 const AddProject = ({ open, setOpen, taskData }) => {
-  //console.log(taskData);
+  let userTeam = [];
+  let leadTeam = [];
+  console.log("TaskData=>", taskData);
+
+  if (taskData && taskData.uTeam) {
+    userTeam = taskData?.uTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  if (taskData && taskData.lTeam) {
+    leadTeam = taskData?.lTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  console.log("LeadTeam=>",leadTeam);
+  console.log("UserTeam=>",userTeam);
+
+  const uid = userTeam.map(item => item.id);
+  const lid = leadTeam.map(item => item.id);
 
   const { refetch } = useGetProjectQuery();
 
   //Getch details of person reatong the proj from local storage
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const userid = user._id;
-
-  const location = useLocation();
-
-  const getTitle = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "ADD TASK";
-    }
-    return "ADD PROJECT";
-  };
-
-  const getPlaceholder = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Name";
-    }
-    return "Project Name";
-  };
-
-  const getDate = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Created On";
-    }
-    return "Project Created On";
-  };
-
-  const getStage = () => {
-    const isTasksPage = location.pathname.includes("/task");
-    if (isTasksPage) {
-      return "Task Stage";
-    }
-    return "Project Stage";
-  };
-
   const today = new Date().toISOString().split("T")[0];
 
   const {
@@ -70,9 +54,13 @@ const AddProject = ({ open, setOpen, taskData }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: taskData ? new Date(taskData?.date).toISOString().split('T')[0] : today,
+      date: taskData
+        ? new Date(taskData?.date).toISOString().split("T")[0]
+        : today,
       title: taskData?.title,
-      due: taskData ? new Date(taskData?.due).toISOString().split('T')[0] : today,
+      due: taskData
+        ? new Date(taskData?.due).toISOString().split("T")[0]
+        : today,
     },
   });
 
@@ -80,11 +68,10 @@ const AddProject = ({ open, setOpen, taskData }) => {
 
   const [uTeam, setUTeam] = useState([]);
 
-  const [stage, setStage] = useState(null);
-  const [priority, setPriority] = useState(null);
+  const [stage, setStage] = useState('Select Stage');
+  const [priority, setPriority] = useState('Select Priority');
 
-  const [assets, setAssets] = useState([]);
-  const [uploading, setUploading] = useState(false);
+
 
   const [addproj] = useAddProjectMutation();
 
@@ -93,11 +80,10 @@ const AddProject = ({ open, setOpen, taskData }) => {
   const submitHandler = async (data) => {
     try {
       const projData = { ...data, lTeam, uTeam, stage, priority, projId };
-      console.log(projData);
       const res = await addproj(projData).unwrap();
-      console.log(res);
       refetch();
       toast.success(res?.message);
+      setOpen(false);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -112,17 +98,13 @@ const AddProject = ({ open, setOpen, taskData }) => {
         taskData?.priority &&
         taskData?.stage
       ) {
-        setLTeam(taskData?.lTeam);
-        setUTeam(taskData?.uTeam);
+        setLTeam(lid);
+        setUTeam(uid);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
       }
     }
   }, [taskData]);
-
-  const handleSelect = (e) => {
-    setAssets(e.target.files);
-  };
 
   return (
     <>
@@ -195,40 +177,15 @@ const AddProject = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="inline-block items-center justify-start mt-4">
-              <label
-                className="inline-flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
-                htmlFor="imgUpload"
-              >
-                <input
-                  type="file"
-                  className="hidden"
-                  id="imgUpload"
-                  onChange={(e) => handleSelect(e)}
-                  accept=".jpg, .png, .jpeg"
-                  multiple={true}
-                />
-                <BiImages />
-                <span>Add Assets</span>
-              </label>
-            </div>
-
-            <div className="bg-gray-50 pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
-              {uploading ? (
-                <span className="text-sm py-2 text-red-500">
-                  Uploading assets
-                </span>
-              ) : (
-                <Button
-                  label="Submit"
-                  type="submit"
-                  className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
-                />
-              )}
-
+            <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
+              <Button
+                label="Submit"
+                type="submit"
+                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto rounded-md"
+              />
               <Button
                 type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto rounded-md"
                 onClick={() => setOpen(false)}
                 label="Cancel"
               />

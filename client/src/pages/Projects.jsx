@@ -5,22 +5,13 @@ import BoardView from "../other/BoardView";
 import Button from "../other/Button";
 import AddProject from "../other/task/AddProject";
 import Title from "../other/Title";
-import { projects } from './../assets/data';
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
-
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
+import { tasks } from "../assets/data";
 
 const Projects = () => {
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const { data } = useGetProjectQuery();
-  console.log("Data=>", data );
+  const { data, refetch } = useGetProjectQuery();
 
   let projects = [];
   if (data && data.projects) {
@@ -37,6 +28,7 @@ const Projects = () => {
       creator: project.creator,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
+      tasks: project.tasks,
     }));
   }
 
@@ -52,31 +44,15 @@ const Projects = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (projects) {
-  //     setLoading(false);
-  //   }
-  // }, [projects]);
-
   const filteredProjects = projects?.filter((project) => {
-    const priorityMatch =
-      filters.priority === "all" || project.priority === filters.priority;
-    const stageMatch =
-      filters.stage === "all" || project.stage === filters.stage;
-    return priorityMatch && stageMatch;
-  });
+      const priorityMatch = filters.priority === "all" || project.priority === filters.priority;
+      const stageMatch = filters.stage === "all" || project.stage === filters.stage;
+      return priorityMatch && stageMatch;
+    }).reverse(); // Invert the array to show recently added elements on top
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="py-10">
-  //       <Loading />
-  //     </div>
-  //   );
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   return (
     <div className="w-full">
@@ -137,12 +113,8 @@ const Projects = () => {
         </div>
       </div>
 
-      <BoardView tasks={filteredProjects} />
-
-      {open &&
-      <AddProject open={open} setOpen={setOpen} />
-      }
-      
+      {filteredProjects && <BoardView tasks={filteredProjects} />}
+      {open && <AddProject open={open} setOpen={setOpen} />}
     </div>
   );
 };

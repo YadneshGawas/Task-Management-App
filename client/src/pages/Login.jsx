@@ -23,7 +23,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const [loginUser, { isLoading, isError, error }] = useLoginMutation();
+  const [loginUser] = useLoginMutation();
 
   const submitHandler = async (data) => {
     try {

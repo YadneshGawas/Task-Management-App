@@ -1,18 +1,25 @@
 /* eslint-disable no-unused-vars */
 import express from "express";
-import { createSubTask, createTask, dashboardStatistics, deleteSubtask, delTasks, getTask, getTasks, postTaskActivity, updateDesc, updateSubDesc } from "../controller/taskCont.js";
+import { addMedia, createSubTask, createTask, deleteMedia, deleteSubMedia, deleteSubtask, delTasks, getAdminTask, getTaskDetails, getUserTasks, postTaskActivity, putStatus, subDetails, updateDesc, updateSubDesc } from "../controller/taskCont.js";
 import { isAdminRoute, protectRoute } from "../middleware/authWare.js";
 
 const router = express.Router();
 
-router.post("/createtask" , createTask);
-router.post("/gettask" , getTask);
+router.post("/createtask" ,protectRoute, createTask);
+router.put("/putstatus", putStatus);
+router.post("/getadmintask",getAdminTask);
+router.post("/getusertask",protectRoute,getUserTasks);
+router.get("/getdetails/:id",getTaskDetails);
 router.put("/delete/:id",delTasks);
-router.put("/createsubtask",createSubTask);
+router.put("/createsubtask",protectRoute,createSubTask);
 router.put("/deletesubtask",deleteSubtask);
 router.put("/updatedescription",updateDesc);
-router.post("/activity", postTaskActivity);
+router.post("/activity",protectRoute, postTaskActivity);
 router.put("/updatesubdescription",updateSubDesc);
+router.put("/addmedia",protectRoute,addMedia);
+router.put("/deletemedia",deleteMedia);
+router.put("/deletesubmedia",deleteSubMedia);
+router.get("/getsubdetails/:taskId/:subId",subDetails);
 
 //router.put("/updatesubtask",updateSubTask);
 

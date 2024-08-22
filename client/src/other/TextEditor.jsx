@@ -4,9 +4,9 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 
-const TextEditor = ({ content, setContent, modules}) => {
+const TextEditor = ({ content, setContent, modules, status}) => {
     return (
-        <div className="max-w-lg">
+        <div className="max-w-xl">
             <ReactQuill
                 theme='snow'
                 formats={['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent']}
@@ -14,6 +14,7 @@ const TextEditor = ({ content, setContent, modules}) => {
                 modules={modules}
                 onChange={setContent}
                 value={content}
+                readOnly={status}
             />
             {/* <div>
                 <h2 className="text-xl font-bold flex justify-center mt-8">Preview</h2>

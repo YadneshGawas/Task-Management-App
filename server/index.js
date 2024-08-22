@@ -12,13 +12,13 @@ dotenv.config();
 
 dbConnection();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:4555"],
+    origin: [process.env.BASE_APP_URL],
     method: ["GET","PUT","POST","DELETE"],
     credentials: true,
   })

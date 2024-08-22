@@ -5,9 +5,9 @@ import Project from "./../schemas/projects.js";
 
 export const testingApis = async (req, res) => {
   // Log the request and response details, including cookies from the request
-  const { title } = req.body;
+  const { userId } = req.user;
   //const msg = `RES STATUS:${res.statusCode}, REQ COOKIES:${req.cookie}`;
-  return res.status(200).json({ message: `Working ${title}` });
+  return res.status(200).json({ message: `Working ${userId}` });
 };
 
 export const createProject = async (req, res) => {
@@ -38,7 +38,8 @@ export const createProject = async (req, res) => {
           stage: stage.toLowerCase(),
           assets,
           date,
-          creator: userId,
+          //creator: userId,
+          by: userId,
         });
 
         // await Notice.create({
@@ -75,7 +76,7 @@ export const createProject = async (req, res) => {
           .json({ status: true, message: "project updated successfully." });
       } catch (error) {
         console.log(error);
-         return res.status(400).json({ status: false, message: error.message });
+        return res.status(400).json({ status: false, message: error.message });
       }
     }
   } catch (error) {
@@ -86,124 +87,19 @@ export const createProject = async (req, res) => {
 
 export const getProjects = async (req, res) => {
   try {
-    //const { userId } = req.user; // Assuming req.user contains the authenticated user's information
-    const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+    const { userId } = req.user; // Assuming req.user contains the authenticated user's information
+    //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
     //Change req to post to get id from frontend in body
     //Get doesn't have a body
 
-
     // Find projects where the userId is in the leads array
-    const projects = await Project.find({ lTeam: { $in: [userId] } });
-    // .populate({
-    //   path: "team",
-    //   select: "name title role email",
-    // })
+    const projects = await Project.find({ lTeam: { $in: [userId] } })
+      .populate("uTeam", "name email role") // Populate uTeam
+      .populate("lTeam", "name email role")
+      .populate("tasks", "title stage"); // Populate lTeam, adjust fields as necessary
 
     res.status(200).json({
       projects, // Return the array of projects
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-export const dashboardStatistics = async (req, res) => {
-  try {
-    const { userId, isAdmin } = req.user;
-
-    const allProjects = isAdmin
-      ? await Project.find({
-          isTrashed: false,
-        })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 })
-      : await Project.find({
-          isTrashed: false,
-          team: { $all: [userId] },
-        })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 });
-
-    const users = await User.find({ isActive: true })
-      .select("name title role isAdmin createdAt")
-      .limit(10)
-      .sort({ _id: -1 });
-
-    //   group Project by stage and calculate counts
-    const groupProjects = allProjects.reduce((result, Project) => {
-      const stage = Project.stage;
-
-      if (!result[stage]) {
-        result[stage] = 1;
-      } else {
-        result[stage] += 1;
-      }
-
-      return result;
-    }, {});
-
-    // Group Project by priority
-    const groupData = Object.entries(
-      allProjects.reduce((result, Project) => {
-        const { priority } = Project;
-
-        result[priority] = (result[priority] || 0) + 1;
-        return result;
-      }, {})
-    ).map(([name, total]) => ({ name, total }));
-
-    // calculate total Project
-    const totalProjects = allProjects?.length;
-    const last10Project = allProjects?.slice(0, 10);
-
-    const summary = {
-      totalProjects,
-      last10Project,
-      users: isAdmin ? users : [],
-      projects: groupProjects,
-      graphData: groupData,
-    };
-
-    res.status(200).json({
-      status: true,
-      message: "Successfully",
-      ...summary,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-export const getProject = async (req, res) => {
-  try {
-    const { stage, isTrashed } = req.query;
-
-    let query = { isTrashed: isTrashed ? true : false };
-
-    if (stage) {
-      query.stage = stage;
-    }
-
-    let queryResult = Project.find(query)
-      .populate({
-        path: "team",
-        select: "name title email",
-      })
-      .sort({ _id: -1 });
-
-    const Projects = await queryResult;
-
-    res.status(200).json({
-      status: true,
-      Projects,
     });
   } catch (error) {
     console.log(error);
@@ -220,6 +116,26 @@ export const delProjects = async (req, res) => {
     res.status(200).json({
       status: true,
       message: `Project ${id} deleted successfully`,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+export const getAProject = async (req, res) => {
+  try {
+    const { projectId } = req.params; // Assuming req.user contains the authenticated user's information
+    //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
+    //Change req to post to get id from frontend in body
+    //Get doesn't have a body
+
+    // Find projects where the userId is in the leads array
+    const projects = await Project.findById(projectId)
+      .populate("uTeam", "name email role") // Populate uTeam
+
+    res.status(200).json({
+      projects, // Return the array of projects
     });
   } catch (error) {
     console.log(error);

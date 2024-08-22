@@ -1,17 +1,20 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT;
 
 export const dbConnection = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/lastDB');
+    await mongoose.connect(process.env.MONGO_URL);
     console.log("Database connected successfully");
   } catch (error) {
     console.error("Database connection failed:", error);
     process.exit(1);
   }
 };
-
-const JWT_SECRET = "hvdvay6ert72839289";
 
 export const createJWT = (res, userId) => {
   const token = jwt.sign({ userId }, JWT_SECRET, {

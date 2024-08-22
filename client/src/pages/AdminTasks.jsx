@@ -2,29 +2,23 @@
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useParams } from "react-router-dom";
-//import { tasks } from "../assets/data";
 import BoardView from "../other/BoardView";
-import Loading from "../other/Loader";
-import Title from "../other/Title";
 import Button from "../other/Button";
-import AddTask from "../other/task/AddTask";
-import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
+import AddTask from "../other/task/AddTask";
+import Title from "../other/Title";
+import { useGetTaskQuery } from "../redux/slice/api/taskApi";
 
 const AdminTasks = () => {
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+
 
   const { projectId } = useParams();
   const { data, refetch } = useGetTaskQuery();
   
+  let title  ="";
   let tasks = [];
   if (data && data.tasks) {
     tasks = data.tasks.map((task) => ({
@@ -43,12 +37,11 @@ const AdminTasks = () => {
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
       subTasks: task.subTasks,
+      projectTitle: task.projectTitle,
+      projectDue: task.projectDue,
+      projectPriority: task.projectPriority,
     }));
   }
-
-
-  // const projname = (projects.find((obj) => obj.id === projectId).title);
-  // console.log(projname)
 
   const [filters, setFilters] = useState({
     priority: "all",
@@ -71,18 +64,25 @@ const AdminTasks = () => {
     return priorityMatch && stageMatch && projectMatch ;
   });
 
+  if(filteredTasks){
+    console.log(filteredTasks);
+    if(filteredTasks?.length > 0){
+      const projName = filteredTasks[0].projectTitle;
+      title = projName;
+    }
+  else{
+    title = "No tasks found"
+  }
+}
+
   useEffect(() => {
     refetch();
   }, [open]);
 
-  return loading ? (
-    <div className="py-10">
-      <Loading />
-    </div>
-  ) : (
+  return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <Title title={`Tasks for `} />
+        <Title title={`${title} `} />
 
         <Button
           onClick={() => setOpen(true)}
@@ -138,7 +138,9 @@ const AdminTasks = () => {
         </div>
       </div>
 
+      {filteredTasks &&
       <BoardView tasks={filteredTasks} />
+      }
 
       {open && <AddTask open={open} setOpen={setOpen} />}
     </div>

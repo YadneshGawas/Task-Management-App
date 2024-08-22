@@ -1,53 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { Dialog } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getInitials } from "../assets";
 import Button from "./Button";
 import Wrapper from "./Wrapper";
-import Textbox from "./Textbox";
-import { toast } from "sonner";
-import { getInitials } from "../assets";
-import { useDispatch, useSelector } from "react-redux";
 
 
 const UserInfo = ({ open, setOpen, userData }) => {
   const { user } = useSelector((state) => state.auth);
-  console.log("UserData=>", userData);
-  //const [getUser] = useGetUserQuery();
-
-  // const refreshData = async () => {
-  //   try {
-  //     const res = await fetch(`api/user/getuser/${userId}`, {
-  //       method: "POST",
-  //       body: JSON.stringify({ userId }),
-  //     });
-  //     if (!res.ok) {
-  //       throw new Error("Response not ok", ...res.data);
-  //     }
-  //     // Parse the JSON response
-  //     const userData = await res.json();
-  //     console.log("User data:", userData);
-  //     dispatch(setCredentials(userData));
-  //     // Create an object from the response data
-  //     const userObject = {
-  //       id: userData._id,
-  //       name: userData.name,
-  //       email: userData.email,
-  //       role: userData.role,
-  //       // Add other properties as needed
-  //     };
-  //     setUserObject(userObject);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (open) {
-  //     refreshData();
-  //   }
-  // }, [open]);
 
   return (
     <Wrapper open={open} setOpen={setOpen}>
@@ -60,13 +22,13 @@ const UserInfo = ({ open, setOpen, userData }) => {
       {user ? (
       <div className="mt-2 flex flex-col gap-6">
         <div className="flex items-center gap-4 bg-white p-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl ">
+          <div className="w-16 h-16 min-w-16 bg-blue-600 rounded-full text-white flex items-center justify-center text-2xl ">
             <span className="text-center font-bold">
               {getInitials(user.name)}
             </span>
           </div>
           <div className="flex flex-col gap-y-1">
-            <p className="text-black text-xl font-bold">{user.name}</p>
+            <p className="text-black text-xl font-bold flex-wrap">{user.name}</p>
             <span className="text-base text-gray-500">{user.role}</span>
             <span className="text-blue-500">
               {user.email ?? "email@example.com"}

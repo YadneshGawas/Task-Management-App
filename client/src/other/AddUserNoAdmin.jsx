@@ -12,7 +12,7 @@ import {
 } from "../redux/slice/api/userApi";
 import { setCredentials } from "../redux/slice/authS";
 import Button from "./Button";
-import Loading from "./Loader";
+
 import Textbox from "./Textbox";
 import Wrapper from "./Wrapper";
 
@@ -21,7 +21,6 @@ const AddUser = ({ open, setOpen, userData }) => {
 
   const { user } = useSelector((state) => state.auth);
 
-  const isLoading = false;
   const isUpdating = false;
 
   const dispatch = useDispatch();
@@ -67,6 +66,7 @@ const AddUser = ({ open, setOpen, userData }) => {
           //localStorage.setItem("userInfo", JSON.stringify(userData));
           dispatch(setCredentials(data));
         }
+        setOpen(false);
         refetch();
         console.log(userData);
       } else {
@@ -74,6 +74,7 @@ const AddUser = ({ open, setOpen, userData }) => {
         const res = await adduser(data).unwrap();
         console.log("res", res);
         toast.success("Successfully added");
+        setOpen(false);
         refetch();
       }
     } catch (error) {
@@ -130,11 +131,6 @@ const AddUser = ({ open, setOpen, userData }) => {
           
           </div>
 
-          {isLoading || isUpdating ? (
-            <div className="py-5">
-              <Loading />
-            </div>
-          ) : (
             <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
               <Button
                 type="submit"
@@ -149,7 +145,7 @@ const AddUser = ({ open, setOpen, userData }) => {
                 label="Close"
               />
             </div>
-          )}
+
         </form>
       </Wrapper>
     </>

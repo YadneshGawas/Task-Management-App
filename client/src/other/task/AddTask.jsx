@@ -3,25 +3,18 @@
 import { Dialog } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiImages } from "react-icons/bi";
 import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { useGetAProjectQuery } from "../../redux/slice/api/projApi.js";
+import {
+  useAddTaskMutation,
+  useGetTaskQuery,
+} from "../../redux/slice/api/taskApi.js";
 import Button from "../Button";
 import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import Wrapper from "../Wrapper";
 import UserList from "./UserList";
-import {
-  useAddTaskMutation,
-  useGetTaskQuery,
-} from "../../redux/slice/api/taskApi.js";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable
-} from "firebase/storage";
-import { app } from "../../assets/firebase";
 
 const LISTS = ["todo", "in progress", "completed"];
 const PRIORITY = ["high", "medium", "low"];
@@ -29,12 +22,28 @@ const PRIORITY = ["high", "medium", "low"];
 const uploadedFileURLs = [];
 
 const AddTask = ({ open, setOpen, taskData }) => {
-  //console.log(taskData);
+  let userTeam = [];
 
-  const { projectId } = useParams();
+  if (taskData && taskData.uTeam) {
+    userTeam = taskData?.uTeam?.map((user) => ({
+      id: user._id,
+    }));
+  }
+
+  const uid = userTeam.map(item => item.id);
+
+  const { projectId: paramsProjectId } = useParams();
+  const projId = taskData?.projectId || paramsProjectId;
+
+  const { data: projectData, refetch: projDataRefetch } = useGetAProjectQuery(projId);
+  const team = projectData?.projects?.uTeam;
+
+  const [projectId, setProjectId] = useState(projId);
+
+  const taskId = taskData?._id;
+
   const { refetch } = useGetTaskQuery();
 
-  //Getch details of person reatong the proj from local storage
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const userid = user._id;
 
@@ -72,6 +81,8 @@ const AddTask = ({ open, setOpen, taskData }) => {
     return "Project Stage";
   };
 
+  
+
   const today = new Date().toISOString().split("T")[0];
 
   const {
@@ -92,30 +103,19 @@ const AddTask = ({ open, setOpen, taskData }) => {
   });
 
   const [uTeam, setUTeam] = useState([]);
-  const [stage, setStage] = useState(null);
-  const [priority, setPriority] = useState(null);
+  const [stage, setStage] = useState('Select Stage');
+  const [priority, setPriority] = useState('Select Priority');
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
 
 
   const [addtask] = useAddTaskMutation();
-  const taskId = taskData?.id;
+
   const URLS = taskData?.assets ? [...taskData.assets] : []; 
 
   const submitHandler = async (data) => {
-    for ( const file of assets){
-      setUploading(true);
-      try{
-        await uploadFile(file);
-      }catch(error){
-        console.error("Error uploading file", error.message);
-        return;
-      }finally{
-        setUploading(false)
-      }
-    }
     try {
-      const tskData = { ...data, uTeam, stage, priority, taskId, projectId, assets: [...URLS, ...uploadedFileURLs] };
+      const tskData = { ...data, uTeam, priority, taskId, projectId};
       console.log("Before sending=>",tskData);
       const res = await addtask(tskData).unwrap();
       console.log(res);
@@ -129,49 +129,21 @@ const AddTask = ({ open, setOpen, taskData }) => {
   };
 
   useEffect(() => {
+    projDataRefetch()
     if (taskData) {
+      setProjectId(taskData.projectId);
       if (taskData?.uTeam && taskData?.priority && taskData?.stage) {
-        setUTeam(taskData?.uTeam);
+        setUTeam(uid);
         setPriority(taskData?.priority);
         setStage(taskData?.stage);
       }
     }
-  }, [taskData]);
+  }, [taskData, projectData]);
 
   const handleSelect = (e) => {
     setAssets(e.target.files);
   };
 
-  const uploadFile = async(file) => {
-    const storage = getStorage(app);
-    
-    const name = new Date().getTime() + file.name;
-    const storageRef = ref(storage, name);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          console.log("Uploading");
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            uploadedFileURLs.push(downloadURL);
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-        }
-      )
-    });
-  };
 
   return (
     <>
@@ -195,15 +167,17 @@ const AddTask = ({ open, setOpen, taskData }) => {
               error={errors.title ? errors.title.message : ""}
             />
 
-            <UserList setUTeam={setUTeam} uTeam={uTeam} />
+            {user.isAdmin &&
+            <UserList setUTeam={setUTeam} uTeam={uTeam} users={team} />
+            }
 
             <div className="flex gap-2">
-              <SelectList
+              {/* <SelectList
                 label={getStage()}
                 lists={LISTS}
                 selected={stage}
                 setSelected={setStage}
-              />
+              /> */}
 
               <Textbox
                 placeholder="Date"
@@ -232,6 +206,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
                   required: "Date is required!",
                 })}
                 error={errors.date ? errors.date.message : ""}
+                min={new Date().toISOString().split("T")[0]}
               />
 
               <SelectList
@@ -242,7 +217,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
               />
             </div>
 
-            <div className="inline-block items-center justify-start mt-4">
+            {/* <div className="inline-block items-center justify-start mt-4">
               <label
                 className="inline-flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
                 htmlFor="imgUpload"
@@ -258,7 +233,7 @@ const AddTask = ({ open, setOpen, taskData }) => {
                 <BiImages />
                 <span>Add Assets</span>
               </label>
-            </div>
+            </div> */}
 
             <div className="bg-white pb-5 pt-2 inline-block sm:flex sm:flex-row-reverse gap-4">
               {uploading ? (

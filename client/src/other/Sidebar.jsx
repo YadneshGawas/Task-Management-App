@@ -23,13 +23,6 @@ const Sidebar = () => {
   const location = useLocation();
 
   const path = location.pathname.split("/")[1];
-  // console.log("Location Split=>",location.pathname.split("/")[1]);
-
-  // const PostLink = ({x}) =>
-  // {
-  //   const temp = x.link.split("/")[0];
-  //   console.log("EL Nav Split",temp);
-  // };
 
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
@@ -41,7 +34,7 @@ const Sidebar = () => {
         to={el.link}
         onClick={closeSidebar}
         className={clsx(
-          "w-full lg:w-4/5 md:w-9/12 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
+          "w-full lg:w-4/5 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
           path === el.link.split("/")[0] ? "bg-blue-400 text-white" : ""
         )}
       >
@@ -51,7 +44,6 @@ const Sidebar = () => {
     );
   };
 
-  // Dynamically set the links based on user role
   const linkData = [
     {
       label: "Dashboard",
@@ -94,11 +86,6 @@ const Sidebar = () => {
         ))}
       </div>
 
-      {/* <div>
-        {linkData.map((link) => (
-          <PostLink x={link} key={link.label} />
-        ))}
-      </div> */}
     </div>
   );
 };

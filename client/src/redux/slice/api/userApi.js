@@ -46,7 +46,19 @@ export const userApi = apiSlice.injectEndpoints({
                 credentials: "include",
             }),
         }),
+        getUserInfo: builder.query({
+            query: (id) =>({
+                url: `${USER_URL}/getuserinfo/${id}`,
+                method: "GET",
+            }),
+        }),
+        logout: builder.mutation({
+            query: () =>({
+                url: `${USER_URL}/logout`,
+                method: "PUT",
+            }),
+        }),
     }),
 });
 
-export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUsersQuery ,useGetTeamListQuery} =  userApi;
+export const { useUpdateUserMutation , useAddUserMutation, useChpassUserMutation, useDeleteUserMutation, useUserActionMutation, useGetUsersQuery ,useGetTeamListQuery, useGetUserInfoQuery, useLogoutMutation} =  userApi;

@@ -1,12 +1,10 @@
 /* eslint-disable no-unused-vars */
-import Notif from "../schemas/notifications.js";
-import User from "../schemas/user.js";
+import Project from "../schemas/projects.js";
 import Task from "./../schemas/tasks.js";
 
 export const createTask = async (req, res) => {
   try {
-    const userId = "66af9db7479f7ad5afe7161b";
-    //const { userId } = req.user;
+    const { userId } = req.user;
 
     const {
       title,
@@ -18,31 +16,8 @@ export const createTask = async (req, res) => {
       desc,
       projectId,
       taskId,
-      assets
+      assets,
     } = req.body;
-
-    // let text = "New task has been assigned to you";
-    // if (team?.length > 1) {
-    //   text = text + ` and ${team?.length - 1} others.`;
-    // }
-
-    // text =
-    //   text +
-    //   ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
-    //     date
-    //   ).toDateString()}. Thank you!!!`;
-
-    // const activity = {
-    //   type: "assigned",
-    //   activity: text,
-    //   by: userId,
-    // };
-
-    // await Notif.create({
-    //   team,
-    //   text,
-    //   task: task._id,
-    // });
 
     const task = await Task.findById(taskId);
 
@@ -58,16 +33,26 @@ export const createTask = async (req, res) => {
           desc,
           taskId,
           projectId,
-          assets
+          assets,
+          by: userId,
         });
+
+        const project = await Project.findById(projectId);
+        if (project) {
+          project.tasks.push(task._id);
+          await project.save();
+        }
         res
           .status(200)
           .json({ status: true, task, message: "Task created successfully." });
       } catch (error) {
         console.log(error);
-        return res.status(400).json({ status: false, message: error.message });
+        return res
+          .status(400)
+          .json({ status: false, message: error.message, error });
       }
     } else {
+      let temp;
       try {
         (task.id = taskId),
           (task.date = date),
@@ -77,10 +62,10 @@ export const createTask = async (req, res) => {
           (task.priority = priority),
           (task.uTeam = uTeam),
           (task.desc = desc ? desc : " "),
-          (task.projectId = projectId),
-          (task.assets = assets),
-          
-          await task.save();
+          (task.projectId = projectId ? projectId : task.projectId),
+          (task.assets = assets ? assets : []),
+          (temp = task);
+        await task.save();
 
         res
           .status(200)
@@ -89,7 +74,12 @@ export const createTask = async (req, res) => {
         console.log(error);
         res
           .status(400)
-          .json({ status: false, message: "Failed to update task" });
+          .json({
+            status: false,
+            message: "Failed to update task",
+            error,
+            temp,
+          });
       }
     }
   } catch (error) {
@@ -98,18 +88,56 @@ export const createTask = async (req, res) => {
   }
 };
 
+export const addMedia = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { desc, linkTo, taskId } = req.body;
+
+    const link = linkTo.join(",");
+
+    if (!userId || !desc || !link || !taskId) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Missing required fields" });
+    }
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({ status: false, message: "Task not found" });
+    }
+
+    const newMedia = {
+      desc,
+      link,
+      by: userId,
+    };
+
+    task.assets.push(newMedia);
+    await task.save();
+
+    res
+      .status(200)
+      .json({ status: true, message: "Media added successfully", newMedia });
+  } catch (error) {
+    console.error("Error adding media:", error); // Log error details
+    res
+      .status(500)
+      .json({
+        status: false,
+        error: error,
+        message: "Failed to create media object",
+      });
+  }
+};
+
 export const updateDesc = async (req, res) => {
   try {
-    const userId = "66af9db7479f7ad5afe7161b";
-
     const { desc, taskId } = req.body;
 
     const task = await Task.findById(taskId);
 
-    (task.id = taskId),
-    (task.desc = desc ? desc : " "),
-    
-    await task.save();
+    (task.id = taskId), (task.desc = desc ? desc : " "), await task.save();
 
     res
       .status(200)
@@ -120,15 +148,41 @@ export const updateDesc = async (req, res) => {
   }
 };
 
+export const putStatus = async (req, res) => {
+  try {
+    const { stage , taskId } = req.body;
+
+    const task = await Task.findById(taskId);
+
+    task.stage = stage ? stage : "to do"
+    await task.save();
+
+    res
+      .status(200)
+      .json({ status: true, message: task, stage: stage });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, message: "Failed to update task" });
+  }
+};
+
 export const delTasks = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const task = await Task.findById(id);
+    const projectId = task.projectId;
+    //temporary comment
+    const project = await Project.findById(projectId);
+    project?.tasks?.pull({ _id: id });
+    await project.save();
 
     await Task.findByIdAndDelete(id);
 
     res.status(200).json({
       status: true,
       message: `Task ${id} deleted successfully`,
+      project: project,
     });
   } catch (error) {
     console.log(error);
@@ -139,8 +193,8 @@ export const delTasks = async (req, res) => {
 export const postTaskActivity = async (req, res) => {
   try {
     // const { id } = req.params;
-    // const { userId } = req.user;
-    const userId = "66af9db7479f7ad5afe7161b";
+    const { userId } = req.user;
+    // const userId = "66af9db7479f7ad5afe7161b";
     const { id, type, activity } = req.body;
 
     const task = await Task.findById(id);
@@ -155,82 +209,10 @@ export const postTaskActivity = async (req, res) => {
 
     await task.save();
 
-    res
-      .status(200)
-      .json({ status: true, message: "Activity posted successfully.", data: data });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-export const dashboardStatistics = async (req, res) => {
-  try {
-    const { userId, isAdmin } = req.user;
-
-    const allTasks = isAdmin
-      ? await Task.find({
-          isTrashed: false,
-        })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 })
-      : await Task.find({
-          isTrashed: false,
-          team: { $all: [userId] },
-        })
-          .populate({
-            path: "team",
-            select: "name role title email",
-          })
-          .sort({ _id: -1 });
-
-    const users = await User.find({ isActive: true })
-      .select("name title role isAdmin createdAt")
-      .limit(10)
-      .sort({ _id: -1 });
-
-    //   group task by stage and calculate counts
-    const groupTaskks = allTasks.reduce((result, task) => {
-      const stage = task.stage;
-
-      if (!result[stage]) {
-        result[stage] = 1;
-      } else {
-        result[stage] += 1;
-      }
-
-      return result;
-    }, {});
-
-    // Group tasks by priority
-    const groupData = Object.entries(
-      allTasks.reduce((result, task) => {
-        const { priority } = task;
-
-        result[priority] = (result[priority] || 0) + 1;
-        return result;
-      }, {})
-    ).map(([name, total]) => ({ name, total }));
-
-    // calculate total tasks
-    const totalTasks = allTasks?.length;
-    const last10Task = allTasks?.slice(0, 10);
-
-    const summary = {
-      totalTasks,
-      last10Task,
-      users: isAdmin ? users : [],
-      tasks: groupTaskks,
-      graphData: groupData,
-    };
-
     res.status(200).json({
       status: true,
-      message: "Successfully",
-      ...summary,
+      message: "Activity posted successfully.",
+      data: data,
     });
   } catch (error) {
     console.log(error);
@@ -238,46 +220,18 @@ export const dashboardStatistics = async (req, res) => {
   }
 };
 
-export const getTasks = async (req, res) => {
+export const getAdminTask = async (req, res) => {
   try {
-    const { stage, isTrashed } = req.query;
-
-    let query = { isTrashed: isTrashed ? true : false };
-
-    if (stage) {
-      query.stage = stage;
-    }
-
-    let queryResult = Task.find(query)
-      .populate({
-        path: "team",
-        select: "name title email",
-      })
-      .sort({ _id: -1 });
-
-    const tasks = await queryResult;
-
-    res.status(200).json({
-      status: true,
-      tasks,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-export const getTask = async (req, res) => {
-  try {
-    //const { userId } = req.body; // Assuming req.user contains the authenticated user's information
-    //const userId = "66af9db7479f7ad5afe7161b"; // Assuming req.user contains the authenticated user's information
-    const projId = "66b2ff5599de302fb3720f75";
-    // Find projects where the userId is in the leads array
-    const tasks = await Task.find({ projectId: projId });
-    // .populate({
-    //   path: "team",
-    //   select: "name title role email",
-    // })
+    //const { userId } = req.user;
+    //const userId = "66af9db7479f7ad5afe7161b";
+    //If i want to pass task to another admin the setup lTeam attribute in tasks schema
+    //and change by: userId to ({ lTeam: { $in: [userId] } })
+    // const tasks = await Task.find();
+    const tasks = await Task.find().populate({
+      path: "uTeam", 
+      select: "name email role",
+    },
+    );
 
     res.status(200).json({
       tasks, // Return the array of projects
@@ -288,24 +242,42 @@ export const getTask = async (req, res) => {
   }
 };
 
-// export const updateSubTask = async (req, res) => {
-//   try {
-//     const { id } = req.body;
+export const getUserTasks = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    //const userId = "66b9895f6e7bf0ea463cf32e";
+    const tasks = await Task.find({ uTeam: { $in: [userId] } }).populate(
+      "uTeam",
+      "name email role"
+    );
 
-//     const subtask = await Task.find({ subTasks: {$in: [id]}});
+    res.status(200).json({
+      tasks, // Return the array of projects
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};
 
-//     res
-//       .status(200)
-//       .json({ status: true, message: `SubTask ${id} added successfully.`, task:subtask });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(400).json({ status: false, message: error.message });
-//   }
-// };
+export const getTaskDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    //const userId = "66b9895f6e7bf0ea463cf32e";
+    const tasks = await Task.findById(id).populate("uTeam", "name email role");
+
+    res.status(200).json({
+      tasks, // Return the array of projects
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};
 
 export const createSubTask = async (req, res) => {
   try {
-    const { title, desc, stage, taskId, subId, assets } = req.body;
+    const { title, desc, stage, taskId, subId, assets, assignee } = req.body;
 
     const task = await Task.findById(taskId);
 
@@ -318,6 +290,7 @@ export const createSubTask = async (req, res) => {
           desc,
           stage,
           assets,
+          by: assignee
         };
 
         task.subTasks.push(newSubTask);
@@ -336,21 +309,17 @@ export const createSubTask = async (req, res) => {
       }
     } else {
       try {
-        const test = {
-          title: title,
-          desc: desc,
-          stage: stage,
-        }
         subtask.title = title;
         subtask.desc = desc;
         subtask.stage = stage;
         subtask.assets = assets;
+        subtask.by = assignee;
 
         await task.save();
 
         return res
           .status(200)
-          .json({ message: "Subtask updated successfully", subtask: test });
+          .json({ message: "Subtask updated successfully", subtask: subtask });
       } catch (error) {
         return res.status(400).json({ message: "Failed to update task" });
       }
@@ -363,33 +332,32 @@ export const createSubTask = async (req, res) => {
 
 export const updateSubDesc = async (req, res) => {
   try {
-    const { desc,taskId,subId } = req.body;
+    const { desc, taskId, subId } = req.body;
 
     const task = await Task.findById(taskId);
 
     const subtask = task.subTasks.find((sub) => sub._id.toString() === subId);
 
-        const test = {
-          desc: desc,
-        }
-  
-        subtask.desc = desc;
-        await task.save();
-        return res
-          .status(200)
-          .json({ message: "Subtask description updated successfully", subtask: test });
-      } catch (error) {
-        return res.status(400).json({ message: "Failed to update subtask description" });
-      }
-    
+    const test = {
+      desc: desc,
+    };
 
+    subtask.desc = desc;
+    await task.save();
+    return res.status(200).json({
+      message: "Subtask description updated successfully",
+      subtask: test,
+    });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Failed to update subtask description" });
+  }
 };
-
 
 export const deleteSubtask = async (req, res) => {
   try {
-    const { id } = req.body;
-    const { taskId } = req.body;
+    const { id, taskId } = req.body;
 
     const task = await Task.findById(taskId);
     task?.subTasks?.pull({ _id: id });
@@ -400,27 +368,56 @@ export const deleteSubtask = async (req, res) => {
   }
 };
 
-// export const updateTask = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { title, date, team, stage, priority, assets } = req.body;
+export const deleteMedia = async (req, res) => {
+  const { mediaId, taskId } = req.body;
+  try {
+    const task = await Task.findById(taskId);
+    task?.assets.pull({ _id: mediaId });
+    await task.save();
+    res.json({ message: `Media ${mediaId} deleted successfully`})
+  } catch (error) {
+    console.log(error);
+    res.json({ message: `Failed to delete media`})
+  }
+};
 
-//     const task = await Task.findById(id);
+export const deleteSubMedia = async (req, res) => {
+  const { delMedia, taskId, subId } = req.body;
 
-//     task.title = title;
-//     task.date = date;
-//     task.priority = priority.toLowerCase();
-//     task.assets = assets;
-//     task.stage = stage.toLowerCase();
-//     task.team = team;
+  try {
+    const task =await Task.findById(taskId);
+    const subtask = task?.subTasks?.find((sub) => sub.id === subId);
 
-//     await task.save();
+    if(subtask)
+    {
+      subtask.assets = subtask?.assets?.filter( asset => asset !== delMedia);
+      await task.save();
+    }
 
-//     res
-//       .status(200)
-//       .json({ status: true, message: "Task duplicated successfully." });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(400).json({ status: false, message: error.message });
-//   }
-// };
+    const assets = task?.subTasks?.assets;
+
+    res.json({ message: `Media deleted successfully`, delMedia,assets})
+  } catch (error) {
+    console.log(error);
+    res.json({ message: `Failed to delete sub media`, error:error})
+  }
+};
+
+export const subDetails = async (req, res) => {
+  try {
+    const { taskId, subId } = req.params;
+
+    const task = await Task.findById(taskId).populate({
+      path: 'subTasks.by', // Path to the 'by' field inside 'subTasks'
+      select: 'name', // Optional: Specify which fields to return from the User document
+    });
+
+    const subtask = task.subTasks.find((sub) => sub._id.toString() === subId);
+
+    return res.status(200).json(subtask);
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Failed to get subtask details" });
+  }
+};

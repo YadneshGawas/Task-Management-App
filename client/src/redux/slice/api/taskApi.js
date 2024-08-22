@@ -11,6 +11,13 @@ export const taskApi = apiSlice.injectEndpoints({
                 body: data,
             })
         }),
+        putStatus: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/putstatus`,
+                method: "PUT",
+                body: data,
+            })
+        }),
         addSubTask: builder.mutation({
             query: (data) =>({
                 url: `${USER_URL}/createsubtask`,
@@ -48,13 +55,26 @@ export const taskApi = apiSlice.injectEndpoints({
         }),
         getTask: builder.query({
             query: () =>({
-                url: `${USER_URL}/gettask`,
+                url: `${USER_URL}/getadmintask`,
                 method: "POST",
+            })
+        }),
+        getUserTask: builder.query({
+            query: () =>({
+                url: `${USER_URL}/getusertask`,
+                method: "POST",
+            })
+        }),
+        addMedia: builder.mutation({
+            query: (data) =>({
+                url: `${USER_URL}/addmedia`,
+                method: "PUT",
+                body: data,
             })
         }),
         getTaskDetails: builder.query({
             query: (id) => ({
-                url: `${USER_URL}/getDetails/${id}`,
+                url: `${USER_URL}/getdetails/${id}`,
                 method: "GET",
             })
         }),
@@ -62,6 +82,26 @@ export const taskApi = apiSlice.injectEndpoints({
             query: ({id}) => ({
                 url: `${USER_URL}/delete/${id}`,
                 method: "PUT",
+            })
+        }),
+        delMedia: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/deletemedia`,
+                method: "PUT",
+                body: data,
+            })
+        }),
+        delSubMedia: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/deletesubmedia`,
+                method: "PUT",
+                body: data,
+            })
+        }),
+        getSubtask: builder.query({
+            query: ({taskId, subId}) => ({
+                url: `${USER_URL}/getsubdetails/${taskId}/${subId}`,
+                method: "GET",
             })
         }),
 
@@ -78,4 +118,10 @@ export const {
     useUpdateDescMutation,
     usePostActivityMutation,
     useUpdateSubTaskDescMutation,
+    useGetUserTaskQuery,
+    useAddMediaMutation,
+    useDelMediaMutation,
+    useDelSubMediaMutation,
+    useGetSubtaskQuery,
+    usePutStatusMutation,
 } =  taskApi;

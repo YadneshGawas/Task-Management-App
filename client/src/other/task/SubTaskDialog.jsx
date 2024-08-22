@@ -34,9 +34,10 @@ const SubTaskDialog = ({ task }) => {
         id: task._id,
         taskId: taskId,
       }).unwrap();
-      toast.success(res?.message);
-      window.location.reload();
-      // console.log(task._id)
+      toast.success("Deleted subtask successfully");
+      setTimeout(() => {
+        window.location.reload();
+      },1000);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -74,6 +75,7 @@ const SubTaskDialog = ({ task }) => {
             leave="transition ease-in duration-75"
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
+            className="z-50"
           >
             <Menu.Items className="absolute p-4 right-0 mt-2 mb-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
               <div className="px-1 py-1 space-y-2">
@@ -93,7 +95,6 @@ const SubTaskDialog = ({ task }) => {
                   </Menu.Item>
                 ))}
               </div>
-              {user.isAdmin && (
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
@@ -112,7 +113,6 @@ const SubTaskDialog = ({ task }) => {
                     )}
                   </Menu.Item>
                 </div>
-              )}
             </Menu.Items>
           </Transition>
         </Menu>
