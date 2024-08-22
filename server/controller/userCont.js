@@ -6,8 +6,11 @@ import Notif from "./../schemas/notifications.js";
 import transporter from "./../components/nodeMailerConfig.js";
 import jwt from "jsonwebtoken";
 import Task from "../schemas/tasks.js";
+import dotenv  from 'dotenv';
 
-const JWT_SECRET = "hvdvay6ert72839289";
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT;
 
 export const registerUser = async (req, res) => {
   try {
@@ -54,8 +57,6 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    const isAdmin = user.isAdmin;
-
     if (!user) {
       return res
         .status(401)
@@ -88,7 +89,7 @@ export const loginUser = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
+    return res.status(400).json({ status: false, message: error.message, error: "Failed" });
   }
 };
 

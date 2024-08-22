@@ -94,7 +94,7 @@ const TaskCard = ({ task }) => {
   return (
     <div>
       <div
-        className="w-full h-fit bg-white rounded-xl transition-shadow duration-300 hover:shadow-xl"
+        className="w-full h-fit bg-white rounded-xl transition-shadow duration-300 hover:shadow-lg"
         onClick={handleNavigateonClick}
       >
         <div

@@ -5,36 +5,33 @@
 /* eslint-disable no-unused-vars */
 
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux"; // Import useSelector for Redux
-import { getInitials, PRIORITYSTYLES, TASK_TYPE } from "../assets/index";
+import { getInitials } from "../assets/index";
 /*icons*/
+import { motion } from "framer-motion";
+import "react-circular-progressbar/dist/styles.css";
 import { FaTasks } from "react-icons/fa";
 import { LiaTasksSolid } from "react-icons/lia";
 import {
   MdKeyboardArrowDown,
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
   MdTaskAlt,
 } from "react-icons/md";
 import { TbProgress } from "react-icons/tb";
 import { allusers } from "../assets/data";
+import BasicBars from "../other/BasicBars";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 import {
   useGetTaskQuery,
   useGetUserTaskQuery,
 } from "../redux/slice/api/taskApi";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
-import { animate, motion } from "framer-motion";
-import { Circle } from "rc-progress";
-import Progress from "react-circle-progress-bar";
-import BasicLineChart from "../other/LineChart";
-import Guage from "../other/Guage";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import Piechart from './../other/Piechart';
-import BasicBars from "../other/BasicBars";
-
+import ButtonIconOnly from "./../other/ButtonIconOnly";
+import Piechart from "./../other/Piechart";
 
 const TaskTb = ({ user, proj, handleSort, sortConfig }) => {
   // Icons references
@@ -108,14 +105,24 @@ const TaskTb = ({ user, proj, handleSort, sortConfig }) => {
   const TbHeader = () => (
     <thead className="bg-white sticky top-0">
       <tr className="text-black text-left text-lg">
-        <th className="py-2 pl-2" onClick={() => handleSort("title")}>
+        <th
+          className="py-2 pl-2 flex items-center"
+          onClick={() => handleSort("title")}
+        >
           {user.isAdmin ? "Project Title" : "Task Title"}
+          <MdKeyboardArrowDown />
         </th>
-        <th className="py-2 pl-2" onClick={() => handleSort("priority")}>
-          Priority
+        <th className="py-2 pl-3" onClick={() => handleSort("priority")}>
+          <div className="flex items-center">
+            Priority
+            <MdKeyboardArrowDown />
+          </div>
         </th>
-        <th className="py-2" onClick={() => handleSort("due")}>
-          Due On
+        <th
+          className="py-2 flex items-center pl-2"
+          onClick={() => handleSort("due")}
+        >
+          Due On {<MdKeyboardArrowDown />}
         </th>
         {/* {!user.isAdmin && (
           <th
@@ -183,18 +190,28 @@ const TaskTb = ({ user, proj, handleSort, sortConfig }) => {
   );
 
   return (
-    <div className="bg-white px-2 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
-      <div className="w-full max-h-96 overflow-y-auto">
-        <table className="w-full">
-          <TbHeader />
-          <tbody>
-            {sortedTasks.map((task, index) => (
-              <TbRow key={index} task={task} />
-            ))}
-          </tbody>
-        </table>
+    <motion.div
+      initial={{ opacity: 0 }} // Initial opacity when the page loads
+      animate={{ opacity: 1 }} // Fade in to full opacity
+      transition={{
+        ease: "linear",
+        duration: 0.5, // Duration of the fade-in
+        staggerChildren: 0.1, // Delay between each child's animation
+      }}
+    >
+      <div className="bg-white px-2 pt-2 pb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded">
+        <div className="w-full max-h-96 overflow-y-auto">
+          <table className="w-full">
+            <TbHeader />
+            <tbody>
+              {sortedTasks.map((task, index) => (
+                <TbRow key={index} task={task} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -223,10 +240,6 @@ const UserTb = ({ user }) => {
     },
   ];
 
-  useEffect(() => {
-    console.log("All tasks =>", tasks);
-  }, [tasks]);
-
   // Table header part
   const TableHeader = () => (
     <thead className="">
@@ -239,7 +252,6 @@ const UserTb = ({ user }) => {
   // Table row part
   const TbRow = ({ user }) => {
     const usr = user?.users;
-    console.log(user);
     return (
       <tr className="transition-shadow duration-300 hover:shadow-lg text-gray-600 hover:border hover:border-gray-100 m-2 rounded-t-lg">
         <td className="w-full py-2 p-2">
@@ -266,49 +278,59 @@ const UserTb = ({ user }) => {
   };
 
   return (
-    <div className="bg-white h-full px-4 p-10 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
-      <table className="w-full mb-5">
-        <TableHeader />
-        <div className="w-full max-h-80 overflow-y-auto">
-          {tasks && (
-            <tbody>
-              {users?.map((users, index) => {
-                const user = users._id;
-                const filteredTasks = tasks?.filter((task) =>
-                  task.uTeam.some((member) => member._id === user)
-                );
-                const total = filteredTasks?.length;
-                const low = filteredTasks.filter(
-                  (task) => task.priority === "low"
-                );
-                const med = filteredTasks.filter(
-                  (task) => task.priority === "medium"
-                );
-                const high = filteredTasks.filter(
-                  (task) => task.priority === "high"
-                );
+    <motion.div
+      initial={{ opacity: 0 }} // Initial opacity when the page loads
+      animate={{ opacity: 1 }} // Fade in to full opacity
+      transition={{
+        ease: "linear",
+        duration: 0.5, // Duration of the fade-in
+        staggerChildren: 0.1, // Delay between each child's animation
+      }}
+    >
+      <div className="bg-white h-full px-4 p-10 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+        <table className="w-full mb-5">
+          <TableHeader />
+          <div className="w-full max-h-80 overflow-y-auto">
+            {tasks && (
+              <tbody>
+                {users?.map((users, index) => {
+                  const user = users._id;
+                  const filteredTasks = tasks?.filter((task) =>
+                    task.uTeam.some((member) => member._id === user)
+                  );
+                  const total = filteredTasks?.length;
+                  const low = filteredTasks.filter(
+                    (task) => task.priority === "low"
+                  );
+                  const med = filteredTasks.filter(
+                    (task) => task.priority === "medium"
+                  );
+                  const high = filteredTasks.filter(
+                    (task) => task.priority === "high"
+                  );
 
-                const lowlen = low.length;
-                const medlen = med.length;
-                const highlen = high.length;
+                  const lowlen = low.length;
+                  const medlen = med.length;
+                  const highlen = high.length;
 
-                const userObject = {
-                  users,
-                  lowlen,
-                  medlen,
-                  highlen,
-                  total,
-                };
-                return <TbRow key={index} user={userObject} />;
-              })}
-            </tbody>
-          )}
-        </div>
-      </table>
-      {/* <div className="w-full h-full p-10">
+                  const userObject = {
+                    users,
+                    lowlen,
+                    medlen,
+                    highlen,
+                    total,
+                  };
+                  return <TbRow key={index} user={userObject} />;
+                })}
+              </tbody>
+            )}
+          </div>
+        </table>
+        {/* <div className="w-full h-full p-10">
       <Circle percent={10} strokeWidth={5} trailWidth={5}/>
       </div> */}
-    </div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -318,11 +340,29 @@ const Dashboard = () => {
   const { data: usersdata } = useGetTeamListQuery();
   const { data: project, refetch: projRefetch } = useGetProjectQuery();
   const { data: task, refetch: taskRefetch } = useGetUserTaskQuery();
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(10);
   const [sortConfig, setSortConfig] = useState({
     key: "due",
     direction: "asc",
     stage: "todo",
   });
+
+  const handleNext = () => {
+    if (end < project?.projects?.length) {
+      setStart(start + 1);
+      setEnd(end + 1);
+      console.log("Start=>", start);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (start > 0) {
+      setStart(start - 1);
+      setEnd(end - 1);
+      console.log("End=>", end);
+    }
+  };
 
   let object = [];
 
@@ -364,10 +404,38 @@ const Dashboard = () => {
     }
   }
 
-  useEffect(() => {
-    projRefetch();
-    taskRefetch();
-  }, [projRefetch, taskRefetch]);
+  const graphData = () => {
+    if (project) {
+      const proj = project?.projects;
+      const reversedProj = proj?.slice().reverse();
+      console.log(reversedProj);
+
+      const temp = reversedProj.slice(start, end).map((item) => {
+        // Count the number of completed tasks within the current project's tasks array
+        const totalTaskCount = item.tasks.length;
+        const completedTaskCount = item.tasks.filter(
+          (subtask) => subtask.stage === "completed"
+        ).length;
+
+        // Return a new object representing the project with the completed task count
+        return {
+          id: item._id,
+          title: item.title,
+          completed: completedTaskCount,
+          total: totalTaskCount,
+          max: 50,
+        };
+      });
+      return temp;
+    }
+  };
+
+  const barChartData = graphData();
+
+  // useEffect(() => {
+  //   projRefetch();
+  //   taskRefetch();
+  // }, [projRefetch, taskRefetch]);
 
   const getComp = (object) => {
     const comp = object.filter((obj) => obj.stage === "completed");
@@ -469,8 +537,8 @@ const Dashboard = () => {
         animate={{ opacity: 1 }} // Fade in to full opacity
         transition={{
           ease: "linear",
-          duration: 2, // Duration of the fade-in
-          staggerChildren: 0.2, // Delay between each child's animation
+          duration: 0.5, // Duration of the fade-in
+          staggerChildren: 0.1, // Delay between each child's animation
         }}
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -497,7 +565,7 @@ const Dashboard = () => {
         </div>
       </motion.div>
 
-      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
+      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-4 pt-4">
         <div className={`flex-1 h-full w-full`}>
           {/* ${!user.isAdmin ? "w-full" : "w-2/3"} md:w-full lg:w-1/2 xl:w-1/3 */}
           <TaskTb
@@ -513,25 +581,48 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-      <div className="flex md:flex-row space-x-3 flex-col gap-y-3 justify-center">
-        <div className="bg-white w-2/5 h-full py-2 flex items-start transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
-          {/* <Circle percent={10} strokeWidth={5} trailWidth={5} />
-          <Guage />
-          <Progress progress={10} subtitle="Progress" strokeWidth={15} /> */}
-          {/* <CircularProgressbar
-            value={60}
-            text={`completed`}
-            styles={buildStyles({
-              textSize: "10px",
-              pathColor: "rgba(77, 168, 255, 0.85)",
-            })}
-          /> */}
-          <Piechart total={object?.length} comp={getComp(object)} />
-        </div>
-        <div className="bg-white h-max w-2/3 md:px-6 py-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
-          <BasicBars />
-        </div>
-      </div>
+      {project && user.isAdmin && (
+        <motion.div
+          initial={{ opacity: 0 }} // Initial opacity when the page loads
+          animate={{ opacity: 1 }} // Fade in to full opacity
+          transition={{
+            ease: "linear",
+            duration: 0.5, // Duration of the fade-in
+            staggerChildren: 0.1, // Delay between each child's animation
+          }}
+        >
+          <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-2 py-4">
+            <div className="flex flex-col bg-white w-max h-full py-2 items-start transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+              <div>
+                <span className="text-black text-lg font-bold pl-4">
+                  Projects Overall Progress
+                </span>
+              </div>
+              <Piechart total={object?.length} comp={getComp(object)} />
+            </div>
+            <div className="flex flex-col items-start bg-white h-full w-max px-2 py-2 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
+              <div className="w-full text-black text-lg font-bold pl-2 pt-2 flex justify-between">
+                <div>Tasks Progress</div>
+                <div className="flex space-x-2 pr-10">
+                  <ButtonIconOnly
+                    icon={<MdKeyboardArrowLeft className="cursor-pointer" />}
+                    onClick={handlePrevious}
+                  />
+                  {`${start} - ${end}`}
+                  <ButtonIconOnly
+                    icon={<MdKeyboardArrowRight className="cursor-pointer" />}
+                    onClick={handleNext}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <BasicBars data={barChartData} start={start} end={end} />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };

@@ -709,10 +709,8 @@ const Activities = ({ activity, id, refetch }) => {
   const Card = ({ item }) => {
     return (
       <div className="flex w-full space-x-4">
-        <div className="flex flex-col items-center flex-shrink-0">
-          <div className="w-10 h-10 flex items-center justify-center">
+        <div className=" pb-10">
             {TASKTYPEICON[item?.type]}
-          </div>
         </div>
 
         <div className="flex flex-row justify-between w-full mb-8">

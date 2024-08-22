@@ -3,12 +3,14 @@
 import * as React from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 
+const chartConfig = {
+  margin: {top:15,botton:25,right:100}
+}
+
 export default function Piechart({ total, comp }) {
-  console.log("Total =>", total);
-  console.log("Completed =>", comp);
   return (
     <PieChart
-      margin={10}
+    {...chartConfig}
       series={[
         {
           data: [
@@ -16,9 +18,9 @@ export default function Piechart({ total, comp }) {
             { id: 1, value: total, label: "Not completed", color: "#bebebe" },
           ],
           highlightScope: { faded: "global", highlighted: "item" },
-          faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
+          faded: { innerRadius: 10, additionalRadius: -10, color: "gray" },
           cornerRadius: 10,
-          innerRadius: 25,
+          innerRadius: 20,
         },
       ]}
       width={500}
