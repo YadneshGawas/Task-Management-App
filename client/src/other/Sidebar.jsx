@@ -8,6 +8,7 @@ import {
   MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
+import { FaRegCopyright } from "react-icons/fa6";
 import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,6 +85,15 @@ const Sidebar = () => {
         {linkData.map((link) => (
           <NavLink el={link} key={link.label} />
         ))}
+      </div>
+
+      <div>
+        <div className=" flex items-center text-gray-500">
+        <FaRegCopyright/>
+        <span className="text-gray-500 font-thin px-2">
+          Made by Yadnesh Gawas
+        </span>
+        </div>
       </div>
 
     </div>
