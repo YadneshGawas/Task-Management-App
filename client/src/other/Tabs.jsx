@@ -10,6 +10,7 @@ function classNames(...classes) {
 }
 
 export default function Tabs({ tabs, setSelected, children, setOpen, setOpenDialog, status, stage }) {
+  console.log("Stage=>",stage);
   return (
     <div className="w-full px-1 sm:px-0">
       <Tab.Group>

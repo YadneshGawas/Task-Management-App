@@ -10,6 +10,7 @@ import Button from "./../other/Button";
 import Textbox from "./../other/Textbox";
 import { logout, setCredentials } from "../redux/slice/authS";
 import { toast } from "sonner";
+import LinearLoader from "../other/LinearLoader";
 
 const Login = () => {
   const { user } = useSelector((state) => state.auth);
@@ -23,7 +24,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const [loginUser] = useLoginMutation();
+  const [loginUser,{isLoading}] = useLoginMutation();
 
   const submitHandler = async (data) => {
     try {
@@ -118,11 +119,16 @@ const Login = () => {
                 </a>
               </span>
 
+              {isLoading ? (
+                <LinearLoader/>
+              ):(
               <Button
                 type="submit"
                 label="Log In"
                 className="w-full h-10 bg-blue-400 text-white rounded-full"
               />
+              )}
+
 
               <span className="ml-2 pb-2">
                 New here?{" "}

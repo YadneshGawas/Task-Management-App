@@ -20,6 +20,7 @@ import { setOpenSidebar } from "./redux/slice/authS";
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
+import Reports from "./pages/Reports";
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -116,6 +117,7 @@ function App() {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/team" element={<Users />} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/tasks/:taskId" element={<TaskDetails />} />
             <Route path="/projects/:projectId/tasks" element={<AdminTasks />} />
           </Route>

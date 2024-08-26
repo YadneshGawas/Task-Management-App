@@ -5,6 +5,7 @@ import {
   MdDashboard,
   MdOutlineAddTask,
   MdOutlinePendingActions,
+  MdOutlineTextSnippet,
   MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
@@ -62,6 +63,11 @@ const Sidebar = () => {
           link: "tasks",
           icon: <MdTaskAlt />,
         },
+    {
+      label: "Reports",
+      link: "reports",
+      icon: <MdOutlineTextSnippet />
+    }
   ];
 
   if (user.isAdmin) {

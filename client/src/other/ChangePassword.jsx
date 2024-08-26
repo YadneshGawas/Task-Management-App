@@ -8,6 +8,7 @@ import Wrapper from "./Wrapper";
 import Textbox from "./Textbox";
 import { toast } from "sonner";
 import { useChpassUserMutation } from "../redux/slice/api/userApi";
+import CircularLoader from "./CircularLoader";
 
 const ChangePassword = ({ open, setOpen }) => {
   const {
@@ -25,7 +26,7 @@ const ChangePassword = ({ open, setOpen }) => {
   });
 
   const password = watch("password");
-  const [cgPass] = useChpassUserMutation();
+  const [cgPass,{isLoading}] = useChpassUserMutation();
 
   const handleOnSubmit = async (data) => {
     try {
@@ -120,11 +121,15 @@ const ChangePassword = ({ open, setOpen }) => {
             error={errors.confirmPassword ? errors.confirmPassword.message : ""}
           />
           <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
+          {isLoading ? (
+            <CircularLoader/>
+          ):(
             <Button
               type="submit"
               className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto rounded-md"
               label="Submit"
             />
+          )}
 
             <Button
               type="button"

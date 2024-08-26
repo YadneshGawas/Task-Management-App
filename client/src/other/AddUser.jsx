@@ -8,12 +8,13 @@ import { toast } from "sonner";
 import {
   useAddUserMutation,
   useGetTeamListQuery,
-  useUpdateUserMutation
+  useUpdateUserMutation,
 } from "../redux/slice/api/userApi";
 import { setCredentials } from "../redux/slice/authS";
 import Button from "./Button";
 import Textbox from "./Textbox";
 import Wrapper from "./Wrapper";
+import CircularLoader from "./CircularLoader";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
@@ -28,8 +29,8 @@ const AddUser = ({ open, setOpen, userData }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const [adduser] = useAddUserMutation(); //definitely using mail registration
-  const [updateuser] = useUpdateUserMutation();
+  const [adduser, { isLoading }] = useAddUserMutation(); //definitely using mail registration
+  const [updateuser, { isLoading: loading2 }] = useUpdateUserMutation();
 
   const { refetch } = useGetTeamListQuery();
 
@@ -124,21 +125,24 @@ const AddUser = ({ open, setOpen, userData }) => {
             )}
           </div>
 
-            <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
+          <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
+            {isLoading || loading2 ? (
+              <CircularLoader />
+            ) : (
               <Button
                 type="submit"
                 className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5"
                 label="Submit"
               />
+            )}
 
-              <Button
-                type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
-                onClick={() => setOpen(false)}
-                label="Close"
-              />
-            </div>
-        
+            <Button
+              type="button"
+              className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+              onClick={() => setOpen(false)}
+              label="Close"
+            />
+          </div>
         </form>
       </Wrapper>
     </>

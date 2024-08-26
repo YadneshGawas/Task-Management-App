@@ -530,6 +530,11 @@ const Dashboard = () => {
     );
   };
 
+  const pieData = [
+    { id: 0, value: getComp(object), label: "Completed", color: "#90fedf" },
+    { id: 1, value: object?.length, label: "Not completed", color: "#bebebe" },
+  ];
+
   return (
     <div className="h-full py-4">
       <motion.div
@@ -598,11 +603,11 @@ const Dashboard = () => {
                   Projects Overall Progress
                 </span>
               </div>
-              <Piechart total={object?.length} comp={getComp(object)} />
+              <Piechart pieData={pieData} iR={20} hg={250} />
             </div>
             <div className="flex flex-col items-start bg-white h-full w-max px-2 py-2 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan-100 rounded ">
-              <div className="w-full text-black text-lg font-bold pl-2 pt-2 flex justify-between">
-                <div>Tasks Progress</div>
+              <div className="w-full text-black text-lg font-bold pl-2  flex justify-between">
+                <div>Projects Tasks Progress</div>
                 <div className="flex space-x-2 pr-10">
                   <ButtonIconOnly
                     icon={<MdKeyboardArrowLeft className="cursor-pointer" />}

@@ -7,24 +7,22 @@ const chartConfig = {
   margin: {top:15,botton:25,right:100}
 }
 
-export default function Piechart({ total, comp }) {
+export default function Piechart({ pieData, iR, cX, hg }) {
   return (
     <PieChart
     {...chartConfig}
       series={[
         {
-          data: [
-            { id: 0, value: comp, label: "Completed", color: "#90fedf" },
-            { id: 1, value: total, label: "Not completed", color: "#bebebe" },
-          ],
+          data: pieData,
           highlightScope: { faded: "global", highlighted: "item" },
           faded: { innerRadius: 10, additionalRadius: -10, color: "gray" },
           cornerRadius: 10,
-          innerRadius: 20,
+          innerRadius: iR,
+          cx: cX
         },
       ]}
       width={500}
-      height={250}
+      height = {hg}
     />
   );
 }

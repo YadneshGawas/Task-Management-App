@@ -95,7 +95,7 @@ const chartSetting = {
     {
       label: "Tasks",
       min: 0,
-      max: 100, // Adjust this value as needed
+      max: 25, // Adjust this value as needed
     },
   ],
   width: 700,
@@ -103,8 +103,6 @@ const chartSetting = {
   margin: { left: 140 },
   
 };
-
-// const valueFormatter = (value) => `${value}mm`;
 
 export default function BasicBars({ data }) {
   return (
@@ -116,7 +114,7 @@ export default function BasicBars({ data }) {
         { dataKey: "total", label: "Total Tasks", stack: "project", color:'#bebebe' },
       ]}
       layout="horizontal"
-      grid={{vertical: true}}
+      //grid={{vertical: true}}//Enable the grid
       borderRadius={1}
       {...chartSetting}
     />

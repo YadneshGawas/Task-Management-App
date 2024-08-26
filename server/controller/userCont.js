@@ -7,6 +7,7 @@ import transporter from "./../components/nodeMailerConfig.js";
 import jwt from "jsonwebtoken";
 import Task from "../schemas/tasks.js";
 import dotenv  from 'dotenv';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -62,13 +63,6 @@ export const loginUser = async (req, res) => {
         .status(401)
         .json({ status: false, message: "Invalid email or password." });
     }
-
-    // if (!user?.isActive) {
-    //   return res.status(401).json({
-    //     status: false,
-    //     message: "User account has been deactivated, contact the administrator",
-    //   });
-    // }
 
     const isMatch = await user.matchPassword(password);
 
@@ -209,13 +203,17 @@ export const markNotificationRead = async (req, res) => {
 
 export const changeUserPassword = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { userId, email } = req.user;
+    const { password } = req.body;
 
     const user = await User.findById(userId);
-
-    if (user) {
-      if (user.password === req.body.oldPassword) {
-        user.password = req.body.password;
+    ///////////////////////////////////////
+    //const isMatch = await user.matchPassword(password);
+    const isMatch = bcrypt.compare(user.password,password);//solve the issue of bcrypt compare
+    //////////////////////////////////////
+    if (user) { 
+      if (isMatch) {
+        user.password = password;
 
         await user.save();
 
@@ -228,7 +226,7 @@ export const changeUserPassword = async (req, res) => {
       } else {
         res
           .status(404)
-          .json({ status: false, message: "Old password is incorrect" });
+          .json({ status: false, message: "Old password is incorrect",email });
       }
     } else {
       res.status(504).json({ status: false, message: "User not found" });

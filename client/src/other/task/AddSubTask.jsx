@@ -21,6 +21,7 @@ import {
   ref,
   getDownloadURL,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 import { app } from "../../assets/firebase";
 import { BiImages } from "react-icons/bi";
@@ -49,6 +50,25 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
   const { taskId } = useParams();
   const { refetch } = useGetTaskDetailsQuery(taskId);
 
+  const [deleting, setDeleting] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState();
+
+  const deleteFile = async (fileURL) => {
+    const storage = getStorage(app);
+    const fileRef = ref(storage, fileURL);
+
+    return new Promise((resolve, reject) => {
+      deleteObject(fileRef)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+
   let subId = "";
   if (taskData) {
     subId = taskData._id;
@@ -67,8 +87,10 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
   });
 
   const delHandler = (el) => {
+    console.log("EL from subtask delmedia handler=>",el)
     setDelMedia(el);
     setOpenDialog(true);
+    setSelectedFiles(el);
   };
 
   const handleSelect = (e) => {
@@ -194,6 +216,8 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
 
   const delSubMediaFunction = async () => {
     try {
+      setDeleting(true);
+      const firebaseRes = await deleteFile(selectedFiles);
       const data = { taskId, subId, delMedia };
       const res = await deletemedia(data).unwrap();
       setOpenDialog(false);
