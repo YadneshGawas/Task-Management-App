@@ -65,6 +65,12 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: "POST",
             })
         }),
+        getUserReport: builder.query({
+            query: (id) =>({
+                url: `${USER_URL}/getuserreport/${id}`,
+                method: "GET",
+            })
+        }),
         addMedia: builder.mutation({
             query: (data) =>({
                 url: `${USER_URL}/addmedia`,
@@ -124,4 +130,5 @@ export const {
     useDelSubMediaMutation,
     useGetSubtaskQuery,
     usePutStatusMutation,
+    useGetUserReportQuery,
 } =  taskApi;

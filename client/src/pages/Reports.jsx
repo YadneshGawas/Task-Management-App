@@ -1,14 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ReportGenerator from "../other/ReportGenerator";
 import { useGetTeamListQuery } from "../redux/slice/api/userApi";
 import { getInitials } from "./../assets/index";
-import AddUser from "./../other/AddUser";
 import Button from "./../other/Button";
 import Title from "./../other/Title";
-import UserInfo from "../other/UserInfo";
-import ReportGenerator from "../other/ReportGenerator";
 
 const Reports = () => {
   const [open, setOpen] = useState(false);
@@ -53,7 +52,6 @@ const Reports = () => {
       <td className="p-2">{users.email || "users.email.com"}</td>
       <td className="p-2">{users.role || "users"}</td>
 
-      {user._id != users._id && (
         <td className="p-2 flex gap-4 justify-end">
           <Button
             className="text-blue-600 hover:text-blue-500 font-semibold sm:px-0"
@@ -62,7 +60,7 @@ const Reports = () => {
             onClick={() => handleClick(users)}
           />
         </td>
-      )}
+
     </tr>
   );
 

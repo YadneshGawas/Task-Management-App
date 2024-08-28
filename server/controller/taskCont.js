@@ -260,6 +260,24 @@ export const getUserTasks = async (req, res) => {
   }
 };
 
+export const getUserReport = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const tasks = await Task.find({ uTeam: { $in: [id] } }).populate(
+      "uTeam",
+      "name email role"
+    );
+
+    res.status(200).json({
+      tasks, // Return the array of projects
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+};
+
 export const getTaskDetails = async (req, res) => {
   try {
     const { id } = req.params;

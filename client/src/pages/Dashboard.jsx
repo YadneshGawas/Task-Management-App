@@ -337,7 +337,6 @@ const UserTb = ({ user }) => {
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const adminStatus = user.isAdmin;
-  const { data: usersdata } = useGetTeamListQuery();
   const { data: project, refetch: projRefetch } = useGetProjectQuery();
   const { data: task, refetch: taskRefetch } = useGetUserTaskQuery();
   const [start, setStart] = useState(0);
@@ -352,7 +351,6 @@ const Dashboard = () => {
     if (end < project?.projects?.length) {
       setStart(start + 1);
       setEnd(end + 1);
-      console.log("Start=>", start);
     }
   };
 
@@ -360,7 +358,6 @@ const Dashboard = () => {
     if (start > 0) {
       setStart(start - 1);
       setEnd(end - 1);
-      console.log("End=>", end);
     }
   };
 
@@ -408,7 +405,6 @@ const Dashboard = () => {
     if (project) {
       const proj = project?.projects;
       const reversedProj = proj?.slice().reverse();
-      console.log(reversedProj);
 
       const temp = reversedProj.slice(start, end).map((item) => {
         // Count the number of completed tasks within the current project's tasks array
