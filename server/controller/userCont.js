@@ -209,6 +209,7 @@ export const markNotificationRead = async (req, res) => {
 
 export const changeUserPassword = async (req, res) => {
   try {
+<<<<<<< Updated upstream
     const { userId } = req.user;
 
     const user = await User.findById(userId);
@@ -216,6 +217,17 @@ export const changeUserPassword = async (req, res) => {
     if (user) {
       if (user.password === req.body.oldPassword) {
         user.password = req.body.password;
+=======
+    const { email } = req.user;
+    const { password, oldPassword } = req.body;
+
+    const user = await User.findOne({email});
+
+    const isMatch = await user.matchPassword(oldPassword);
+    if (user) { 
+      if (isMatch) {
+        user.password = password;
+>>>>>>> Stashed changes
 
         await user.save();
 
@@ -228,7 +240,11 @@ export const changeUserPassword = async (req, res) => {
       } else {
         res
           .status(404)
+<<<<<<< Updated upstream
           .json({ status: false, message: "Old password is incorrect" });
+=======
+          .json({ status: false, message: "Old password is incorrect",email,password });
+>>>>>>> Stashed changes
       }
     } else {
       res.status(504).json({ status: false, message: "User not found" });

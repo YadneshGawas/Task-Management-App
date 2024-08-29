@@ -154,7 +154,7 @@ export const putStatus = async (req, res) => {
 
     const task = await Task.findById(taskId);
 
-    task.stage = stage ? stage : "to do"
+    task.stage = stage ? stage : "todo"
     await task.save();
 
     res

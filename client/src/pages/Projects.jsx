@@ -7,8 +7,10 @@ import AddProject from "../other/task/AddProject";
 import Title from "../other/Title";
 import { useGetProjectQuery } from "../redux/slice/api/projApi";
 import { tasks } from "../assets/data";
+import { useSelector } from "react-redux";
 
 const Projects = () => {
+  const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
 
   const { data, refetch } = useGetProjectQuery();
@@ -44,11 +46,15 @@ const Projects = () => {
     });
   };
 
-  const filteredProjects = projects?.filter((project) => {
-      const priorityMatch = filters.priority === "all" || project.priority === filters.priority;
-      const stageMatch = filters.stage === "all" || project.stage === filters.stage;
+  const filteredProjects = projects
+    ?.filter((project) => {
+      const priorityMatch =
+        filters.priority === "all" || project.priority === filters.priority;
+      const stageMatch =
+        filters.stage === "all" || project.stage === filters.stage;
       return priorityMatch && stageMatch;
-    }).reverse(); // Invert the array to show recently added elements on top
+    })
+    .reverse(); // Invert the array to show recently added elements on top
 
   useEffect(() => {
     refetch();
@@ -59,12 +65,14 @@ const Projects = () => {
       <div className="flex items-center justify-between mb-4">
         <Title title="Projects" />
 
-        <Button
-          onClick={() => setOpen(true)}
-          label="Create Project"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-        />
+        {user.isAdmin && (
+          <Button
+            onClick={() => setOpen(true)}
+            label="Create Project"
+            icon={<IoMdAdd className="text-lg" />}
+            className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+          />
+        )}
       </div>
 
       <div className="flex gap-4 mb-4">

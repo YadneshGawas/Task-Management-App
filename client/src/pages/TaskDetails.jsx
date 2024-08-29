@@ -134,9 +134,8 @@ const TASKTYPEICON = {
 };
 
 const TaskDetails = () => {
-  const location = useLocation();
   const [selected, setSelected] = useState(0);
-  const [status, setStatus] = useState("");
+  const [currPercentage, setCurrPercentage] = useState(null);
   const [disableEdit, setDisableEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
@@ -334,8 +333,9 @@ const TaskDetails = () => {
 
   const [putstatus] = usePutStatusMutation();
 
-  const statusUpdate = async () => {
+  const statusUpdate = async() => {
     try {
+<<<<<<< Updated upstream
       const percentage = Math.round((getCompleted() / getTasks()) * 100);
       //const percentage = 99;
       const getStage = () => {
@@ -360,10 +360,68 @@ const TaskDetails = () => {
       const res = await putstatus(data).unwrap();
       console.log("Status update =>", res, percentage);
       taskRefetch();
+=======
+      let percentage = 0;
+      percentage = Math.round((getCompleted() / getTasks()) * 100);
+      percentage = percentage > 0 ? percentage : 0;
+      const inProgressCount = getInProgress();
+      setCurrPercentage(percentage);
+      console.log("Percentage=>", percentage);
+      console.log("Current Percentage=>", currPercentage);
+      if (percentage !== currPercentage) {
+        console.log("Update run");
+        const disableAfterDue = () => {
+          const currDate = new Date();
+          const dueDate = new Date(data?.tasks?.due);
+          if (currDate > dueDate) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+        const getStage = () => {
+          if (disableAfterDue()) {
+            if (percentage === 0) {
+              setDisableEdit(false);
+              return "todo";
+            }
+          }
+          if (disableAfterDue()) {
+            console.log("Percentage from loop=>", percentage);
+            if (percentage < 100) {
+              setDisableEdit(false);
+              return "in progress";
+            }
+          }
+          if (disableAfterDue()) {
+            if (percentage === 100) {
+              setDisableEdit(true);
+              return "completed";
+            }
+          }
+        };
+        const stage = getStage();
+        const data1 = {
+          taskId,
+          stage,
+        };
+        const res = await putstatus(data1).unwrap();
+        taskRefetch();
+        setCurrPercentage(percentage);
+      }
+>>>>>>> Stashed changes
     } catch (error) {
       console.log(error);
     }
   };
+
+  // useEffect(() => {
+  //   // const delay = 2000;
+  //   // const timer = setTimeout(statusUpdate,delay);
+  //   // return () => clearTimeout(timer);
+  //   statusUpdate();
+  // }, [selected]);
+
 
   useEffect(() => {
     statusUpdate();
