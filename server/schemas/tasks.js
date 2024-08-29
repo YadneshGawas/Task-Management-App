@@ -101,13 +101,15 @@ taskSchema.pre("save", async function (next) {
             by: this.by,
           });
         }
-        if (this.isModified("stage")) {
+        if (this.isModified("stage") && this.stage !== original.stage) {
           this.activities.push({
+            //fixed
             type: "stage",
             activity: `Stage changed from "${original.stage}" to "${this.stage}"`,
             by: this.by,
           });
         }
+        
         if (this.isModified("due")) {
           this.activities.push({
             type: "due",

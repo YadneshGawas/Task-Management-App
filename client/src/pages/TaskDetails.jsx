@@ -316,12 +316,6 @@ const TaskDetails = () => {
   const deleteSubHandler = async (subId) => {
     try {
       setOpenDialog3(false);
-      //
-      const temp = {
-        taskId,
-        id: subId,
-      };
-      //
       const res = await delSubTask({
         id: subId,
         taskId,
