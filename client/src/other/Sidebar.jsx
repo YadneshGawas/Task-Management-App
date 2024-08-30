@@ -19,7 +19,6 @@ import clsx from "clsx";
 import { setOpenSidebar } from "../redux/slice/authS";
 
 const Sidebar = () => {
-
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const Sidebar = () => {
         )}
       >
         {el.icon}
-        <span className='hover:text-[#2564ed]'>{el.label}</span>
+        <span className="hover:text-[#2564ed]">{el.label}</span>
       </Link>
     );
   };
@@ -53,42 +52,44 @@ const Sidebar = () => {
       link: "dashboard",
       icon: <MdDashboard />,
     },
-    user.isAdmin
-      ? {
-          label: "Projects",
-          link: "projects",
-          icon: <FaTasks />,
-        }
-      : {
-          label: "Tasks",
-          link: "tasks",
-          icon: <MdTaskAlt />,
-        },
     {
-      label: "Reports",
-      link: "reports",
-      icon: <MdOutlineTextSnippet />
-    }
+      label: "Projects",
+      link: "projects",
+      icon: <FaTasks />,
+    },
   ];
 
   if (user.isAdmin) {
+    linkData.push(
+      {
+        label: "Team",
+        link: "team",
+        icon: <FaUsers />,
+      },
+      {
+        label: "Reports",
+        link: "reports",
+        icon: <MdOutlineTextSnippet />,
+      }
+    );
+  } else {
     linkData.push({
-      label: "Team",
-      link: "team",
-      icon: <FaUsers />,
+      label: "Tasks",
+      link: "tasks",
+      icon: <MdTaskAlt />,
     });
   }
 
   return (
-    <div className='w-full h-full flex flex-col gap-6 pl-3'>
-      <h1 className='flex gap-1 pt-6 items-center'>
-        <p className='bg-gradient-to-br from-blue-400 to-green-300 p-2 rounded-full'>
-          <AiFillThunderbolt className='text-white text-2xl font-black' />
+    <div className="w-full h-full flex flex-col gap-6 pl-3">
+      <h1 className="flex gap-1 pt-6 items-center">
+        <p className="bg-gradient-to-br from-blue-400 to-green-300 p-2 rounded-full">
+          <AiFillThunderbolt className="text-white text-2xl font-black" />
         </p>
-        <span className='text-2xl font-bold text-black'>Task Manager</span>
+        <span className="text-2xl font-bold text-black">Task Manager</span>
       </h1>
 
-      <div className='flex-1 flex flex-col gap-y-5 pt-2 pb-5'>
+      <div className="flex-1 flex flex-col gap-y-5 pt-2 pb-5">
         {linkData.map((link) => (
           <NavLink el={link} key={link.label} />
         ))}
@@ -96,13 +97,12 @@ const Sidebar = () => {
 
       <div>
         <div className=" flex items-center text-gray-500">
-        <FaRegCopyright/>
-        <span className="text-gray-500 font-thin px-1">
-          Made by Yadnesh Gawas
-        </span>
+          <FaRegCopyright />
+          <span className="text-gray-500 font-thin px-1">
+            Made by Yadnesh Gawas
+          </span>
         </div>
       </div>
-
     </div>
   );
 };

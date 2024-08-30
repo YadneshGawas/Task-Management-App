@@ -43,11 +43,14 @@ import {
   usePutStatusMutation,
   useUpdateDescMutation,
 } from "../redux/slice/api/taskApi";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { app } from "../assets/firebase";
 import { useGetUsersQuery } from "../redux/slice/api/userApi";
 import { TASK_TYPE, getInitials } from "./../assets/index";
 import Button from "./../other/Button";
 import Tabs from "./../other/Tabs";
 import AddTask from "./../other/task/AddTask";
+import { useGetAProjectQuery } from "../redux/slice/api/projApi";
 
 const TASK_TYPE_SUB = {
   todo: "bg-blue-500",
@@ -134,9 +137,11 @@ const TASKTYPEICON = {
 };
 
 const TaskDetails = () => {
+  const location = useLocation();
   const [selected, setSelected] = useState(0);
-  const [currPercentage, setCurrPercentage] = useState(null);
+  const [status, setStatus] = useState("");
   const [disableEdit, setDisableEdit] = useState(false);
+  const [currPercentage, setCurrPercentage] = useState(null);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [media, setMedia] = useState(false);
@@ -155,16 +160,38 @@ const TaskDetails = () => {
   const [deletemedia] = useDelMediaMutation();
   const [delTask] = useDelTaskMutation();
   const { data: users, refetch } = useGetUsersQuery(taskId);
-  const { data, refetch: taskRefetch, isLoading: tasksLoading } = useGetTaskDetailsQuery(taskId);
+  const { data, refetch: taskRefetch, isLoading: tasksLoading  } = useGetTaskDetailsQuery(taskId);
   const {
     data: subtask,
     refetch: subtaskrefetch,
     isLoading,
   } = useGetSubtaskQuery({ taskId, subId });
-  const isTasksPage = location.pathname.includes("/tasks");
-  const assets = data?.tasks?.assets;
   const task = data?.tasks;
   const projectId = task?.projectId;
+
+  const delHandler = (id, obj) => {
+    setDelMedia(id);
+    setOpenDialog2(true);
+    setSelectedFiles(obj);
+  };
+
+  const [deleting, setDeleting] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState();
+
+  const deleteFile = async (fileURL) => {
+    const storage = getStorage(app);
+    const fileRef = ref(storage, fileURL);
+
+    return new Promise((resolve, reject) => {
+      deleteObject(fileRef)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 
   let temp = [];
 
@@ -176,7 +203,6 @@ const TaskDetails = () => {
     try {
       setSubId(el._id);
       setOpen1(true);
-      console.log(temp);
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +211,6 @@ const TaskDetails = () => {
   const handleSubDelClick = async (el) => {
     try {
       setSubId(el._id);
-      console.log("SubId=>", subId);
       setOpenDialog3(true);
     } catch (error) {
       console.log(error);
@@ -240,17 +265,12 @@ const TaskDetails = () => {
     return "default";
   };
 
-  const delHandler = (id) => {
-    setDelMedia(id);
-    setOpenDialog2(true);
-  };
-
   const delMediaFunction = async (mediaId) => {
     try {
+      setDeleting(true);
+      const firebaseRes = await deleteFile(selectedFiles);
       const data = { taskId, mediaId };
-      console.log("Before sending=>", data);
       const res = await deletemedia(data).unwrap();
-      console.log(res);
       toast.success("Deleted media successfully");
       subtaskrefetch();
       setOpenDialog2(false);
@@ -302,7 +322,6 @@ const TaskDetails = () => {
         taskId,
         id: subId,
       };
-      console.log(temp);
       //
       const res = await delSubTask({
         id: subId,
@@ -329,6 +348,14 @@ const TaskDetails = () => {
       data?.tasks?.subTasks?.filter((subtask) => subtask.stage === "completed")
         .length || 0;
     return completedSubtasksCount;
+  };
+
+  const getInProgress = () => {
+    const inprogSubtasksCount =
+      data?.tasks?.subTasks?.filter(
+        (subtask) => subtask.stage === "in progress"
+      ).length || 0;
+    return inprogSubtasksCount;
   };
 
   const [putstatus] = usePutStatusMutation();
@@ -368,7 +395,8 @@ const TaskDetails = () => {
       console.log("Initial Percentage=>",initialPercentage)
       setCurrPercentage(initialPercentage);
     }
-  }, [task]); 
+    subtaskrefetch();
+  }, [task,subtask]); 
 
   const checkUpdate = () =>{
     const percentage = Math.round((getCompleted() / getTasks()) * 100);
@@ -384,12 +412,12 @@ const TaskDetails = () => {
   useEffect(() => {
     checkUpdate();
     refetch();
-    subtaskrefetch();
+    //subtaskrefetch();
     taskRefetch();
     if (task?.desc) {
       setDesc(task?.desc);
     }
-  }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data, selected, currPercentage]);
+  }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data]);
 
   return (
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
@@ -635,7 +663,7 @@ const TaskDetails = () => {
                                 icon={
                                   <MdDelete className="text-white rounded-lg" />
                                 }
-                                onClick={() => delHandler(el._id)}
+                                onClick={() => delHandler(el._id, el.link)}
                               />
                             </div>
                           </div>
@@ -725,9 +753,7 @@ const Activities = ({ activity, id, refetch }) => {
   const Card = ({ item }) => {
     return (
       <div className="flex w-full space-x-4">
-        <div className=" pb-10">
-            {TASKTYPEICON[item?.type]}
-        </div>
+        <div className=" pb-10">{TASKTYPEICON[item?.type]}</div>
 
         <div className="flex flex-row justify-between w-full mb-8">
           <div
@@ -748,9 +774,9 @@ const Activities = ({ activity, id, refetch }) => {
     <div className="w-full flex gap-10 2xl:gap-20 max-h-[calc(100vh-220px)] px-8 py-6 bg-white shadow rounded-md justify-between overflow-y-auto">
       <div className="w-full">
         <h4 className="text-gray-600 font-semibold text-lg mb-5">Activities</h4>
-          {activity?.map((el, index) => (
-            <Card key={index} item={el} isConnected={true} />
-          ))}
+        {activity?.map((el, index) => (
+          <Card key={index} item={el} isConnected={true} />
+        ))}
       </div>
     </div>
   );

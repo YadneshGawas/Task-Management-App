@@ -11,7 +11,6 @@ import Textbox from "./../other/Textbox";
 import { logout, setCredentials } from "../redux/slice/authS";
 import { toast } from "sonner";
 import LinearLoader from "../other/LinearLoader";
-
 import { motion } from "framer-motion";
 
 const Login = () => {
@@ -24,7 +23,7 @@ const Login = () => {
     hidden: { opacity: 0 },
     show: { opacity: 1 },
     transition: {
-      duration: 2,
+      duration: 2000,
     }
   };
 

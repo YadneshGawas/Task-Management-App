@@ -204,12 +204,12 @@ export const markNotificationRead = async (req, res) => {
 export const changeUserPassword = async (req, res) => {
   try {
     const { userId, email } = req.user;
-    const { password } = req.body;
+    const { password, oldPassword } = req.body;
 
-    const user = await User.findById(userId);
+    const user = await User.findOne({email});
     ///////////////////////////////////////
-    //const isMatch = await user.matchPassword(password);
-    const isMatch = bcrypt.compare(user.password,password);//solve the issue of bcrypt compare
+    const isMatch = await user.matchPassword(oldPassword);
+    //const isMatch = bcrypt.compare(user.password,password);//solve the issue of bcrypt compare
     //////////////////////////////////////
     if (user) { 
       if (isMatch) {
