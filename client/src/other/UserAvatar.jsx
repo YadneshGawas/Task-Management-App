@@ -13,14 +13,18 @@ import UserInfo from "./UserInfo";
 import ChangePassword from "./ChangePassword";
 import AddUserNoAdmin from "./AddUserNoAdmin";
 import { useLogoutMutation } from "../redux/slice/api/userApi";
+import { HiDocumentReport } from "react-icons/hi";
+import { FaUserEdit } from "react-icons/fa";
+import ReportGenerator from './ReportGenerator';
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
+  const [viewReport, setViewReport] = useState(false);
   let { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [obj] = useLogoutMutation()
+  const [obj] = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
@@ -75,7 +79,7 @@ const UserAvatar = () => {
                       onClick={() => setOpen(true)}
                       className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
-                      <FaUser className='mr-2' aria-hidden='true' />
+                      <FaUserEdit className='mr-2' aria-hidden='true' />
                       Update Profile
                     </button>
                   )}
@@ -92,6 +96,20 @@ const UserAvatar = () => {
                     </button>
                   )}
                 </Menu.Item>
+
+                {!user.isAdmin && 
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => setViewReport(true)}
+                      className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
+                    >
+                      <HiDocumentReport className='mr-2' aria-hidden='true' />
+                      Generate Report
+                    </button>
+                  )}
+                </Menu.Item>
+                }
 
                 <Menu.Item>
                   {({ active }) => (
@@ -112,6 +130,7 @@ const UserAvatar = () => {
       <AddUserNoAdmin open={open} setOpen={setOpen} userData={user}/>
       <ChangePassword open={openPassword} setOpen={setOpenPassword}/>
       <UserInfo user={user} open={viewOpen} setOpen={setViewOpen} userData={user}/>
+      <ReportGenerator open={viewReport} setOpen={setViewReport} userData={user} />
     </>
   );
 };
