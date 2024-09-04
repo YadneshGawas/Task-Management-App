@@ -297,6 +297,8 @@ export const createSubTask = async (req, res) => {
   try {
     const { title, desc, stage, taskId, subId, assets, assignee } = req.body;
 
+    const { userId } = req.user;
+
     const task = await Task.findById(taskId);
 
     const subtask = task.subTasks.find((sub) => sub._id.toString() === subId);
@@ -308,7 +310,7 @@ export const createSubTask = async (req, res) => {
           desc,
           stage,
           assets,
-          by: assignee
+          by: userId,
         };
 
         task.subTasks.push(newSubTask);

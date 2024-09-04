@@ -32,9 +32,11 @@ import { MdDelete } from "react-icons/md";
 import ConfirmatioDialog from "../Dialogs";
 import UserList from "./UserList";
 import SingleMember from "../SingleMember";
+import { useSelector } from "react-redux";
 const uploadedFileURLs = [];
 
-const AddSubTask = ({ open, setOpen, taskData, users }) => {
+const AddSubTask = ({ open, setOpen, taskData, users, stat }) => {
+  const { user } = useSelector((state) => state.auth);
   const [assignee, setAssignee] = useState([]);
   const [addsub] = useAddSubTaskMutation();
   const [stage, setStage] = useState("Select stage");
@@ -53,6 +55,8 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
   const [deleting, setDeleting] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState();
 
+  console.log("Status from subtasks=>",stat);
+
   const deleteFile = async (fileURL) => {
     const storage = getStorage(app);
     const fileRef = ref(storage, fileURL);
@@ -68,14 +72,13 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
     });
   };
 
-
   let subId = "";
   if (taskData) {
     subId = taskData._id;
   } else {
     subId = "";
   }
-  
+
   const {
     register,
     handleSubmit,
@@ -87,7 +90,7 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
   });
 
   const delHandler = (el) => {
-    console.log("EL from subtask delmedia handler=>",el)
+    console.log("EL from subtask delmedia handler=>", el);
     setDelMedia(el);
     setOpenDialog(true);
     setSelectedFiles(el);
@@ -126,7 +129,9 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
   };
 
   const handleDoubleClick = () => {
-    setIsEditing(true);
+    if (!stat) {
+      setIsEditing(true);
+    }
   };
 
   const getFileTypeIcon = (fileUrl) => {
@@ -200,12 +205,13 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
         assignee,
         assets: [...uploadedFileURLs],
       };
-      console.log("Before sending=>",d);
+      console.log("Before sending=>", d);
       const res = await addsub(d).unwrap();
       toast.success(res?.message);
       setIsEditing(false);
       setTimeout(() => {
         setOpen(false);
+        window.location.reload();
       }, 500);
       refetch();
     } catch (error) {
@@ -237,11 +243,15 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
       if (taskData?.desc) {
         setDesc(taskData?.desc);
       }
-      if(taskData?.by){
-        setAssignee(taskData?.by)
+      if (taskData?.by) {
+        setAssignee(taskData?.by);
       }
     }
   }, [taskData]);
+
+  useEffect(() => {
+    console.log("Assets=>",uploadedFileURLs);
+  }, [uploadedFileURLs]);
 
 
   return (
@@ -274,14 +284,14 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
                 selected={stage}
                 setSelected={setStage}
               />
-              
+
               <SingleMember
                 label="Assign Task To"
                 lists={users}
                 assignee={assignee}
                 setAssignee={setAssignee}
               />
-              
+
               <div className="w-full flex flex-col mb-3">
                 <div className="text-black text-md mb-2">
                   <p>Description</p>
@@ -323,58 +333,56 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
               {/* <UserList/> */}
 
               <div className="w-full md:w-1/2">
-                <p className="text-black text-xl mb-2">
-                  Assets
-                </p>
+                <p className="text-black text-xl mb-2">Assets</p>
                 {taskData?.assets.length > 0 ? (
-                <div className="w-full grid grid-cols-2 gap-2">
-                  {taskData?.assets?.map((el, index) => {
-                    const fileType = getFileTypeIcon(el);
-                    return (
-                      <div key={index} className="relative">
-                        <a
-                          href={el}
-                          target="_blank" // Opens the link in a new tab
-                          rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
-                          className="w-full rounded h-20 md:h-25 2xl:h-30 cursor-pointer transition-all duration-700 hover:scale-105 hover:z-50 flex items-center justify-center bg-gray-100"
-                        >
-                          {fileType === "image" ? (
-                            <img
-                              src={el}
-                              alt={taskData?.title}
-                              className="w-full h-full object-cover rounded"
-                            />
-                          ) : fileType === "pdf" ? (
-                            <FaFilePdf className="text-red-500 text-4xl" />
-                          ) : fileType === "doc" ? (
-                            <FaFileWord className="text-blue-500 text-4xl" />
-                          ) : (
-                            <p className="text-gray-500">Unknown File Type</p>
-                          )}
-                        </a>
-                        <div className="absolute top-2 right-2 z-10">
-                          <ButtonIconOnly
-                            type="button"
-                            className="flex items-center justify-center bg-red-600 rounded-xl w-6 h-6"
-                            icon={
-                              <MdDelete className=" text-white rounded-lg" />
-                            }
-                            onClick={() => delHandler(el)} // Add your delete handler function here
-                          />
+                  <div className="w-full grid grid-cols-2 gap-2">
+                    {taskData?.assets?.map((el, index) => {
+                      const fileType = getFileTypeIcon(el);
+                      return (
+                        <div key={index} className="relative">
+                          <a
+                            href={el}
+                            target="_blank" // Opens the link in a new tab
+                            rel="noopener noreferrer" // Provides security benefits when opening links in a new tab
+                            className="w-full rounded h-20 md:h-25 2xl:h-30 cursor-pointer transition-all duration-700 hover:scale-105 hover:z-50 flex items-center justify-center bg-gray-100"
+                          >
+                            {fileType === "image" ? (
+                              <img
+                                src={el}
+                                alt={taskData?.title}
+                                className="w-full h-full object-cover rounded"
+                              />
+                            ) : fileType === "pdf" ? (
+                              <FaFilePdf className="text-red-500 text-4xl" />
+                            ) : fileType === "doc" ? (
+                              <FaFileWord className="text-blue-500 text-4xl" />
+                            ) : (
+                              <p className="text-gray-500">Unknown File Type</p>
+                            )}
+                          </a>
+                          <div className="absolute top-2 right-2 z-10">
+                            {!stat && (
+                              <ButtonIconOnly
+                                type="button"
+                                className="flex items-center justify-center bg-red-600 rounded-xl w-6 h-6"
+                                icon={
+                                  <MdDelete className=" text-white rounded-lg" />
+                                }
+                                onClick={() => delHandler(el)} // Add your delete handler function here
+                              />
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                ):(
-                  <p className="text-black text-sm mb-2">
-                  No assets found
-                </p>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-black text-sm mb-2">No assets found</p>
                 )}
               </div>
             </div>
             <div className="inline-block items-center justify-start">
-              <label
+              {!stat && <label
                 className="inline-flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
                 htmlFor="imgUpload"
               >
@@ -388,7 +396,7 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
                 />
                 <BiImages />
                 <span>Add Assets</span>
-              </label>
+              </label>}
             </div>
             <div className="overflow-x-hidden">
               <ul>
@@ -403,11 +411,20 @@ const AddSubTask = ({ open, setOpen, taskData, users }) => {
                   Uploading assets
                 </span>
               ) : (
-                <Button
-                  label="Submit"
-                  type="submit"
-                  className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto rounded-md"
-                />
+                /*{ (!stat || user.isAdmin) && ( //User isadmin to disable submit for subtasks
+                  <Button
+                    label="Submit"
+                    type="submit"
+                    className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto rounded-md"
+                  />
+                ) }*/
+                (!stat || user.isAdmin ) && ( //User isadmin to disable submit for subtasks
+                  <Button
+                    label="Submit"
+                    type="submit"
+                    className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto rounded-md"
+                  />
+                )
               )}
 
               <Button

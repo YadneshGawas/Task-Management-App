@@ -117,7 +117,8 @@ const TaskCard = ({ task }) => {
                 event.stopPropagation();
               }}
             >
-              {!isTasksPage && <TaskDialog task={task} />}
+              {(!isTasksPage && user.isAdmin) && <TaskDialog task={task} />}
+
             </div>
           </div>
 

@@ -196,7 +196,9 @@ const TaskDetails = () => {
   let temp = [];
 
   const handleDoubleClick = () => {
-    setIsEditing(true);
+    if(!disableEdit){
+      setIsEditing(true);
+    }
   };
 
   const handleOnClick = async (el) => {
@@ -429,6 +431,8 @@ const TaskDetails = () => {
     }
   }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data, isLoading]);
 
+  console.log(disableEdit);
+
   return (
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">
       <div className="flex items-center justify-between">
@@ -501,7 +505,7 @@ const TaskDetails = () => {
                             modules={modules}
                             className="border border-gray-300 rounded-md p-2" // Optional: Styling for editor
                           />
-                          {user.isAdmin && isEditing && (
+                          {user.isAdmin && isEditing && !disableEdit && (
                             <Button
                               type="submit"
                               label="SAVE"
@@ -558,11 +562,11 @@ const TaskDetails = () => {
                   <div className="py-1">
                     <p className="flex flex-row items-center gap-x-2 justify-start text-gray-500 font-semibold text-sm pt-2 pb-3">
                       SUB-TASKS
-                      <ButtonIconOnly
+                      {!disableEdit && <ButtonIconOnly
                         onClick={() => setOpen(true)}
                         icon={<IoMdAdd className="text-lg" />}
                         className="outline outline-1 outline-gray-400"
-                      />
+                      />}
                     </p>
                     {/* <div className="mt-2">
                       <Button //Visible only if admin
@@ -595,11 +599,11 @@ const TaskDetails = () => {
                                 }}
                               >
                                 {/* <SubTaskDialog task={el} /> */}
-                                <ButtonIconOnly
+                                {!disableEdit && <ButtonIconOnly
                                   className="text-red-500"
                                   icon={<MdDelete />}
                                   onClick={() => handleSubDelClick(el)}
-                                />
+                                />}
                                 {/* pass object from here */}
                               </div>
                               {/* pass object from here */}
@@ -625,13 +629,13 @@ const TaskDetails = () => {
                   <div className="w-full space-y-4">
                     <p className="text-lg font-semibold">ASSETS</p>
                     {/* <div className="w-full"> */}
-                    <button
+                    {!disableEdit && <button
                       onClick={() => setMedia(true)}
                       className="w-full flex gap-4 items-center text-sm text-gray-500 font-semibold"
                     >
                       <IoMdAdd className="text-lg" />
                       <span>ADD MEDIA</span>
-                    </button>
+                    </button>}
                     {/* </div> */}
                     <div className="w-full grid grid-cols-3 gap-4">
                       {task?.assets?.map((el, index) => {
@@ -667,14 +671,14 @@ const TaskDetails = () => {
                               )}
                             </a>
                             <div className="absolute top-2 right-2 z-10">
-                              <ButtonIconOnly
+                              {!disableEdit && <ButtonIconOnly
                                 type="button"
                                 className="flex items-center justify-center bg-red-600 rounded-xl w-6 h-6"
                                 icon={
                                   <MdDelete className="text-white rounded-lg" />
                                 }
                                 onClick={() => delHandler(el._id, el.link)}
-                              />
+                              />}
                             </div>
                           </div>
                         );
@@ -714,6 +718,7 @@ const TaskDetails = () => {
           setOpen={setOpen1}
           taskData={subtask}
           users={teamMembers}
+          stat={disableEdit}
         />
       )}
 
