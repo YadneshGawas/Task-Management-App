@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -13,10 +14,11 @@ import { useGetAProjectQuery } from "../redux/slice/api/projApi";
 const AdminTasks = () => {
   const [selected, setSelected] = useState(0);
   const handleOpen = () => setOpen(true);
+  const [object, setObject] = useState(false);
   const [open, setOpen] = useState(false);
-  const [disable,setDisable] = useState(false);
+  const [stage, setStage] = useState(false);
   const { projectId } = useParams();
-  const { data, refetch } = useGetTaskQuery();
+  const { data, refetch, isLoading } = useGetTaskQuery();
   const { data: project } = useGetAProjectQuery(projectId);
 
   let title = "";
@@ -66,7 +68,6 @@ const AdminTasks = () => {
   });
 
   if (filteredTasks) {
-    console.log(filteredTasks);
     if (filteredTasks?.length > 0) {
       const projName = filteredTasks[0].projectTitle;
       title = projName;
@@ -78,30 +79,49 @@ const AdminTasks = () => {
   const disableAfterDue = () => {
     const currentDate = new Date();
     const dueDate = new Date(project?.projects?.due);
-    if(currentDate>dueDate){
-      setDisable(true);
-    }else{
-      setDisable(false);
+
+    if (currentDate > dueDate) {
+      setObject(true);
+    } else {
+      setObject(false);
     }
-  }
+  };
 
   useEffect(() => {
-    disableAfterDue();
+    setTimeout(()=>{
+      if (!isLoading) {
+        const projStage = project?.projects?.stage;
+        if(projStage === "completed"){
+          setStage(true);
+        }else{
+          setStage(false);
+        }
+        disableAfterDue();
+        console.log(projStage);
+        console.log(stage);
+      }
+
+    },100)
+  }, [project]);
+
+  useEffect(() => {
+    //disableAfterDue();
     refetch();
-  }, [ disableAfterDue]);
+  }, [open]);
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <Title title={`${title} `} />
 
-        {!disable && 
-        <Button
-          onClick={() => setOpen(true)}
-          label="Create Task"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
-        />}
+        {!stage && !isLoading  && !object && (
+          <Button
+            onClick={() => setOpen(true)}
+            label="Create Task"
+            icon={<IoMdAdd className="text-lg" />}
+            className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5"
+          />
+        )}
       </div>
 
       <div className="flex gap-4 mb-4">

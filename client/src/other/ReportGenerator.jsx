@@ -13,7 +13,7 @@ import Wrapper from "./Wrapper";
 import { useGetUserReportQuery } from "../redux/slice/api/taskApi";
 
 const ReportGenerator = ({ open, setOpen, userData }) => {
-  console.log("User data from report generator=>",userData);  
+  //console.log("User data from report generator=>",userData);  
   const { user } = useSelector((state) => state.auth);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -111,7 +111,7 @@ const ReportGenerator = ({ open, setOpen, userData }) => {
     }
 
     setTasks(filteredTasks);
-    console.log(filteredTasks);
+    //console.log(filteredTasks);
     setPie(pieData);
   };
 
@@ -234,7 +234,7 @@ const ReportGenerator = ({ open, setOpen, userData }) => {
           </div>
           <Button
             type="button"
-            className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto mt-5"
+            className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto mt-5 self-end"
             onClick={() => setOpen(false)}
             label="Close"
           />

@@ -167,6 +167,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
                   required: "Date is required!",
                 })}
                 error={errors.date ? errors.date.message : ""}
+                min={new Date().toISOString().split("T")[0]}
               />
 
               <SelectList

@@ -390,6 +390,11 @@ const TaskDetails = () => {
   };
 
   useEffect(() => {
+    console.log(data);
+    
+  }, []);
+
+  useEffect(() => {
     if(!tasksLoading){
       const initialPercentage = Math.round((getCompleted() / getTasks()) * 100);
       console.log("Initial Percentage=>",initialPercentage)
@@ -410,14 +415,19 @@ const TaskDetails = () => {
   }
 
   useEffect(() => {
+    const stage = data?.tasks?.stage;
+    if(stage === "completed"){
+      setDisableEdit(true)
+    }
     checkUpdate();
     refetch();
+    console.log(data?.tasks);
     //subtaskrefetch();
     taskRefetch();
     if (task?.desc) {
       setDesc(task?.desc);
     }
-  }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data]);
+  }, [open, openEdit, openDialog, openDialog2, refetch, taskRefetch, data, isLoading]);
 
   return (
     <div className="w-full flex flex-col gap-3 mb-3 overflow-y-hidden text-sm">

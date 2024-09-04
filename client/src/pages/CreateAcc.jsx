@@ -150,7 +150,7 @@ const CreateAcc = () => {
                 />
                 <span className="ml-2">
                   I agree to the{" "}
-                  <a href="/" className="text-blue-500 underline">
+                  <a href="https://www.privacypolicies.com/live/2652c1c8-ac96-487a-ad77-3cd3626648eb" className="text-blue-500 underline">
                     terms and conditions
                   </a>
                 </span>
