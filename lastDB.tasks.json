@@ -1,0 +1,3960 @@
+[{
+  "_id": {
+    "$oid": "66c59032be3d8576dabe19a6"
+  },
+  "projectId": {
+    "$oid": "66b9a61c9ff03a1fdf756ceb"
+  },
+  "title": "Schema Design",
+  "date": {
+    "$date": "2024-08-21T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "desc": "Add description here",
+  "priority": "medium",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c59032be3d8576dabe19a9"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Student",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c59099be3d8576dabe1ca2"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Student",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c590b3be3d8576dabe1d42"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c590b3be3d8576dabe1d61"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724407993372180166678_284415186741248_3053848579496390405_n.jpg?alt=media&token=96c26f4b-1862-4b01-bd09-a2127a41a1cd\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724407993372180166678_284415186741248_3053848579496390405_n.jpg?alt=media&token=96c26f4b-1862-4b01-bd09-a2127a41a1cd style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c860bd61e59ed9b00e6350"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c8687361e59ed9b01056d4"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c8687361e59ed9b01056d6"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c8687361e59ed9b01056fd"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"undefined\"",
+      "date": {
+        "$date": "2024-08-28T06:13:16.267Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cec1878dbc4c744a2ece08"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-08-28T06:13:16.267Z"
+      },
+      "_id": {
+        "$oid": "66cec1878dbc4c744a2ece09"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-28T06:13:16.267Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cec18c8dbc4c744a2eceb0"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-28T06:13:16.267Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cec18c8dbc4c744a2ecefe"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-28T10:47:01.894Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cf0055c42f8e2b88c63ef5"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-28T10:50:04.220Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cf00e1ec2aadda22dcafd7"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Student1",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d808e470c199e5d2aae532"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d808e570c199e5d2aae585"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 3 removed ",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8093c70c199e5d2aae69a"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Student1",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8095070c199e5d2aae7dd"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 3 removed ",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8096c70c199e5d2aae923"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Student1",
+      "date": {
+        "$date": "2024-09-04T07:14:35.026Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d809ab70c199e5d2aaeaaa"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 2",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d835a278dbf96b0cc88cd9"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d835a278dbf96b0cc88cda"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 2",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d835a778dbf96b0cc88ded"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d835a778dbf96b0cc88dee"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 2 by Student1",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d835a778dbf96b0cc88def"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d835a778dbf96b0cc88e88"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 2",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c59099be3d8576dabe1c9e"
+      }
+    },
+    {
+      "title": "Subtask 2",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c590b3be3d8576dabe1d3e"
+      }
+    },
+    {
+      "title": "Subtask 2",
+      "desc": "<p>Hello world</p>",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66d809ab70c199e5d2aaeaa6"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-21T06:58:58.447Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T10:25:43.952Z"
+  },
+  "projectTitle": "Backend Development",
+  "projectDue": {
+    "$date": "2024-08-22T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 21,
+  "stage": "completed"
+},
+{
+  "_id": {
+    "$oid": "66c59053be3d8576dabe1a3c"
+  },
+  "projectId": {
+    "$oid": "66bc988a03d94c413bf8d416"
+  },
+  "title": "Test Task ",
+  "date": {
+    "$date": "2024-08-21T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-22T00:00:00.000Z"
+  },
+  "desc": "Add description here",
+  "priority": "low",
+  "stage": "completed",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c59053be3d8576dabe1a3f"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Student1",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c8678261e59ed9b00fa2fb"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c8678261e59ed9b00fa312"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c8678261e59ed9b00fa2f7"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-21T06:59:31.208Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-23T10:42:10.064Z"
+  },
+  "projectTitle": "my test Proj",
+  "projectDue": {
+    "$date": "2024-08-22T00:00:00.000Z"
+  },
+  "projectPriority": "low",
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "66c5906bbe3d8576dabe1a95"
+  },
+  "projectId": {
+    "$oid": "66b9b1c3a75923d04b2a1b71"
+  },
+  "title": "API Design",
+  "date": {
+    "$date": "2024-08-21T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-28T00:00:00.000Z"
+  },
+  "desc": "Add description here",
+  "priority": "medium",
+  "stage": "completed",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c5906bbe3d8576dabe1a98"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Student",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c59089be3d8576dabe1c05"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-21T06:15:34.318Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c59089be3d8576dabe1c1c"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c59089be3d8576dabe1c01"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-21T06:59:55.327Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-21T07:00:25.671Z"
+  },
+  "projectTitle": "Project Temp",
+  "projectDue": {
+    "$date": "2024-08-28T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "66c86aec61e59ed9b0155e1b"
+  },
+  "projectId": {
+    "$oid": "66b867a3314e9ec3cf6a9f2d"
+  },
+  "title": "Task 1",
+  "date": {
+    "$date": "2024-08-23T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-31T00:00:00.000Z"
+  },
+  "desc": "<p>Enter the description here</p>",
+  "priority": "high",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86aec61e59ed9b0155e1e"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Student1",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86afd61e59ed9b01563ad"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b0861e59ed9b0156db1"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b0861e59ed9b0156dd2"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to todo",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b0d61e59ed9b0156e01"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b0d61e59ed9b0156e2c"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from todo to in progress",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b1161e59ed9b0156e67"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Student1",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b3061e59ed9b0156edb"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b3461e59ed9b0156f64"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b3461e59ed9b0156fa8"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b3861e59ed9b0157001"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86b3861e59ed9b015704f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86cf861e59ed9b015806d"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86d0c61e59ed9b0158108"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86d4d61e59ed9b01581bf"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86d4e61e59ed9b015823f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e4e61e59ed9b0158808"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e4e61e59ed9b015880a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e4e61e59ed9b015884c"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Student1",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e5d61e59ed9b0158918"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e5d61e59ed9b015897b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e9261e59ed9b0158ac5"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86e9261e59ed9b0158b4a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86eb561e59ed9b0158bf1"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-23T05:35:01.094Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66c86eb561e59ed9b0158c80"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"undefined\"",
+      "date": {
+        "$date": "2024-08-28T05:37:33.962Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cebf1e92e97054e52ef9a8"
+      }
+    },
+    {
+      "type": "due",
+      "activity": "Stage changed from \"Sat Aug 24 2024 05:30:00 GMT+0530 (India Standard Time)\" to \"Thu Aug 29 2024 05:30:00 GMT+0530 (India Standard Time)\"",
+      "date": {
+        "$date": "2024-08-28T05:37:33.962Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cebf1e92e97054e52ef9a9"
+      }
+    },
+    {
+      "type": "priority",
+      "activity": "Priority changed from \"medium\" to \"high\"",
+      "date": {
+        "$date": "2024-08-28T05:37:33.962Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66cebf1e92e97054e52ef9aa"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"undefined\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-29T05:08:38.772Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d00a877a5c5798393f1fda"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"undefined\" to \"todo\"",
+      "date": {
+        "$date": "2024-08-29T05:08:38.772Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d00a877a5c5798393f1fdc"
+      }
+    },
+    {
+      "type": "description",
+      "activity": "Description changed to <p>Enter the description here</p>",
+      "date": {
+        "$date": "2024-08-30T05:08:52.545Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d157d5ab64b08339b11eb2"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"undefined\"",
+      "date": {
+        "$date": "2024-08-30T05:08:52.545Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1581dab64b08339b1207e"
+      }
+    },
+    {
+      "type": "due",
+      "activity": "Stage changed from \"Thu Aug 29 2024 05:30:00 GMT+0530 (India Standard Time)\" to \"Sat Aug 31 2024 05:30:00 GMT+0530 (India Standard Time)\"",
+      "date": {
+        "$date": "2024-08-30T05:08:52.545Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1581dab64b08339b1207f"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "",
+      "stage": "in progress",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c86afd61e59ed9b01563a9"
+      }
+    },
+    {
+      "title": "Subtask 2",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66c86e5d61e59ed9b0158914"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-23T10:56:44.785Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-30T05:26:53.541Z"
+  },
+  "projectTitle": "FrontEnd Development",
+  "projectDue": {
+    "$date": "2024-08-24T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 29
+},
+{
+  "_id": {
+    "$oid": "66d00b1c7a5c5798394103e9"
+  },
+  "projectId": {
+    "$oid": "66d00ac17a5c5798393f212a"
+  },
+  "title": "TEST 1",
+  "date": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-30T00:00:00.000Z"
+  },
+  "desc": "<p>THIS IS THE DESCRIPTION TO TEST THE WORKING OF APPLICATION</p><ol><li>1</li><li>2</li><li>3</li><li>4</li></ol><ul><li>1</li><li>2</li><li>3</li><li>4</li><li><span class=\"ql-font-serif\">hello</span></li><li><span class=\"ql-font-monospace\">hello</span></li><li><span class=\"ql-size-huge\">hello</span></li><li><strong class=\"ql-size-huge\">hello</strong></li><li><strong class=\"ql-size-huge\">world</strong></li></ul>",
+  "priority": "medium",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    }
+  ],
+  "assets": [],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "",
+      "stage": "in progress",
+      "assets": [],
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d01d37b246544e9376e0f5"
+      }
+    },
+    {
+      "title": "Subtask 2",
+      "desc": "",
+      "stage": "completed",
+      "assets": [
+        "https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725445888393713cfc9ea077079866fa21ce1ac82522.jpg?alt=media&token=bda49ff5-1d42-4598-959e-553dba72b691"
+      ],
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d01d59b246544e9376e48c"
+      }
+    },
+    {
+      "title": "Subtask 3",
+      "desc": "",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66b9895f6e7bf0ea463cf32e"
+      },
+      "_id": {
+        "$oid": "66d066764ea6f004e85c749a"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-29T05:46:04.982Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T12:36:42.059Z"
+  },
+  "projectTitle": "TESTING PHASE 1",
+  "projectDue": {
+    "$date": "2024-09-06T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 279,
+  "stage": "in progress",
+  "activities": [
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-29T12:08:15.704Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d066234ea6f004e85c73b7"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-29T12:08:15.704Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d066234ea6f004e85c73d3"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to todo",
+      "date": {
+        "$date": "2024-08-29T12:08:15.704Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d0662c4ea6f004e85c741a"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Student1",
+      "date": {
+        "$date": "2024-08-29T12:08:15.704Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d066764ea6f004e85c749e"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas: Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724934088949180166678_284415186741248_3053848579496390405_n.jpg?alt=media&token=cede182d-6607-4130-bedd-2c30f0441c9e\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724934088949180166678_284415186741248_3053848579496390405_n.jpg?alt=media&token=cede182d-6607-4130-bedd-2c30f0441c9e style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a> ",
+      "date": {
+        "$date": "2024-08-29T12:19:07.078Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d067cb369c9ff2612af7bf"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Student1: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724993853456179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=a6616a33-1fab-44fb-a832-5b5699b2d9bf\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724993853456179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=a6616a33-1fab-44fb-a832-5b5699b2d9bf style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1514081570350b5978b7c"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Student1",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "_id": {
+        "$oid": "66d1514481570350b5978bc8"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask 1 stage changed from todo to completed",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1515181570350b5978c6a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask 3 stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1516981570350b5978d6d"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1516981570350b5978dbb"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask 3 stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1517881570350b5978e81"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1517881570350b5978ed9"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas: Image 4 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994016046179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=1f15c12e-9290-41ec-af29-aed6f34c63c6\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994016046179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=1f15c12e-9290-41ec-af29-aed6f34c63c6 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a> ",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d151e281570350b5978f4b"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset Image 4 deleted by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "_id": {
+        "$oid": "66d151e681570350b5978fdb"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas: Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994055462180253019_284414830074617_2243359214502911240_n.jpg?alt=media&token=60941606-35c8-4819-a7f8-c238e79e8aa2\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994055462180253019_284414830074617_2243359214502911240_n.jpg?alt=media&token=60941606-35c8-4819-a7f8-c238e79e8aa2 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a> ",
+      "date": {
+        "$date": "2024-08-30T04:53:08.774Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1520a81570350b59790b9"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994423573180253019_284414830074617_2243359214502911240_n.jpg?alt=media&token=c7e2a75d-3e0c-4ff6-b6fb-29477a2ac541\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724994423573180253019_284414830074617_2243359214502911240_n.jpg?alt=media&token=c7e2a75d-3e0c-4ff6-b6fb-29477a2ac541 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-08-30T05:06:29.773Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d1537a3fe81c0c89a34e12"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-08-30T05:06:29.773Z"
+      },
+      "_id": {
+        "$oid": "66d1537f3fe81c0c89a34e99"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-30T05:08:52.545Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d153eeab64b08339acf425"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-30T05:08:52.545Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d153eeab64b08339acf49b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d15bd11f6993775b521fe5"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d15bd11f6993775b522065"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d15bdc1f6993775b522106"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d15bdc1f6993775b522190"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724996607637179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=89260613-7f58-448d-a90c-e7797ec90060\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1724996607637179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=89260613-7f58-448d-a90c-e7797ec90060 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d15c021f6993775b523000"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-08-30T05:41:00.637Z"
+      },
+      "_id": {
+        "$oid": "66d15c401f6993775b5230b7"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725165787932179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=db301af7-7e31-45c8-871e-9ee21410ef66\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725165787932179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=db301af7-7e31-45c8-871e-9ee21410ef66 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f0dfc162768c74635788"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "_id": {
+        "$oid": "66d3f0e7c162768c7463584b"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Student1: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725165811898179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=2fc49e0f-21b8-46bb-9dad-01da1ce2f72c\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725165811898179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=2fc49e0f-21b8-46bb-9dad-01da1ce2f72c style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f0f6c162768c74635930"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Student1",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "_id": {
+        "$oid": "66d3f0fac162768c746359fa"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to todo",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f102c162768c74635bed"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f102c162768c74635c9f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from todo to completed",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f108c162768c74635d7c"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-01T04:42:27.777Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d3f108c162768c74635e38"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7e9c10e94d40089ebb0fe"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7e9c10e94d40089ebb1c5"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7e9c60e94d40089ebb2b8"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7e9c60e94d40089ebb388"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7e9ff0e94d40089ebb9e0"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7ea000e94d40089ebbaba"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7ea030e94d40089ebbbc7"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7ea030e94d40089ebbcab"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7eac70e94d40089ebc46b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7eac70e94d40089ebc559"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7eacf0e94d40089ebc67e"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7eacf0e94d40089ebc776"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725428801792179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=9e52b06a-5dc7-4f7b-9232-e8b50185859a\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725428801792179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=9e52b06a-5dc7-4f7b-9232-e8b50185859a style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7f4450e94d40089ebcff2"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "_id": {
+        "$oid": "66d7f44b0e94d40089ebd195"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d836f378dbf96b0cc8a018"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d836f378dbf96b0cc8a124"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 2 by Student1: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725445888393713cfc9ea077079866fa21ce1ac82522.jpg?alt=media&token=bda49ff5-1d42-4598-959e-553dba72b691\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725445888393713cfc9ea077079866fa21ce1ac82522.jpg?alt=media&token=bda49ff5-1d42-4598-959e-553dba72b691 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8370278dbf96b0cc8a592"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85438e3bf3e710b54cdd9"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85438e3bf3e710b54cef4"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8545ae3bf3e710b54d97b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8545ae3bf3e710b54daa1"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66d464061639827eac6236d1"
+  },
+  "projectId": {
+    "$oid": "66d00ac17a5c5798393f212a"
+  },
+  "title": "TEST 2",
+  "date": {
+    "$date": "2024-09-01T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-09-05T00:00:00.000Z"
+  },
+  "desc": "Add description here",
+  "priority": "medium",
+  "stage": "todo",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-09-01T12:40:15.052Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d464061639827eac6236d4"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d806f975f7675000bec6c7"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "<p>Hello world</p>",
+      "stage": "in progress",
+      "assets": [
+        "https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725433590226b45ae1d30d778097404a99d2b80fc325.png?alt=media&token=f5cf07b1-cb65-4301-a443-8f2614aac883"
+      ],
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d806f975f7675000bec6c3"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-09-01T12:54:30.186Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T07:06:33.566Z"
+  },
+  "projectTitle": "TESTING PHASE 1",
+  "projectDue": {
+    "$date": "2024-09-06T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66d7f33e0e94d40089ebcd9f"
+  },
+  "projectId": {
+    "$oid": "66bc6d7d3b89d9abb27ba18c"
+  },
+  "title": "Task 1",
+  "date": {
+    "$date": "2024-09-04T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-09-26T00:00:00.000Z"
+  },
+  "desc": "Add description here",
+  "priority": "medium",
+  "stage": "todo",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "assets": [],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-09-04T04:15:21.502Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d7f33e0e94d40089ebcda2"
+      }
+    }
+  ],
+  "subTasks": [],
+  "createdAt": {
+    "$date": "2024-09-04T05:42:22.702Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T05:42:22.702Z"
+  },
+  "projectTitle": "Project 17",
+  "projectDue": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "projectPriority": "high",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d804fe75f7675000beb6c3"
+  },
+  "projectId": {
+    "$oid": "66d804df75f7675000beb5c2"
+  },
+  "title": "Task 1 Testing",
+  "date": {
+    "$date": "2024-09-04T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-09-05T00:00:00.000Z"
+  },
+  "desc": "<p>Add description here</p>",
+  "priority": "medium",
+  "stage": "in progress",
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    }
+  ],
+  "assets": [
+    {
+      "desc": "Image 1",
+      "link": "https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725446098307179642207_284415033407930_5055532001332129940_n.jpg?alt=media&token=51c36de0-a3ba-4e5e-adae-7d7db7702f4c",
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d837d578dbf96b0cc8aee1"
+      }
+    },
+    {
+      "desc": "Demo task 2",
+      "link": "https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/17254524244061725262409752.jpg?alt=media&token=d98495f0-e1ee-4627-80dc-89f548d387c8",
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8508b022550f90bb1c93a"
+      }
+    }
+  ],
+  "activities": [
+    {
+      "type": "created",
+      "activity": "Task created",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d804fe75f7675000beb6c6"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8052975f7675000beb770"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Student1",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8055275f7675000beb7ae"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8056d75f7675000beb7f9"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Student1: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725433167446180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=e64fc083-7e54-4af1-87af-6c264f011f30\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725433167446180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=e64fc083-7e54-4af1-87af-6c264f011f30 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8056d75f7675000beb7fa"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8056d75f7675000beb82a"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 1",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8057375f7675000beb87f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8057375f7675000beb880"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8057475f7675000beb8bf"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725433283327179642207_284415033407930_5055532001332129940_n.jpg?alt=media&token=ba6ab12f-2061-4a82-93f6-d6db6b541870\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725433283327179642207_284415033407930_5055532001332129940_n.jpg?alt=media&token=ba6ab12f-2061-4a82-93f6-d6db6b541870 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d805c775f7675000beba0e"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 1",
+      "date": {
+        "$date": "2024-09-04T06:53:52.994Z"
+      },
+      "_id": {
+        "$oid": "66d805d775f7675000beba73"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d82c3178dbf96b0cc86bc0"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d82c3578dbf96b0cc86c1e"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d82c3778dbf96b0cc86c82"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82c3f78dbf96b0cc86ced"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82c3f78dbf96b0cc86d4a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82c4678dbf96b0cc86dc1"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82c4678dbf96b0cc86e29"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82d4078dbf96b0cc87128"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82d4078dbf96b0cc87199"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82d4878dbf96b0cc87228"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82d4878dbf96b0cc872a3"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725443438892179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=d6c2d560-bee7-4bf7-a6cb-2620cecaae40\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725443438892179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=d6c2d560-bee7-4bf7-a6cb-2620cecaae40 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d82d7278dbf96b0cc8733e"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8361a78dbf96b0cc8990e"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d8361a78dbf96b0cc8990f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8361a78dbf96b0cc8999e"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8362278dbf96b0cc89a51"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8362278dbf96b0cc89aea"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d837c878dbf96b0cc8ad76"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d837c878dbf96b0cc8ae19"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 1 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725446098307179642207_284415033407930_5055532001332129940_n.jpg?alt=media&token=51c36de0-a3ba-4e5e-adae-7d7db7702f4c\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725446098307179642207_284415033407930_5055532001332129940_n.jpg?alt=media&token=51c36de0-a3ba-4e5e-adae-7d7db7702f4c style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d837d578dbf96b0cc8aee5"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Image 4 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725446122767180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=ae2d64e0-5494-412d-9dc7-fafe41887713\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725446122767180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=ae2d64e0-5494-412d-9dc7-fafe41887713 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d837ed78dbf96b0cc8af9a"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset deleted:Image 4",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "_id": {
+        "$oid": "66d8381478dbf96b0cc8b0a1"
+      }
+    },
+    {
+      "type": "description",
+      "activity": "Description changed to <p>Add description here</p>",
+      "date": {
+        "$date": "2024-09-04T09:42:27.311Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8383a78dbf96b0cc8b1a7"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450911158180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=921d5fa9-bebe-43ce-ae08-bc4d12301ccc\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450911158180040619_284415120074588_8565200166586984906_n.jpg?alt=media&token=921d5fa9-bebe-43ce-ae08-bc4d12301ccc style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84aa2022550f90bb0e1b5"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ad4022550f90bb0e2f3"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84afa022550f90bb0e4e5"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 4 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bf2022550f90bb0e86b"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb3f"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 2",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb40"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 2 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450961567179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=5eb5325c-d349-4d6a-84a1-659b1cdfa5af\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450961567179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=5eb5325c-d349-4d6a-84a1-659b1cdfa5af style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb41"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 3",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb42"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 3 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450999816179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=66164baf-cf2a-47cc-a3c8-577631354f64\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450999816179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=66164baf-cf2a-47cc-a3c8-577631354f64 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb43"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 4",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb44"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 4 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84bfd022550f90bb0eb45"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c02022550f90bb0ee5a"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 3",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c02022550f90bb0ee5b"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 3 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450999816179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=66164baf-cf2a-47cc-a3c8-577631354f64\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725450999816179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=66164baf-cf2a-47cc-a3c8-577631354f64 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c02022550f90bb0ee5c"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 4",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c02022550f90bb0ee5d"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 4 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84c02022550f90bb0ee5e"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 3 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c06022550f90bb0f1de"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 4",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c06022550f90bb0f1df"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 4 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84c06022550f90bb0f1e0"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 4 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c09022550f90bb0f57b"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c27022550f90bb0fc00"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c37022550f90bb0fe8f"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c59022550f90bb10132"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c61022550f90bb105f9"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c76022550f90bb10915"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84c8c022550f90bb10d46"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ca7022550f90bb11216"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84ca7022550f90bb11217"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84cab022550f90bb11683"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 2 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84cab022550f90bb11684"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 2",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d0d022550f90bb122b9"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d0d022550f90bb122ba"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d12022550f90bb12762"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d2a022550f90bb12fe6"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d43022550f90bb135e0"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d46022550f90bb1399a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d46022550f90bb13b0f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d4e022550f90bb13cd6"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84d4f022550f90bb13e55"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84dc4022550f90bb14026"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84dda022550f90bb1448c"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84df6022550f90bb14759"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e07022550f90bb14bcc"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 1 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725451764238179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=35ff743f-d220-4802-9485-253402d43843\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725451764238179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=35ff743f-d220-4802-9485-253402d43843 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e07022550f90bb14bcd"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e07022550f90bb14d6f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e0d022550f90bb14fc0"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e0d022550f90bb1516c"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e49022550f90bb153cb"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 1 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84e49022550f90bb153cc"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e49022550f90bb15587"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 10 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e70022550f90bb15855"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 11 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84e8e022550f90bb15cfb"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 11 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84eca022550f90bb160fe"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165d8"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 2",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165d9"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165da"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 2 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725451764238179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=35ff743f-d220-4802-9485-253402d43843\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/1725451764238179646946_284414670074633_624878309995399267_n.jpg?alt=media&token=35ff743f-d220-4802-9485-253402d43843 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165db"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 10",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165dc"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165dd"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 10 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84ece022550f90bb165de"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ed2022550f90bb16bc6"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 10",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ed2022550f90bb16bc7"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ed2022550f90bb16bc8"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 10 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d84ed2022550f90bb16bc9"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 10 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ed6022550f90bb1710e"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84f1c022550f90bb176b9"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84f1c022550f90bb1785c"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84f2e022550f90bb17ef2"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84fad022550f90bb183fd"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 3 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ff5022550f90bb18a64"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ff9022550f90bb19145"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d84ffd022550f90bb196de"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85019022550f90bb19ce4"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 1 removed ",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8503c022550f90bb1a446"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 1 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8504c022550f90bb1aa66"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 2 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8505f022550f90bb1b2d8"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 3 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8507b022550f90bb1bd3a"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8507b022550f90bb1bf86"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Recently added asset by Yadnesh Gawas:Demo task 2 <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/17254524244061725262409752.jpg?alt=media&token=d98495f0-e1ee-4627-80dc-89f548d387c8\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/17254524244061725262409752.jpg?alt=media&token=d98495f0-e1ee-4627-80dc-89f548d387c8 style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8508b022550f90bb1c93e"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 3",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d850cf022550f90bb1cc8b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d850cf022550f90bb1cc8c"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 3 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d850cf022550f90bb1cc8d"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d850d5022550f90bb1d62d"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 2 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "_id": {
+        "$oid": "66d850d5022550f90bb1d62e"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T11:54:47.531Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d850d5022550f90bb1d8a2"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85264e3bf3e710b541659"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85264e3bf3e710b541956"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 1",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8526de3bf3e710b5423d5"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 2 removed ",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85278e3bf3e710b542ee8"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 2 to Subtask 3",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85278e3bf3e710b542ee9"
+      }
+    },
+    {
+      "type": "asset",
+      "activity": "Asset added to Subtask 3 by Yadnesh Gawas: <a href=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/17254524092741725262409752.jpg?alt=media&token=765e1d58-218f-4e92-a3ca-721f736e91ff\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://firebasestorage.googleapis.com/v0/b/taskmanager-1923e.appspot.com/o/17254524092741725262409752.jpg?alt=media&token=765e1d58-218f-4e92-a3ca-721f736e91ff style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}\"/></a>",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d85278e3bf3e710b542eea"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8527ee3bf3e710b54350a"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 3 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "_id": {
+        "$oid": "66d8527ee3bf3e710b54350b"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"todo\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8527ee3bf3e710b5437a7"
+      }
+    },
+    {
+      "type": "created",
+      "activity": "Subtask 4 added by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8529be3bf3e710b544001"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 1 to Subtask 4",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852a5e3bf3e710b544988"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852a5e3bf3e710b544989"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"todo\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852a5e3bf3e710b544c3f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852a9e3bf3e710b54570d"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852b0e3bf3e710b546394"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Asset removed from Subtask 4 by Yadnesh Gawas",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "_id": {
+        "$oid": "66d852b0e3bf3e710b546395"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852b0e3bf3e710b54665f"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852b7e3bf3e710b5470ea"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852b7e3bf3e710b5473bd"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 4 to Subtask 1",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852bce3bf3e710b547e6e"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852c2e3bf3e710b548931"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852c6e3bf3e710b5495bf"
+      }
+    },
+    {
+      "type": "assetdel",
+      "activity": "Subtask 3 removed ",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852d7e3bf3e710b54a4b1"
+      }
+    },
+    {
+      "type": "title",
+      "activity": "Subtask title changed from Subtask 3 to Subtask 4",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852d7e3bf3e710b54a4b2"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from in progress to completed",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852dce3bf3e710b54ad57"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"in progress\" to \"completed\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852dce3bf3e710b54b048"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Subtask stage changed from completed to in progress",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852e2e3bf3e710b54bace"
+      }
+    },
+    {
+      "type": "stage",
+      "activity": "Stage changed from \"completed\" to \"in progress\"",
+      "date": {
+        "$date": "2024-09-04T12:27:47.096Z"
+      },
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d852e2e3bf3e710b54bdc9"
+      }
+    }
+  ],
+  "subTasks": [
+    {
+      "title": "Subtask 1",
+      "desc": "<p>sccdscsdvd</p>",
+      "stage": "completed",
+      "assets": [],
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8504c022550f90bb1aa62"
+      }
+    },
+    {
+      "title": "Subtask 4",
+      "desc": "<p>yughghjhjjhh</p>",
+      "stage": "in progress",
+      "assets": [],
+      "by": {
+        "$oid": "66af9db7479f7ad5afe7161b"
+      },
+      "_id": {
+        "$oid": "66d8529be3bf3e710b543ffd"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-09-04T06:58:06.409Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T12:30:26.103Z"
+  },
+  "projectTitle": "Project Testing",
+  "projectDue": {
+    "$date": "2024-09-05T00:00:00.000Z"
+  },
+  "projectPriority": "medium",
+  "__v": 110
+}]

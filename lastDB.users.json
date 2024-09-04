@@ -1,0 +1,324 @@
+[{
+  "_id": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "name": "Yadnesh Gawas",
+  "email": "yadnesh.gawas@gmail.com",
+  "role": "Administrator",
+  "password": "$2a$10$9LA0QS9odvNY5DQFTAhjdOZjUSiWtkUUEDjbJRRr0rWrWbVsMrC2O",
+  "isAdmin": true,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-04T15:26:47.765Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-30T05:41:48.163Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b9895f6e7bf0ea463cf32e"
+  },
+  "name": "Student1",
+  "email": "21co73@aitdgoa.edu.in",
+  "role": "Student",
+  "password": "$2a$10$VpuU.WF3NSWIaD9nhzl0cO0CEbiOnneaDmQ3JByDu35tAbW2LuOfW",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-12T04:02:39.824Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T10:32:18.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44166d2be8319273ef18"
+  },
+  "name": "Jai",
+  "email": "jai@ex.com",
+  "role": "Student",
+  "password": "vdji06iu5r",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:31:34.871Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:31:34.871Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44226d2be8319273ef1d"
+  },
+  "name": "Mayur",
+  "email": "mayur@ex.com",
+  "role": "Student",
+  "password": "0oic5o0ocr",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:31:46.404Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:31:46.404Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44326d2be8319273ef22"
+  },
+  "name": "Aman",
+  "email": "aman@ex.com",
+  "role": "Student",
+  "password": "0uxhzh1389",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:32:02.692Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:32:02.692Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44416d2be8319273ef27"
+  },
+  "name": "Harsh",
+  "email": "harsh@ex.com",
+  "role": "Student",
+  "password": "npulmoea1y",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:32:17.660Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:32:17.660Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb445b6d2be8319273ef2c"
+  },
+  "name": "Vighnesh",
+  "email": "vighnesh@ex.com",
+  "role": "Student",
+  "password": "lf2pqujkpm",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:32:43.640Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:32:43.640Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb446e6d2be8319273ef31"
+  },
+  "name": "Aayush",
+  "email": "ayush@ex.com",
+  "role": "Student",
+  "password": "8nl0nt7vsd",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:33:02.601Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:33:02.601Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44836d2be8319273ef36"
+  },
+  "name": "Krishna",
+  "email": "krishna@ex.com",
+  "role": "Student",
+  "password": "vej8tw1bde",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:33:23.118Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:33:23.118Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44966d2be8319273ef3b"
+  },
+  "name": "Sankalp",
+  "email": "sankalp@ex.com",
+  "role": "Student",
+  "password": "c4fg2yez1g",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:33:42.541Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:33:42.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44b16d2be8319273ef45"
+  },
+  "name": "Tejas",
+  "email": "tejas@ex.com",
+  "role": "Student",
+  "password": "uyjz949z2y",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:34:09.825Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:34:09.825Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44c26d2be8319273ef4a"
+  },
+  "name": "Siddharth",
+  "email": "siddharth@ex.com",
+  "role": "Student",
+  "password": "b3x6o88x5a",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:34:26.416Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:34:26.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44cc6d2be8319273ef4f"
+  },
+  "name": "Suchit",
+  "email": "suchit@ex.com",
+  "role": "Student",
+  "password": "25okvgz4tk",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:34:36.723Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:34:36.723Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44d86d2be8319273ef54"
+  },
+  "name": "Vaibhav",
+  "email": "vaibhav@ex.com",
+  "role": "Student",
+  "password": "c14yquhqj9",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:34:48.179Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:34:48.179Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44e56d2be8319273ef59"
+  },
+  "name": "Rama",
+  "email": "rama@ex.com",
+  "role": "Student",
+  "password": "ds0qhrfsds",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:35:01.368Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:35:01.368Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44f06d2be8319273ef5e"
+  },
+  "name": "Arun",
+  "email": "arun@ex.com",
+  "role": "Student",
+  "password": "fz3wwnz1b5",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:35:12.754Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:35:12.754Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bb44fb6d2be8319273ef63"
+  },
+  "name": "Shubham",
+  "email": "shubham@ex.com",
+  "role": "Student",
+  "password": "kfw3dhaocx",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-13T11:35:23.403Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-13T11:35:23.403Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66c816082d548de00401f900"
+  },
+  "name": "Tester",
+  "email": "yadnesh1526@gmail.com",
+  "role": "Student",
+  "password": "$2a$10$K8aCM0B3jvT6Ayi57hHq0OeEnnlTNOVxDWjXl/lIaQEEdSILSW5fC",
+  "isAdmin": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-08-23T04:54:32.513Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-23T04:54:32.513Z"
+  },
+  "__v": 0
+}]

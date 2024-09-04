@@ -1,0 +1,1032 @@
+[{
+  "_id": {
+    "$oid": "66b867a3314e9ec3cf6a9f2d"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "title": "FrontEnd Development",
+  "date": {
+    "$date": "2024-08-11T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-24T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "completed",
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    },
+    {
+      "$oid": "66bb44226d2be8319273ef1d"
+    },
+    {
+      "$oid": "66bb44326d2be8319273ef22"
+    },
+    {
+      "$oid": "66bb44416d2be8319273ef27"
+    },
+    {
+      "$oid": "66bb445b6d2be8319273ef2c"
+    },
+    {
+      "$oid": "66bb446e6d2be8319273ef31"
+    },
+    {
+      "$oid": "66bb44836d2be8319273ef36"
+    },
+    {
+      "$oid": "66bb44966d2be8319273ef3b"
+    },
+    {
+      "$oid": "66bb44a16d2be8319273ef40"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66bb055c59adf6a4340b8bcd"
+    },
+    {
+      "$oid": "66c2d1ae57e6c37dff5bbca3"
+    },
+    {
+      "$oid": "66c2d890042641c3b9431b36"
+    },
+    {
+      "$oid": "66c4820f0413739ef26c477c"
+    },
+    {
+      "$oid": "66c6d9091cdff6380bf5bd67"
+    },
+    {
+      "$oid": "66c865ec61e59ed9b00e847c"
+    },
+    {
+      "$oid": "66c86aec61e59ed9b0155e1b"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-11T07:26:27.256Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-29T05:18:47.098Z"
+  },
+  "__v": 82
+},
+{
+  "_id": {
+    "$oid": "66b9a61c9ff03a1fdf756ceb"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "title": "Backend Development",
+  "date": {
+    "$date": "2024-08-12T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-22T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "todo",
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66bed99056b5dc5407081ad4"
+    },
+    {
+      "$oid": "66c59032be3d8576dabe19a6"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-12T06:05:16.985Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-01T12:46:16.646Z"
+  },
+  "__v": 15
+},
+{
+  "_id": {
+    "$oid": "66b9b1c3a75923d04b2a1b71"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project Temp",
+  "date": {
+    "$date": "2024-08-12T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-28T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "in progress",
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66c5906bbe3d8576dabe1a95"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-12T06:54:59.278Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-21T06:59:55.340Z"
+  },
+  "__v": 3,
+  "assets": []
+},
+{
+  "_id": {
+    "$oid": "66bc2f409a3ed8488f5633a6"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 1",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "in progress",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:14:56.394Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T04:14:56.394Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc2f4a9a3ed8488f5633b4"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 2",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "low",
+  "stage": "in progress",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66bb44226d2be8319273ef1d"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:15:06.745Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T04:15:06.745Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc2f549a3ed8488f5633c2"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 3",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "in progress",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66bb44226d2be8319273ef1d"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:15:16.211Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T04:15:16.211Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc2f5f9a3ed8488f5633d0"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 4",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66bb44226d2be8319273ef1d"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    },
+    {
+      "$oid": "66bb44836d2be8319273ef36"
+    },
+    {
+      "$oid": "66bb446e6d2be8319273ef31"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:15:27.140Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T04:15:27.140Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc2f699a3ed8488f5633de"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 5",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "low",
+  "stage": "in progress",
+  "uTeam": [
+    {
+      "$oid": "66bb44226d2be8319273ef1d"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    },
+    {
+      "$oid": "66bb44836d2be8319273ef36"
+    },
+    {
+      "$oid": "66bb446e6d2be8319273ef31"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:15:37.358Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-01T13:17:43.512Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66bc2f789a3ed8488f5633ec"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 6",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "uTeam": [
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44836d2be8319273ef36"
+    },
+    {
+      "$oid": "66bb446e6d2be8319273ef31"
+    },
+    {
+      "$oid": "66bb44c26d2be8319273ef4a"
+    },
+    {
+      "$oid": "66bb44d86d2be8319273ef54"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:15:52.136Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-01T13:17:49.086Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66bc2f819a3ed8488f5633fa"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 7",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "in progress",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66b9a5429ff03a1fdf756c9c"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44836d2be8319273ef36"
+    },
+    {
+      "$oid": "66bb446e6d2be8319273ef31"
+    },
+    {
+      "$oid": "66bb44c26d2be8319273ef4a"
+    },
+    {
+      "$oid": "66bb44d86d2be8319273ef54"
+    },
+    {
+      "$oid": "66bb44416d2be8319273ef27"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T04:16:01.558Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T04:16:01.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d743b89d9abb27ba10e"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 8\n",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:20.117Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:20.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d773b89d9abb27ba11c"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 9",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:23.159Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:23.159Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d773b89d9abb27ba12a"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 10",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:23.359Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:23.359Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d773b89d9abb27ba138"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 11",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:23.568Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:23.568Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d773b89d9abb27ba146"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 12",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:23.721Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:23.721Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d773b89d9abb27ba154"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 13\n",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:23.865Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:23.865Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d783b89d9abb27ba162"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 14",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66bc6dbe3b89d9abb27ba264"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:24.012Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:41:34.457Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66bc6d783b89d9abb27ba170"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 15",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:24.174Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-14T08:40:24.174Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d783b89d9abb27ba17e"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 16",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "completed",
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:24.342Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-01T13:21:17.932Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bc6d7d3b89d9abb27ba18c"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 17",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "todo",
+  "assets": [],
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66d7f33e0e94d40089ebcd9f"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:29.097Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T05:42:22.715Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66bc6d7d3b89d9abb27ba19a"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project 18",
+  "date": {
+    "$date": "2024-08-14T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "priority": "high",
+  "stage": "completed",
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-14T08:40:29.274Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-01T13:19:57.510Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d00ac17a5c5798393f212a"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "title": "TESTING PHASE 1",
+  "date": {
+    "$date": "2024-08-29T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-09-06T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "in progress",
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66d00b1c7a5c5798394103e9"
+    },
+    {
+      "$oid": "66d464061639827eac6236d1"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-08-29T05:44:33.135Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T07:05:35.111Z"
+  },
+  "__v": 11
+},
+{
+  "_id": {
+    "$oid": "66d804df75f7675000beb5c2"
+  },
+  "lTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    }
+  ],
+  "title": "Project Testing",
+  "date": {
+    "$date": "2024-09-04T00:00:00.000Z"
+  },
+  "due": {
+    "$date": "2024-09-05T00:00:00.000Z"
+  },
+  "priority": "medium",
+  "stage": "in progress",
+  "uTeam": [
+    {
+      "$oid": "66af9db7479f7ad5afe7161b"
+    },
+    {
+      "$oid": "66b9895f6e7bf0ea463cf32e"
+    },
+    {
+      "$oid": "66bb44166d2be8319273ef18"
+    }
+  ],
+  "tasks": [
+    {
+      "$oid": "66d804fe75f7675000beb6c3"
+    }
+  ],
+  "by": {
+    "$oid": "66af9db7479f7ad5afe7161b"
+  },
+  "createdAt": {
+    "$date": "2024-09-04T06:57:35.263Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-04T06:58:06.428Z"
+  },
+  "__v": 2,
+  "assets": []
+}]
