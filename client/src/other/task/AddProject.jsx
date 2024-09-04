@@ -80,6 +80,7 @@ const AddProject = ({ open, setOpen, taskData }) => {
   const submitHandler = async (data) => {
     try {
       const projData = { ...data, lTeam, uTeam, stage, priority, projId };
+      console.log("Before Sending=>",projData);
       const res = await addproj(projData).unwrap();
       refetch();
       toast.success(res?.message);
