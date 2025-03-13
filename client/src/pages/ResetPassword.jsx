@@ -7,6 +7,8 @@ import Textbox from "../other/Textbox";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
 
+const baseurl = import.meta.env.VITE_BASE_APP_URL;
+
 const ResetPassword = () => {
   const [open, setOpen] = useState(false);
   const { userId, token } = useParams();
@@ -23,7 +25,7 @@ const ResetPassword = () => {
   const submitHandler = async (data) => {
     console.log(data);
     try {
-      const res = await fetch(`/api/user/reset/${userId}/${token}`, {
+      const res = await fetch(`${baseurl}/api/user/reset/${userId}/${token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

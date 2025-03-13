@@ -13,6 +13,8 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT;
 
+const baseurl = process.env.BASE_APP_URL;
+
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -287,9 +289,9 @@ export const forgotUser = async (req, res) => {
     const token = jwt.sign({ email: user.email, id: user.id }, secret, {
       expiresIn: "10m",
     });
-    const link = `http://localhost:4555/resetpass/${user._id}/${token}`;
+    //const link = `http://localhost:4555/resetpass/${user._id}/${token}`;
+    const link = `${baseurl}/resetpass/${user._id}/${token}`;
     const mailOptions = {
-      from: "yadneshgawas.infipreintern@gmail.com",
       to: email,
       subject: "Password Reset",
       text: `You requested a password reset. Use the following token to reset your password: ${link} `, // plain text body
@@ -371,9 +373,9 @@ export const adduser = async (req, res) => {
     const token = jwt.sign({ email: user.email, id: user.id }, secret, {
       expiresIn: "10m",
     });
-    const link = `http://localhost:4555/change/${user._id}/${token}`;
+    //const link = `http://localhost:4555/change/${user._id}/${token}`;
+    const link = `${baseurl}/change/${user._id}/${token}`;
     const mailOptions = {
-      from: "yadneshgawas.infipreintern@gmail.com",
       to: email,
       subject: "Account Creation",
       text: `Hello ${usrName} .Your account has been created successfully. The role assigned to you is ${usrRole} .Please use this link to create a password for your account. You must use this password to log in to the application: ${link} `, // plain text body
